@@ -134,14 +134,31 @@ python scripts/run_benchmark.py \
 ## Key config (`configs/default.yaml`)
 
 ```yaml
-gemini:
-  model: gemini-3.1-pro-preview     # orchestrator
+model:                                 # Sub-Agent (vLLM)
+  name: Qwen2.5-VL-7B-Instruct
+  path: Qwen/Qwen2.5-VL-7B-Instruct    # HF repo id or local path
+  max_model_len: 16384                 # context window
+  limit_mm_per_prompt_image: 5         # max images per call
+  dtype: bfloat16
+  gpu_memory_utilization: 0.85         # lower if you hit OOM
+
+gemini:                                # Orchestrator
+  model: gemini-3.1-pro-preview        # 3.1 only — do NOT downgrade to 2.5
+
 evolution:
-  train_n: 60                        # train split size
-  val_n: 40                          # val split size
-  augment_swap: true                 # A/B swap augmentation for position invariance
-  explore_margin: 0.075              # keep if val_acc >= prev - margin
-  prune_every_n: 50                  # periodic leave-one-out pruning
+  train_dataset: AgPerry/EditReward-Data-100   # 100 preference demos
+  train_n: 60                          # train split size
+  val_n: 40                            # val split size (gating)
+  max_iterations: 5                    # iterations per run
+  batch_concurrent: 128                # parallel Sub-Agent calls
+  explore_margin: 0.075                # keep if val_acc >= prev - margin
+  augment_swap: true                   # A/B swap augmentation
+  prune_every_n: 50                    # periodic leave-one-out pruning
+  seed: 42
+
+benchmark:
+  dataset: TIGER-Lab/EditReward-Bench
+  max_workers: 128                     # parallel scoring threads
 ```
 
 ## Repository layout
