@@ -60,6 +60,25 @@ python scripts/run_evolution.py \
 python scripts/run_benchmark.py --config configs/default.yaml
 ```
 
+## Reproduce paper results
+
+End-to-end one-command reproduction (env setup → data download → vLLM serve → evolution → benchmark → print results):
+
+```bash
+bash scripts/reproduce.sh
+```
+
+The script needs **one machine with ≥ 4 GPUs (L40S / A100 / H100)**, the Gemini credentials above, and Internet access for the HuggingFace dataset download. It runs the 7 steps from `scripts/reproduce.sh` in order and trap-cleans up vLLM servers on exit. Total wall-clock: roughly 4–6 hours.
+
+If you only want to **benchmark** an existing evolved library (skip evolution):
+
+```bash
+# Provide a checkpoint dir from a prior run
+python scripts/run_benchmark.py \
+  --config configs/default.yaml \
+  --library-dir results/my_run/checkpoints/best
+```
+
 ## Key config (`configs/default.yaml`)
 
 ```yaml
