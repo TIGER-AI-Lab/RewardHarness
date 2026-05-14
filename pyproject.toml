@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rewardharness"
+version = "0.1.0"
+description = "Self-evolving agentic reward framework for image-editing evaluation."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+authors = [
+    { name = "The RewardHarness Authors" },
+]
+keywords = ["reward-model", "image-editing", "agentic", "vlm", "rlhf"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dynamic = ["dependencies"]
+
+[project.urls]
+Homepage = "https://rewardharness.com"
+Repository = "https://github.com/TIGER-AI-Lab/RewardHarness"
+Paper = "https://arxiv.org/abs/2605.08703"
+
+[tool.setuptools.dynamic]
+dependencies = { file = ["requirements.txt"] }
+
+[tool.setuptools.packages.find]
+include = ["src*"]
+exclude = ["tests*", "vanilla*", "examples*", "scripts*"]
