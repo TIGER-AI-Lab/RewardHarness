@@ -18,12 +18,40 @@ RewardHarness reframes reward modeling as **context evolution** rather than weig
 
 ## Architecture
 
+```mermaid
+flowchart LR
+    subgraph IN["Input"]
+      Is["Source image"]
+      P["Editing prompt"]
+      Ik["K candidate edits"]
+    end
+
+    subgraph ORC["Orchestrator (Gemini)"]
+      R["Router"]
+      CA["Chain Analyzer"]
+      EV["Evolver"]
+    end
+
+    subgraph LIB["Library (versioned)"]
+      SK["Skills (rubrics)"]
+      TL["Tools (system_prompts)"]
+    end
+
+    subgraph SUB["Sub-Agent (frozen Qwen2.5-VL-7B via vLLM)"]
+      RC["Reasoning chain"]
+      OUT["Scores + ranking"]
+    end
+
+    IN --> R
+    LIB -- "selected subset" --> R
+    R -- "context C" --> SUB
+    SUB --> OUT
+    OUT -- "vs. ground truth" --> CA
+    CA -- "improvement signals" --> EV
+    EV -- "skill / tool updates (gated)" --> LIB
 ```
-Gemini orchestration layer            Qwen vLLM sub-agent + tools
-  Router.prepare_context()              SubAgent.batch_evaluate()
-  ChainAnalyzer.analyze()               Library.call_tool()
-  Evolver._validate_tool()
-```
+
+At **inference**, the Router selects relevant entries from the Library and the frozen Sub-Agent builds a reasoning chain that produces a preference judgment. At **evolution**, the Chain Analyzer compares predictions against ~100 ground-truth labels and the Evolver applies skill/tool updates — keeping each update only if held-out validation accuracy improves.
 
 | Module | What it does |
 |---|---|
