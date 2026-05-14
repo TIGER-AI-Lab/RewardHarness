@@ -111,9 +111,12 @@ RewardHarness/
 ├── tests/                # pytest suite (~100 tests)
 ├── configs/              # default.yaml + vLLM endpoints
 ├── vanilla/              # Baseline benchmark scripts (Claude, Gemini, etc.)
-├── docs/                 # Design notes and plans
+├── score-guidelines/     # Reference rubrics
 ├── data/                 # Dataset checksums (run download_data.sh to populate)
-└── score-guidelines/     # Reference rubrics
+├── Makefile              # `make help` lists install / test / demo / benchmark / reproduce
+├── CITATION.cff          # GitHub-rendered "Cite this repository" widget
+├── LICENSE               # Apache 2.0
+└── requirements.txt      # Python dependencies
 ```
 
 ## Citation

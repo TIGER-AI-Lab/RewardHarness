@@ -1,0 +1,70 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the paper."
+title: "RewardHarness: Self-Evolving Agentic Post-Training"
+type: software
+authors:
+  - given-names: Yuxuan
+    family-names: Zhang
+  - given-names: Penghui
+    family-names: Du
+  - given-names: Bo
+    family-names: Li
+  - given-names: Cong
+    family-names: Wei
+  - given-names: Junwen
+    family-names: Miao
+  - given-names: Huaisong
+    family-names: Zhang
+  - given-names: Songcheng
+    family-names: Cai
+  - given-names: Yubo
+    family-names: Wang
+  - given-names: Dongfu
+    family-names: Jiang
+  - given-names: Yuyu
+    family-names: Zhang
+  - given-names: Ping
+    family-names: Nie
+  - given-names: Wenhu
+    family-names: Chen
+  - given-names: Changqian
+    family-names: Yu
+  - given-names: Kelsey R.
+    family-names: Allen
+repository-code: "https://github.com/TIGER-AI-Lab/RewardHarness"
+url: "https://rewardharness.com"
+preferred-citation:
+  type: article
+  title: "RewardHarness: Self-Evolving Agentic Post-Training"
+  authors:
+    - given-names: Yuxuan
+      family-names: Zhang
+    - given-names: Penghui
+      family-names: Du
+    - given-names: Bo
+      family-names: Li
+    - given-names: Cong
+      family-names: Wei
+    - given-names: Junwen
+      family-names: Miao
+    - given-names: Huaisong
+      family-names: Zhang
+    - given-names: Songcheng
+      family-names: Cai
+    - given-names: Yubo
+      family-names: Wang
+    - given-names: Dongfu
+      family-names: Jiang
+    - given-names: Yuyu
+      family-names: Zhang
+    - given-names: Ping
+      family-names: Nie
+    - given-names: Wenhu
+      family-names: Chen
+    - given-names: Changqian
+      family-names: Yu
+    - given-names: Kelsey R.
+      family-names: Allen
+  journal: "arXiv preprint arXiv:2605.08703"
+  year: 2026
+  url: "https://arxiv.org/abs/2605.08703"
