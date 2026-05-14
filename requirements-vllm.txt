@@ -1,0 +1,5 @@
+# Heavy GPU dependency for Sub-Agent inference.
+# Install on top of the core requirements only when running Qwen2.5-VL-7B
+# locally (i.e., serving via vLLM). Skip for development / inspection workflows.
+
+vllm>=0.6.0

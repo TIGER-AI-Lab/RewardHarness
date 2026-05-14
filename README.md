@@ -62,6 +62,15 @@ At **inference**, the Router selects relevant entries from the Library and the f
 | `src/library/` | Skills (markdown rubrics) + Tools (VLM `system_prompt` specs) |
 | `src/pipeline.py` | Evolution loop with Phase A (skills) / Phase B (tools) / Phase C (pruning) |
 
+## Hardware requirements
+
+| Workflow | Minimum |
+|---|---|
+| Test suite, `examples/inspect_library.py`, library inspection | CPU only, no Internet |
+| Benchmark with a hosted Sub-Agent (Gemini drop-in) | CPU only + Gemini API |
+| Local Qwen2.5-VL-7B Sub-Agent for evolution / full benchmark | **1 × GPU with ≥ 24 GB** (L40S / A100 / H100); 4 GPUs recommended for parallel evaluation |
+| Full paper reproduction (`make reproduce`) | **≥ 4 GPUs**, ~4–6 h wall-clock, ~50 GB free disk |
+
 ## Install
 
 ```bash
@@ -69,6 +78,11 @@ git clone https://github.com/TIGER-AI-Lab/RewardHarness.git
 cd RewardHarness
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
+
+# OPTIONAL — only needed if you'll serve Qwen2.5-VL-7B locally with vLLM.
+# Skip this if you only want to run the test suite, inspect the Library, or
+# point the Sub-Agent at a hosted Gemini endpoint instead.
+pip install -r requirements-vllm.txt
 ```
 
 ## Environment

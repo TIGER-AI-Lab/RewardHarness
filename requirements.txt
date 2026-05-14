@@ -1,13 +1,15 @@
-# Python 3.10+ required.
-# Versions reflect known-good combinations from the published evolution runs.
-# Loosen upper bounds at your own risk.
+# Core dependencies (no GPU required).
+# Python 3.10+. Versions reflect known-good combinations from the published
+# evolution runs. Loosen upper bounds at your own risk.
+#
+# For Sub-Agent inference with Qwen2.5-VL-7B locally, ALSO install:
+#     pip install -r requirements-vllm.txt
+# (heavy: CUDA toolchain + ~5 GB of wheels). You can skip it if you only
+# want to inspect the Library, run the test suite, or call hosted endpoints.
 
 # Orchestrator + Sub-Agent transport
 openai>=1.0,<2.0
 google-genai>=0.3.0
-
-# Sub-Agent inference engine (skip if not running Qwen locally)
-vllm>=0.6.0
 
 # Model loading + dataset I/O
 transformers>=4.57.0
