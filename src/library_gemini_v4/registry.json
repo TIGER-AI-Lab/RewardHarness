@@ -1,0 +1,62 @@
+{
+  "direct-vision-reliance": {
+    "type": "skill",
+    "description": "CRITICAL: Strictly prohibits the use of hallucinated tools and enforces direct visual analysis.",
+    "path": "skills/direct-vision-reliance/SKILL.md"
+  },
+  "multi-part-instruction-evaluation": {
+    "type": "skill",
+    "description": "Guidelines for evaluating prompts with multiple distinct requirements, ensuring all parts are fulfilled.",
+    "path": "skills/multi-part-instruction-evaluation/SKILL.md"
+  },
+  "text-rendering-evaluation": {
+    "type": "skill",
+    "description": "Rubric for evaluating the addition or modification of text in images, emphasizing exact spelling and typography.",
+    "path": "skills/text-rendering-evaluation/SKILL.md"
+  },
+  "exclusivity-and-preservation": {
+    "type": "skill",
+    "description": "Evaluating whether the edit is exclusive to the requested changes, specifically checking for global bleed.",
+    "path": "skills/exclusivity-and-preservation/SKILL.md"
+  },
+  "artistic-style-transfer-evaluation": {
+    "type": "skill",
+    "description": "Guidelines for evaluating prompts that request a change in artistic style (e.g., specific artists, mediums).",
+    "path": "skills/artistic-style-transfer-evaluation/SKILL.md"
+  },
+  "background-and-scene-transformation": {
+    "type": "skill",
+    "description": "Guidelines for evaluating prompts that change the background or setting of an image.",
+    "path": "skills/background-and-scene-transformation/SKILL.md"
+  },
+  "object-extraction-evaluation": {
+    "type": "skill",
+    "description": "Guidelines for evaluating prompts that request extracting a subject and removing the background, emphasizing subject preservation.",
+    "path": "skills/object-extraction-evaluation/SKILL.md"
+  },
+  "artist-and-style-knowledge": {
+    "type": "skill",
+    "description": "Guidelines for evaluating edits that reference specific artists, art movements, or cultural references.",
+    "path": "skills/artist-and-style-knowledge/SKILL.md"
+  },
+  "spatial-and-relational-edits": {
+    "type": "skill",
+    "description": "Guidelines for evaluating edits involving spatial relationships, positioning, and directional changes.",
+    "path": "skills/spatial-and-relational-edits/SKILL.md"
+  },
+  "scene-and-atmosphere-transformation": {
+    "type": "skill",
+    "description": "Guidelines for evaluating edits that change the atmosphere, setting, or context of a scene.",
+    "path": "skills/scene-and-atmosphere-transformation/SKILL.md"
+  },
+  "counting-and-spatial-reasoning": {
+    "type": "skill",
+    "description": "Guidelines for evaluating edits involving counting objects, specific spatial placements, or rotations.",
+    "path": "skills/counting-and-spatial-reasoning/SKILL.md"
+  },
+  "multi-attribute-verification": {
+    "type": "skill",
+    "description": "Guidelines for verifying objects that require multiple specific attributes or details.",
+    "path": "skills/multi-attribute-verification/SKILL.md"
+  }
+}

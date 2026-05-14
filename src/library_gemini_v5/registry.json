@@ -1,0 +1,27 @@
+{
+  "penalize-over-editing": {
+    "type": "skill",
+    "description": "Guidelines for heavily penalizing images that follow the instruction but introduce destructive, unintended changes to the original image.",
+    "path": "skills/penalize-over-editing/SKILL.md"
+  },
+  "world-knowledge-and-entities": {
+    "type": "skill",
+    "description": "Strategy for evaluating prompts containing specific artists, cultural references, or named entities.",
+    "path": "skills/world-knowledge-and-entities/SKILL.md"
+  },
+  "verify-image-content-and-ocr": {
+    "type": "skill",
+    "description": "Techniques to prevent hallucinating empty images and mixing up Image A and Image B during OCR.",
+    "path": "skills/verify-image-content-and-ocr/SKILL.md"
+  },
+  "text-and-ocr-verifier": {
+    "type": "tool",
+    "description": "Extracts and verifies text from specific regions of images to prevent hallucinating text or mixing up Image A and Image B.",
+    "path": "tools/text-and-ocr-verifier/SKILL.md"
+  },
+  "visual-content-verifier": {
+    "type": "tool",
+    "description": "Extracts detailed descriptions of main subjects, backgrounds, and specific objects in Image A and Image B to prevent hallucination and mix-ups.",
+    "path": "tools/visual-content-verifier/SKILL.md"
+  }
+}

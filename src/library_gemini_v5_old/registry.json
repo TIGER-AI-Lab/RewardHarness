@@ -1,0 +1,32 @@
+{
+  "text-rendering-evaluation": {
+    "type": "skill",
+    "description": "Guidelines for evaluating prompts that require adding, modifying, or removing text.",
+    "path": "skills/text-rendering-evaluation/SKILL.md"
+  },
+  "object-attribute-verification": {
+    "type": "skill",
+    "description": "How to verify complex object replacements and specific attributes.",
+    "path": "skills/object-attribute-verification/SKILL.md"
+  },
+  "thematic-and-style-transformation": {
+    "type": "skill",
+    "description": "Evaluating broad thematic changes, style transfers, and environmental modifications while preserving structure.",
+    "path": "skills/thematic-and-style-transformation/SKILL.md"
+  },
+  "visual-question-answering": {
+    "type": "tool",
+    "description": "Ask specific questions about visual content, style, spatial relationships, or differences between images.",
+    "path": "tools/visual-question-answering/SKILL.md"
+  },
+  "vqa-query-best-practices": {
+    "type": "skill",
+    "description": "Guidelines for formulating effective, objective queries for the Visual Question Answering tool.",
+    "path": "skills/vqa-query-best-practices/SKILL.md"
+  },
+  "spatial-and-relational-reasoning": {
+    "type": "skill",
+    "description": "How to evaluate edits involving spatial positioning, counting, and object relationships.",
+    "path": "skills/spatial-and-relational-reasoning/SKILL.md"
+  }
+}

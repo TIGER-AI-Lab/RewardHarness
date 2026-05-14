@@ -1,0 +1,32 @@
+{
+  "evaluating-text-rendering": {
+    "type": "skill",
+    "description": "Guidelines for evaluating text additions and modifications in images.",
+    "path": "skills/evaluating-text-rendering/SKILL.md"
+  },
+  "evaluating-style-transfers": {
+    "type": "skill",
+    "description": "Guidelines for evaluating artistic style transfers.",
+    "path": "skills/evaluating-style-transfers/SKILL.md"
+  },
+  "evaluating-object-replacements": {
+    "type": "skill",
+    "description": "Guidelines for evaluating object replacements and modifications.",
+    "path": "skills/evaluating-object-replacements/SKILL.md"
+  },
+  "evaluating-background-changes": {
+    "type": "skill",
+    "description": "Guidelines for evaluating background replacements and scene changes.",
+    "path": "skills/evaluating-background-changes/SKILL.md"
+  },
+  "evaluating-multi-step-edits": {
+    "type": "skill",
+    "description": "Guidelines for evaluating prompts with multiple distinct instructions.",
+    "path": "skills/evaluating-multi-step-edits/SKILL.md"
+  },
+  "compare_images": {
+    "type": "tool",
+    "description": "Compare a source image and edited images to identify differences, check if instructions were followed, and assess visual quality.",
+    "path": "tools/compare_images/SKILL.md"
+  }
+}

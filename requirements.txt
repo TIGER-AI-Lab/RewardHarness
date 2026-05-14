@@ -1,0 +1,14 @@
+openai>=1.0
+google-genai
+vllm
+transformers>=4.57.0
+datasets
+pillow
+scikit-image
+numpy
+scipy
+tqdm
+rich
+pyyaml
+pytest
+pytest-mock

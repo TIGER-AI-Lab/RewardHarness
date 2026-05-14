@@ -1,0 +1,27 @@
+{
+  "evaluating-multiple-constraints": {
+    "type": "skill",
+    "description": "How to systematically evaluate prompts with more than one instruction.",
+    "path": "skills/evaluating-multiple-constraints/SKILL.md"
+  },
+  "evaluating-text-additions": {
+    "type": "skill",
+    "description": "Guidelines for evaluating the addition or modification of text in images.",
+    "path": "skills/evaluating-text-additions/SKILL.md"
+  },
+  "evaluating-style-transfers": {
+    "type": "skill",
+    "description": "Guidelines for evaluating artistic style transfers and thematic changes.",
+    "path": "skills/evaluating-style-transfers/SKILL.md"
+  },
+  "visual-question-answering": {
+    "type": "tool",
+    "description": "Ask specific questions about the visual content of the source and edited images to verify constraints.",
+    "path": "tools/visual-question-answering/SKILL.md"
+  },
+  "image-difference-checker": {
+    "type": "tool",
+    "description": "Compare a source image and an edited image to list all additions, removals, and modifications.",
+    "path": "tools/image-difference-checker/SKILL.md"
+  }
+}

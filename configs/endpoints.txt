@@ -1,0 +1,10 @@
+# vLLM endpoints for the Sub-Agent — one URL per line, OpenAI-compatible.
+# Each URL serves Qwen2.5-VL-7B-Instruct on a different GPU/host.
+#
+# Examples (replace with your own hosts/ports):
+http://localhost:8000/v1
+http://localhost:8001/v1
+http://localhost:8002/v1
+http://localhost:8003/v1
+# http://my-gpu-host-01:8000/v1
+# http://my-gpu-host-01:8001/v1

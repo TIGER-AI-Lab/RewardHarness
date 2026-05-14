@@ -1,0 +1,22 @@
+{
+  "text-and-ocr-analyzer": {
+    "type": "tool",
+    "description": "Extracts and verifies text rendered in images to accurately evaluate text-addition prompts.",
+    "path": "tools/text-and-ocr-analyzer/SKILL.md"
+  },
+  "reasoning-preference-alignment": {
+    "type": "skill",
+    "description": "Ensures the final preference strictly matches the reasoning and assigned scores.",
+    "path": "skills/reasoning-preference-alignment/SKILL.md"
+  },
+  "mandatory-ocr-for-text": {
+    "type": "skill",
+    "description": "Mandates the use of the text-and-ocr-analyzer tool for any text-related prompts.",
+    "path": "skills/mandatory-ocr-for-text/SKILL.md"
+  },
+  "world-knowledge-and-style-awareness": {
+    "type": "skill",
+    "description": "Guidance on evaluating prompts that reference specific artists, styles, or cultural entities.",
+    "path": "skills/world-knowledge-and-style-awareness/SKILL.md"
+  }
+}

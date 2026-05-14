@@ -1,0 +1,35 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+.env
+.env.*
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.tox/
+
+# Experiment outputs (large; not in public release)
+results/
+results_new/
+runs/
+checkpoints/
+*.zip
+*.tar.gz
+
+# Dataset caches
+.dataset_cache/
+data/cache/
+
+# Local dev artifacts
+.idea/
+.vscode/
+.DS_Store
+*.swp

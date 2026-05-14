@@ -1,0 +1,142 @@
+{
+  "penalize-unintended-style-changes": {
+    "type": "skill",
+    "description": "Guidelines for penalizing images that alter the original art style when not requested, with exceptions for intended drastic changes.",
+    "path": "skills/penalize-unintended-style-changes/SKILL.md"
+  },
+  "artifact-and-structure-preservation": {
+    "type": "skill",
+    "description": "Rules for prioritizing image integrity and penalizing severe artifacts or loss of original structure.",
+    "path": "skills/artifact-and-structure-preservation/SKILL.md"
+  },
+  "reasoning-preference-alignment": {
+    "type": "skill",
+    "description": "Ensures the final preference logically matches the comparative analysis in the reasoning chain.",
+    "path": "skills/reasoning-preference-alignment/SKILL.md"
+  },
+  "entity-definition-activation": {
+    "type": "skill",
+    "description": "Requires explicitly defining specific artists, styles, or entities and their visual hallmarks before evaluating.",
+    "path": "skills/entity-definition-activation/SKILL.md"
+  },
+  "verify-extreme-claims-and-hallucinations": {
+    "type": "skill",
+    "description": "Guidelines to prevent hallucinating extreme failures (e.g., 'blank black screen') and ensure logical consistency.",
+    "path": "skills/verify-extreme-claims-and-hallucinations/SKILL.md"
+  },
+  "embrace-intended-drastic-changes": {
+    "type": "skill",
+    "description": "Rules for evaluating setting and style changes, strictly forbidding penalizing an image for losing original context when a new setting is requested.",
+    "path": "skills/embrace-intended-drastic-changes/SKILL.md"
+  },
+  "mitigate-positional-bias": {
+    "type": "skill",
+    "description": "Strategies to prevent defaulting to Image B and ensure fair evaluation of both images.",
+    "path": "skills/mitigate-positional-bias/SKILL.md"
+  },
+  "subject-vs-setting-modifications": {
+    "type": "skill",
+    "description": "Guidelines for preserving the main subject during setting changes, penalizing subject destruction.",
+    "path": "skills/subject-vs-setting-modifications/SKILL.md"
+  },
+  "verify-instruction-target-and-spatial-relations": {
+    "type": "skill",
+    "description": "Ensures edits are applied to the exact target, strictly enforcing spatial prepositions (under, behind) and prioritizing correct placement over natural integration.",
+    "path": "skills/verify-instruction-target-and-spatial-relations/SKILL.md"
+  },
+  "penalize-gibberish-text": {
+    "type": "skill",
+    "description": "Guidelines for penalizing gibberish text, establishing that instruction fulfillment strictly outweighs text artifacts.",
+    "path": "skills/penalize-gibberish-text/SKILL.md"
+  },
+  "strict-semantic-and-conceptual-alignment": {
+    "type": "skill",
+    "description": "Ensures strict adherence to requested concepts, rejecting semantic near-misses (e.g., classroom vs cafeteria).",
+    "path": "skills/strict-semantic-and-conceptual-alignment/SKILL.md"
+  },
+  "environmental-blending-and-lighting-adaptation": {
+    "type": "skill",
+    "description": "Rules for evaluating background changes, rewarding necessary adaptations to the subject's lighting, shadows, and ground contact.",
+    "path": "skills/environmental-blending-and-lighting-adaptation/SKILL.md"
+  },
+  "preserve-subject-interaction-and-pose": {
+    "type": "skill",
+    "description": "Guidelines for preserving realistic interaction and strict anatomical integrity when an object is replaced.",
+    "path": "skills/preserve-subject-interaction-and-pose/SKILL.md"
+  },
+  "instruction-over-naturalness": {
+    "type": "skill",
+    "description": "Prioritizes instruction fulfillment over naturalness, warning against the 'subtlety trap' and 'preservation bias'.",
+    "path": "skills/instruction-over-naturalness/SKILL.md"
+  },
+  "enforce-logical-consistency": {
+    "type": "skill",
+    "description": "Ensures the reasoning chain does not contain internal contradictions between stated facts and image evaluations.",
+    "path": "skills/enforce-logical-consistency/SKILL.md"
+  },
+  "evaluate-insertions-and-anatomical-integrity": {
+    "type": "skill",
+    "description": "Guidelines for evaluating inserted humans, animals, or objects, prioritizing anatomical correctness over superficial integration.",
+    "path": "skills/evaluate-insertions-and-anatomical-integrity/SKILL.md"
+  },
+  "evaluate-physical-plausibility": {
+    "type": "skill",
+    "description": "Guidelines for evaluating inserted or replaced objects for physical plausibility, penalizing floating objects or gravity-defying placements.",
+    "path": "skills/evaluate-physical-plausibility/SKILL.md"
+  },
+  "holistic-evaluation-vs-tunnel-vision": {
+    "type": "skill",
+    "description": "Prevents tunnel vision on specific requested edits by enforcing holistic evaluation, penalizing collateral damage, anatomical distortion, and loss of original context.",
+    "path": "skills/holistic-evaluation-vs-tunnel-vision/SKILL.md"
+  },
+  "object-replacement-proportions-and-exaggeration": {
+    "type": "skill",
+    "description": "Guidelines for evaluating object replacements where the new object is inherently bulkier or different in proportion (e.g., snow goggles vs glasses).",
+    "path": "skills/object-replacement-proportions-and-exaggeration/SKILL.md"
+  },
+  "evaluate-text-additions": {
+    "type": "skill",
+    "description": "Guidelines for evaluating text additions, strictly prioritizing exact string matches and legibility over natural integration.",
+    "path": "skills/evaluate-text-additions/SKILL.md"
+  },
+  "visual-question-answering": {
+    "type": "tool",
+    "description": "Answers specific visual questions about the images to verify the presence of objects, text, spatial relations, or specific attributes.",
+    "path": "tools/visual-question-answering/SKILL.md"
+  },
+  "object-locator-and-counter": {
+    "type": "tool",
+    "description": "Detects, counts, and locates specific objects in the image, useful for instructions targeting a specific instance (e.g., 'the 4th surfboard').",
+    "path": "tools/object-locator-and-counter/SKILL.md"
+  },
+  "visual-detail-and-setting-analyzer": {
+    "type": "tool",
+    "description": "Analyzes images to verify exact settings (e.g., cafeteria vs classroom), fine-grained details, and extreme artifacts.",
+    "path": "tools/visual-detail-and-setting-analyzer/SKILL.md"
+  },
+  "prevent-image-feature-swapping": {
+    "type": "skill",
+    "description": "Mandates strict verification of which image contains which features to prevent attributing Image A's details to Image B.",
+    "path": "skills/prevent-image-feature-swapping/SKILL.md"
+  },
+  "side-by-side-image-comparator": {
+    "type": "tool",
+    "description": "Compares two images side-by-side to definitively determine which image contains specific objects, text, or features, preventing feature-swapping.",
+    "path": "tools/side-by-side-image-comparator/SKILL.md"
+  },
+  "text-and-spelling-checker": {
+    "type": "tool",
+    "description": "Extracts and verifies text in the image, checking for exact string matches, spelling errors, and legibility.",
+    "path": "tools/text-and-spelling-checker/SKILL.md"
+  },
+  "artistic-and-cultural-references": {
+    "type": "skill",
+    "description": "Guidelines for evaluating prompts that reference specific artists, art styles, or cultural phenomena.",
+    "path": "skills/artistic-and-cultural-references/SKILL.md"
+  },
+  "overcoming-default-to-a-bias": {
+    "type": "skill",
+    "description": "Strategies to combat the strong bias of defaulting to Image A by hallucinating details or overvaluing naturalness.",
+    "path": "skills/overcoming-default-to-a-bias/SKILL.md"
+  }
+}
