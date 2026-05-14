@@ -161,6 +161,10 @@ RewardHarness/
 └── requirements.txt      # Python dependencies
 ```
 
+## Troubleshooting
+
+Hit a wall? See [`TROUBLESHOOTING.md`](TROUBLESHOOTING.md) for fixes to common install / auth / vLLM / dataset pitfalls.
+
 ## Citation
 
 ```bibtex
