@@ -1,14 +1,27 @@
-openai>=1.0
-google-genai
-vllm
+# Python 3.10+ required.
+# Versions reflect known-good combinations from the published evolution runs.
+# Loosen upper bounds at your own risk.
+
+# Orchestrator + Sub-Agent transport
+openai>=1.0,<2.0
+google-genai>=0.3.0
+
+# Sub-Agent inference engine (skip if not running Qwen locally)
+vllm>=0.6.0
+
+# Model loading + dataset I/O
 transformers>=4.57.0
-datasets
-pillow
-scikit-image
-numpy
-scipy
-tqdm
-rich
-pyyaml
-pytest
-pytest-mock
+datasets>=2.18.0
+pillow>=10.0.0
+scikit-image>=0.23.0
+numpy>=1.26.0,<2.0
+scipy>=1.11.0
+
+# Utilities
+tqdm>=4.66.0
+rich>=13.0.0
+pyyaml>=6.0
+
+# Test suite
+pytest>=8.0
+pytest-mock>=3.12
