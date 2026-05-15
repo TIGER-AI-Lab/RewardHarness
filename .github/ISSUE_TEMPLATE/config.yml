@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Paper
+    url: https://arxiv.org/abs/2605.08703
+    about: Read the paper before filing a question about results or methodology.
+  - name: Troubleshooting guide
+    url: https://github.com/TIGER-AI-Lab/RewardHarness/blob/main/TROUBLESHOOTING.md
+    about: Common install / auth / vLLM / dataset pitfalls and their fixes.
+  - name: Walkthrough
+    url: https://github.com/TIGER-AI-Lab/RewardHarness/blob/main/WALKTHROUGH.md
+    about: 9-step clone-to-first-judgment for new users.
