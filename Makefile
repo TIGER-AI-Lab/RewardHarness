@@ -1,10 +1,11 @@
-.PHONY: help install test demo evolve benchmark reproduce clean
+.PHONY: help install check test demo evolve benchmark reproduce clean
 
 # Default target: show available commands
 help:
 	@echo "RewardHarness — common targets"
 	@echo ""
-	@echo "  make install     Install Python dependencies"
+	@echo "  make install     Install Python dependencies (core only)"
+	@echo "  make check       Preflight: verify env vars, credentials, endpoints"
 	@echo "  make test        Run the test suite (no GPU / no network)"
 	@echo "  make demo        Run a 1-iteration evolution smoke test"
 	@echo "  make evolve      Full evolution run (configs/default.yaml)"
@@ -17,6 +18,9 @@ help:
 
 install:
 	pip install -r requirements.txt
+
+check:
+	python scripts/check_env.py
 
 test:
 	python -m pytest tests/ -v

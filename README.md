@@ -99,6 +99,9 @@ The Sub-Agent expects one or more vLLM endpoints serving `Qwen2.5-VL-7B-Instruct
 ## Quickstart
 
 ```bash
+# Preflight: verify env vars, credentials, and endpoint reachability
+make check         # or: python scripts/check_env.py
+
 # Run all tests (~2 s, no GPU / no network needed)
 python -m pytest tests/ -v
 

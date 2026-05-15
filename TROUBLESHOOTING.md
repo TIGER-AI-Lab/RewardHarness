@@ -1,5 +1,15 @@
 # Troubleshooting
 
+**Run the preflight first:**
+
+```bash
+make check    # or: python scripts/check_env.py
+```
+
+It will tell you exactly which of the items below is failing on your machine. If everything's green and you still hit an issue, the rest of this doc covers the long-tail fixes.
+
+---
+
 Common pitfalls and their fixes, ordered by where they tend to hit in a fresh setup. If your issue isn't listed, please open an [issue](https://github.com/TIGER-AI-Lab/RewardHarness/issues) with the failing command, the stack trace, and your Python / CUDA / `vllm` versions.
 
 ---
