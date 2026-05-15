@@ -181,6 +181,10 @@ RewardHarness/
 └── requirements.txt      # Python dependencies
 ```
 
+## Walkthrough
+
+New here? [`WALKTHROUGH.md`](WALKTHROUGH.md) is the numbered checklist from `git clone` to your first preference judgment (~15 min for CPU-only inspection, ~30 min plus serving time for a full demo).
+
 ## Troubleshooting
 
 Hit a wall? See [`TROUBLESHOOTING.md`](TROUBLESHOOTING.md) for fixes to common install / auth / vLLM / dataset pitfalls.
