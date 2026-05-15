@@ -189,6 +189,10 @@ New here? [`WALKTHROUGH.md`](WALKTHROUGH.md) is the numbered checklist from `git
 
 Hit a wall? See [`TROUBLESHOOTING.md`](TROUBLESHOOTING.md) for fixes to common install / auth / vLLM / dataset pitfalls.
 
+## Contributing
+
+PRs welcome &mdash; see [`CONTRIBUTING.md`](CONTRIBUTING.md) for the short list of rules (open an issue first for non-trivial changes, run `make check && make test`, no `Co-Authored-By` trailers).
+
 ## Citation
 
 ```bibtex
