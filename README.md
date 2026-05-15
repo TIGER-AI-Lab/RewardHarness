@@ -1,6 +1,7 @@
 # RewardHarness
 
 [![arXiv](https://img.shields.io/badge/arXiv-2605.08703-b31b1b.svg)](https://arxiv.org/abs/2605.08703)
+[![HF Paper](https://img.shields.io/badge/🤗_Paper-2605.08703-yellow.svg)](https://huggingface.co/papers/2605.08703)
 [![Project Page](https://img.shields.io/badge/Project-rewardharness.com-6D7CFF.svg)](https://rewardharness.com)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/downloads/)
@@ -11,8 +12,16 @@ Code release for [*RewardHarness: Self-Evolving Agentic Post-Training*](https://
 
 ## Updates
 
+- **2026-05-15** — Paper featured on [Hugging Face Daily Papers](https://huggingface.co/papers/2605.08703).
 - **2026-05-14** — Initial open-source release at [`TIGER-AI-Lab/RewardHarness`](https://github.com/TIGER-AI-Lab/RewardHarness).
 - **2026-05-09** — Paper on arXiv: [2605.08703](https://arxiv.org/abs/2605.08703).
+
+## Datasets
+
+| Dataset | Use | Hub |
+|---|---|---|
+| `AgPerry/EditReward-Data-100` | 100 preference demos for evolution (train+val split) | [🤗 Hub](https://huggingface.co/datasets/AgPerry/EditReward-Data-100) |
+| `TIGER-Lab/EditReward-Bench` | K=2/3/4 ranking benchmark (gated) | [🤗 Hub](https://huggingface.co/datasets/TIGER-Lab/EditReward-Bench) |
 
 RewardHarness reframes reward modeling as **context evolution** rather than weight optimization. From as few as ~100 preference demonstrations, an Orchestrator (Gemini) iteratively evolves a library of *Skills* (declarative scoring rubrics) and *Tools* (procedural in-context specs) that a frozen Sub-Agent (Qwen2.5-VL-7B via vLLM) consults at inference time. With 0.05% of the EditReward training data, RewardHarness reaches **47.4%** average accuracy on EditReward-Bench + GenAI-Bench, surpassing GPT-5 by 5.3 points.
 
@@ -149,7 +158,7 @@ gemini:                                # Orchestrator
   model: gemini-3.1-pro-preview        # 3.1 only — do NOT downgrade to 2.5
 
 evolution:
-  train_dataset: AgPerry/EditReward-Data-100   # 100 preference demos
+  train_dataset: AgPerry/EditReward-Data-100   # 100 preference demos — https://huggingface.co/datasets/AgPerry/EditReward-Data-100
   train_n: 60                          # train split size
   val_n: 40                            # val split size (gating)
   max_iterations: 5                    # iterations per run
@@ -160,7 +169,7 @@ evolution:
   seed: 42
 
 benchmark:
-  dataset: TIGER-Lab/EditReward-Bench
+  dataset: TIGER-Lab/EditReward-Bench    # https://huggingface.co/datasets/TIGER-Lab/EditReward-Bench
   max_workers: 128                     # parallel scoring threads
 ```
 
