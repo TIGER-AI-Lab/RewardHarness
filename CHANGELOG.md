@@ -1,0 +1,26 @@
+# Changelog
+
+All notable changes to RewardHarness are recorded here. Versions follow [SemVer](https://semver.org/). Dates are in ISO 8601 (UTC).
+
+## [0.1.0] — 2026-05-15
+
+Initial open-source release. Paper: [arXiv 2605.08703](https://arxiv.org/abs/2605.08703). Project page: [rewardharness.com](https://rewardharness.com).
+
+### Added
+
+- **Core framework** (`src/`): Orchestrator (Router + ChainAnalyzer + Evolver), frozen Sub-Agent reasoning loop, versioned Skills/Tools Library with snapshot/restore, Phase A/B/C self-evolution pipeline with gated rollback.
+- **Reproduction scripts** (`scripts/`): `run_evolution.py`, `run_benchmark.py`, `reproduce.sh` (7-step end-to-end), multi-GPU vLLM launchers (`serve_vllm_multi.sh`, `sbatch_vllm.sh`), `check_env.py` preflight, `setup_env.sh`, `download_data.sh`.
+- **Baseline benchmarks** (`vanilla/`): direct VLM scoring on EditReward-Bench / GenAI-Bench / ImagenHub with Claude- and Gemini-backed variants.
+- **Test suite** (`tests/`, 100 tests, ~2 s): fully mocked Library / Router / SubAgent / Evolver / Pipeline / Evaluator tests with no GPU / network / API dependencies.
+- **Examples** (`examples/`): `inspect_library.py` (Library data-model tour) and `show_reasoning_format.py` (annotated `<think>/<tool>/<obs>/<answer>` trace).
+- **Build + packaging**: `Makefile` (install / check / test / demo / evolve / benchmark / reproduce / clean), `pyproject.toml` (editable install), split `requirements.txt` / `requirements-vllm.txt` so CPU-only workflows skip the heavy CUDA dependency, `.env.example`.
+- **Docs**: `README.md` with mermaid architecture diagram, Hardware-requirements table, full `default.yaml` reference, CI/coverage-style badges; `WALKTHROUGH.md` (9-step clone-to-first-judgment); `TROUBLESHOOTING.md`; per-folder READMEs for `tests/`, `examples/`, `vanilla/`, `score-guidelines/`; `CITATION.cff` so GitHub renders a "Cite this repository" widget.
+- **License**: Apache-2.0.
+
+### Performance (paper headline)
+
+- **47.4%** average accuracy on EditReward-Bench + GenAI-Bench using the Gemini-2.0-Flash Sub-Agent (best K=2: 66.2 / K=3: 45.3 / GenAI: 64.4); **45.7%** with Qwen2.5-VL-7B (best K=3: 46.7 / GenAI: 67.5).
+- Surpasses GPT-5 (42.1) by **+5.3** points using only **100 preference demonstrations** (0.05% of the EditReward training data).
+- As a reward signal for GRPO fine-tuning of FLUX.2-klein-base-4B, raises ImgEdit-Bench from 3.32 → **3.52**, matching the much larger Flux.1 Kontext [dev].
+
+[0.1.0]: https://github.com/TIGER-AI-Lab/RewardHarness/releases/tag/v0.1.0
