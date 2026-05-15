@@ -36,13 +36,37 @@ else
     echo "  vLLM not importable (OK if running on login node; needed on compute nodes)"
 fi
 
-# 4. Check Claude proxy availability
+# 4. Check Gemini / Vertex AI environment
 echo ""
-echo "Checking Claude CLIProxyAPI at localhost:8317..."
-if curl -sf http://127.0.0.1:8317/v1/models > /dev/null 2>&1; then
-    echo "  Claude proxy: AVAILABLE"
+echo "[4/5] Checking Gemini / Vertex AI env..."
+for var in GOOGLE_APPLICATION_CREDENTIALS GEMINI_PROJECT; do
+    if [ -z "${!var:-}" ]; then
+        echo "  $var: NOT SET (required — see .env.example)"
+    else
+        echo "  $var: set"
+    fi
+done
+
+# 5. Check at least one vLLM endpoint from configs/endpoints.txt
+echo ""
+echo "[5/5] Checking vLLM endpoints..."
+EP_FILE="$PROJECT_ROOT/configs/endpoints.txt"
+if [ -f "$EP_FILE" ]; then
+    ANY_OK=0
+    while IFS= read -r url; do
+        [[ -z "$url" || "$url" =~ ^# ]] && continue
+        if curl -sf --max-time 3 "$url/models" > /dev/null 2>&1; then
+            echo "  $url: REACHABLE"
+            ANY_OK=1
+        else
+            echo "  $url: not reachable"
+        fi
+    done < "$EP_FILE"
+    if [ "$ANY_OK" = "0" ]; then
+        echo "  (no endpoint reachable yet — bring one up with scripts/serve_vllm_multi.sh)"
+    fi
 else
-    echo "  Claude proxy: NOT REACHABLE (ensure CLIProxyAPI is running before pipeline)"
+    echo "  $EP_FILE not found"
 fi
 
 echo ""
