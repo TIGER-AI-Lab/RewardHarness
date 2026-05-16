@@ -1,4 +1,10 @@
 #!/bin/bash
+# start_vllm_remote.sh — Boot a single vLLM endpoint on an assigned GPU.
+# Intended to be invoked over SSH against a remote node (or by a Slurm task)
+# with $PORT, $GPU_MEM, and $GPU_ID set. Pins the Slurm + CUDA paths so the
+# python venv resolves its native deps correctly even when called from a
+# non-login shell.
+
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/cm/shared/apps/slurm/current/bin"
 export CPATH="/cm/shared/apps/slurm/current/include"
 export LIBRARY_PATH="/cm/shared/apps/slurm/current/lib64/slurm:/cm/shared/apps/slurm/current/lib64"
