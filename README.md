@@ -38,6 +38,7 @@ Read [`WALKTHROUGH.md`](WALKTHROUGH.md) for the 9-step path from `git clone` to 
 
 ## Updates
 
+- **2026-05-16** — Code mirrored at [`KlingAIResearch/RewardHarness`](https://github.com/KlingAIResearch/RewardHarness); both repos kept in sync.
 - **2026-05-15** — Paper featured on [Hugging Face Daily Papers](https://huggingface.co/papers/2605.08703).
 - **2026-05-14** — Initial open-source release at [`TIGER-AI-Lab/RewardHarness`](https://github.com/TIGER-AI-Lab/RewardHarness).
 - **2026-05-09** — Paper on arXiv: [2605.08703](https://arxiv.org/abs/2605.08703).
@@ -111,7 +112,9 @@ At **inference**, the Router selects relevant entries from the Library and the f
 ## Install
 
 ```bash
+# clone from either canonical home — they are kept in sync
 git clone https://github.com/TIGER-AI-Lab/RewardHarness.git
+#   or:  git clone https://github.com/KlingAIResearch/RewardHarness.git
 cd RewardHarness
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
