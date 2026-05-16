@@ -1,0 +1,51 @@
+# DROP-IN CI WORKFLOW — move to .github/workflows/ci.yml to activate
+#
+# This file is parked here because the maintainer's gh OAuth token lacks
+# the `workflow` scope to push to .github/workflows/. To activate:
+#
+#   gh auth refresh -h github.com -s workflow
+#   mkdir -p .github/workflows
+#   mv .github/workflows-pending/ci.yml .github/workflows/ci.yml
+#   git add .github/workflows/ci.yml && git commit -m "ci: activate workflow" && git push
+#
+# Verified locally: 100 tests pass in <2s on Python 3.14 + core requirements
+# alone. Should be green on every matrix entry below.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Test on Python ${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install core dependencies (no vLLM)
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run test suite
+        run: python -m pytest tests/ -v --tb=short
+
+      - name: Smoke-test examples/inspect_library.py
+        run: python examples/inspect_library.py
