@@ -52,6 +52,18 @@ You'll need:
 - A **GCP project ID** with Vertex AI enabled (`GEMINI_PROJECT`)
 - (Optional) a **Hugging Face token** (`HF_TOKEN`) for downloading the gated `TIGER-Lab/EditReward-Bench` dataset.
 
+### Getting a Vertex AI service-account key (first time only)
+
+If you don't already have one, here's the 5-minute path:
+
+1. **Pick or create a GCP project** at <https://console.cloud.google.com/projectcreate>. Note the **Project ID** (not the friendly name) &mdash; e.g., `my-rh-project-12345`. Set `GEMINI_PROJECT` to this value.
+2. **Enable the Vertex AI API**: <https://console.cloud.google.com/apis/library/aiplatform.googleapis.com> &rarr; pick your project &rarr; **Enable**.
+3. **Create a service account**: <https://console.cloud.google.com/iam-admin/serviceaccounts> &rarr; **Create Service Account**. Give it any name (e.g., `rewardharness`). Grant it the **`Vertex AI User`** role (`roles/aiplatform.user`).
+4. **Generate a JSON key**: click the service account &rarr; **Keys** &rarr; **Add Key** &rarr; **Create new key** &rarr; **JSON**. A `.json` file downloads. Move it somewhere safe &mdash; e.g., `~/.config/gcloud/rewardharness.json`.
+5. **Point `GOOGLE_APPLICATION_CREDENTIALS` at that path** in your `.env`.
+
+Confirm with `make check` (step 5 below) &mdash; it parses the JSON and reports the service-account email if things look right.
+
 ## 5. Preflight
 
 ```bash
