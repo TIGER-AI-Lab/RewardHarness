@@ -10,6 +10,23 @@
 
 Code release for [*RewardHarness: Self-Evolving Agentic Post-Training*](https://arxiv.org/abs/2605.08703) (arXiv 2605.08703). Project page: [rewardharness.com](https://rewardharness.com).
 
+## Contents
+
+[What you can do](#what-you-can-do-with-this-code) &middot;
+[Architecture](#architecture) &middot;
+[Hardware](#hardware-requirements) &middot;
+[Install](#install) &middot;
+[Quickstart](#quickstart) &middot;
+[Reproduce paper](#reproduce-paper-results) &middot;
+[Config](#key-config-configsdefaultyaml) &middot;
+[Swap Sub-Agent](#swapping-in-a-different-vlm-as-sub-agent) &middot;
+[Walkthrough](#walkthrough) &middot;
+[Output artifacts](#output-artifacts) &middot;
+[Troubleshooting](#troubleshooting) &middot;
+[Contributing](#contributing) &middot;
+[Security](#security) &middot;
+[Citation](#citation)
+
 ## What you can do with this code
 
 - **Score image edits** &mdash; use the evolved Library + frozen Sub-Agent to produce a 1&ndash;4 preference judgment between two edited candidates of the same source image and instruction.
