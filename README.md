@@ -182,6 +182,18 @@ benchmark:
   max_workers: 128                     # parallel scoring threads
 ```
 
+## Swapping in a different VLM as Sub-Agent
+
+The paper demonstrates two Sub-Agents (Qwen2.5-VL-7B and Gemini-2.0-Flash). The framework is pluggable along two axes:
+
+**1. Any OpenAI-compatible VLM** (e.g., other vLLM-served models, llama.cpp, ollama in OpenAI mode).
+Edit `configs/endpoints.txt` to point at your server(s) and change the model id in `src/sub_agent.py:89` from `"Qwen2.5-VL-7B-Instruct"` to whatever your endpoint reports under `/v1/models`. No other code changes needed &mdash; the Router, ChainAnalyzer, Library, and Evolver are model-agnostic.
+
+**2. A non-OpenAI-compatible VLM** (e.g., Gemini-2.0-Flash directly via Vertex AI).
+Subclass `SubAgent` and override `_call_vllm()` (in `src/sub_agent.py`) to use your backend. The method takes `messages` in OpenAI chat format and must return the assistant's text reply. Everything else (reasoning-chain parsing, tool dispatch, library lookups) stays the same.
+
+The paper's Gemini-2.0-Flash variant uses path (2). For evaluation-only / benchmark workflows where vLLM is the only heavy dependency, path (2) lets you skip `requirements-vllm.txt` entirely.
+
 ## Repository layout
 
 ```
