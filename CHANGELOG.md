@@ -2,6 +2,33 @@
 
 All notable changes to RewardHarness are recorded here. Versions follow [SemVer](https://semver.org/). Dates are in ISO 8601 (UTC).
 
+## [Unreleased]
+
+Post-v0.1.2 polish, slated for v0.1.3:
+
+### Added
+
+- `scripts/check_links.sh` &mdash; audits every markdown link in the docs (relative paths always; external URLs with `--external`).
+- `WALKTHROUGH.md` &mdash; 5-step Vertex AI service-account setup guide with direct GCP console deep-links.
+- README release badge auto-updates from the latest GitHub tag.
+- Per-author `affiliation` entries in the JSON-LD `ScholarlyArticle` block (21 author&ndash;org links).
+
+### Changed
+
+- `CLAUDE.md` rewritten with an explicit "for AI coding agents" preamble; dropped the internal-only `a-tool/edit-reward/` reference; tightened the no-coauthor rule to also forbid AI-attribution footers.
+- README "Repository layout": `data/` row clarified (HuggingFace caches into `~/.cache/huggingface/`, not the repo's `data/` dir).
+- Footer on the website lists both code mirrors (TIGER-AI-Lab / KlingAIResearch).
+
+### Removed
+
+- `vanilla/bench_wanqing.py` and hardcoded credentials from `vanilla/gemini_bench_*.py` (already shipped in v0.1.1's security patch; carrying the note here for completeness).
+- Stale `data/checksums.txt` placeholder that no script ever populated.
+
+### Fixed
+
+- `scripts/run_evolution.py` now has the executable bit set, matching its siblings.
+- `scripts/start_vllm_remote.sh` gained a header docstring explaining the SSH/Slurm invocation pattern.
+
 ## [0.1.2] — 2026-05-16
 
 ### Added
