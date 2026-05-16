@@ -1,0 +1,17 @@
+{
+  "realism-and-artifact-penalties": {
+    "type": "skill",
+    "description": "Guidance on penalizing artifacts while allowing conceptual unrealism if requested by the prompt.",
+    "path": "skills/realism-and-artifact-penalties/SKILL.md"
+  },
+  "instruction-following-completeness": {
+    "type": "skill",
+    "description": "Score completeness of instruction execution. Partial edits get partial credit; missed sub-steps cost points.",
+    "path": "skills/instruction-following-completeness/SKILL.md"
+  },
+  "text-and-ocr-analyzer": {
+    "type": "tool",
+    "description": "Extracts and analyzes text within images to verify spelling, placement, and clarity.",
+    "path": "tools/text-and-ocr-analyzer/SKILL.md"
+  }
+}
