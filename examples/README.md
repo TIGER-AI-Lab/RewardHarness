@@ -6,6 +6,7 @@ Standalone scripts that you can run **without GPUs, vLLM, or API keys** to under
 |---|---|
 | [`inspect_library.py`](inspect_library.py) | Five-minute tour of the Library data model: adding a Skill, adding a Tool, printing the registry, and round-tripping through disk. Requires `openai` + `pyyaml`. |
 | [`show_reasoning_format.py`](show_reasoning_format.py) | Prints a representative `<think>/<tool>/<obs>/<answer>` chain so you know what to expect when running the real Sub-Agent. Pure stdlib. |
+| [`score_pair.py`](score_pair.py) | End-to-end **real-models** demo: score a single edit pair through Library → Router → SubAgent. Needs Gemini + a vLLM endpoint (see .env.example). |
 | [`seed_library/`](seed_library/) | Hand-curated starter Library (2 Skills + 1 Tool) so `scripts/run_benchmark.py --library-dir examples/seed_library` works immediately, without doing a 4–6 hour evolution first. |
 | [`sample_evolution_log.json`](sample_evolution_log.json) | Illustrative 5-iteration evolution log so you can see the exact shape `results/<run>/evolution_log.json` will have (including `keep` / `rollback` actions and skill/tool counts). |
 | [`sample_benchmark_results.json`](sample_benchmark_results.json) | Illustrative `benchmark_results.json` matching the paper's Qwen numbers on EditReward-Bench + GenAI-Bench. |
