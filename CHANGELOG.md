@@ -2,6 +2,26 @@
 
 All notable changes to RewardHarness are recorded here. Versions follow [SemVer](https://semver.org/). Dates are in ISO 8601 (UTC).
 
+## [0.1.2] — 2026-05-16
+
+### Added
+
+- `examples/score_pair.py` &mdash; smallest-possible end-to-end script: Library + Router (Gemini) + SubAgent (vLLM) → 1&ndash;4 preference judgment for a single edit pair.
+- `examples/sample_evolution_log.json` and `examples/sample_benchmark_results.json` &mdash; illustrative output files matching the paper's headline numbers; cross-linked from `OUTPUTS.md` so users can `jq`/diff their own runs.
+- `.github/dependabot.yml` &mdash; weekly pip + monthly GitHub Actions security tracking.
+- `MANIFEST.in` &mdash; ships `score-guidelines/*.md`, `examples/seed_library/`, and `configs/` in the sdist; closes a packaging hole where wheel installs were missing the runtime templates.
+- `REWARDHARNESS_TEMPLATES_DIR` env-var escape hatch in `src/sub_agent.py` for unusual install layouts.
+- `.editorconfig` for consistent contributor style.
+
+### Changed
+
+- README: new "Swapping in a different VLM as Sub-Agent" section explaining the two pluggability axes (OpenAI-compatible vs subclass); "What you can do with this code" 4-bullet hook near the top; Hardware-requirements table now lists per-workflow credentials.
+- Website: new **Reasoning Trace** section showing a real `<think>/<tool>/<obs>/<answer>` chain; **"Why it works"** callout in Method section articulating the context-evolution thesis; brand SVG replaces the cross-platform-flaky 🦞 emoji in the title; Tutorial button replaces the dead `#` self-link.
+- `make demo` and `make benchmark` default to `--library-dir examples/seed_library` for non-empty starting state.
+- `make help` is now a credentials matrix showing what each target actually needs.
+
+[0.1.2]: https://github.com/TIGER-AI-Lab/RewardHarness/releases/tag/v0.1.2
+
 ## [0.1.1] — 2026-05-16
 
 ### Security
