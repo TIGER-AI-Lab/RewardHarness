@@ -82,12 +82,14 @@ At **inference**, the Router selects relevant entries from the Library and the f
 
 ## Hardware requirements
 
-| Workflow | Minimum |
-|---|---|
-| Test suite, `examples/inspect_library.py`, library inspection | CPU only, no Internet |
-| Benchmark with a hosted Sub-Agent (Gemini drop-in) | CPU only + Gemini API |
-| Local Qwen2.5-VL-7B Sub-Agent for evolution / full benchmark | **1 × GPU with ≥ 24 GB** (L40S / A100 / H100); 4 GPUs recommended for parallel evaluation |
-| Full paper reproduction (`make reproduce`) | **≥ 4 GPUs**, ~4–6 h wall-clock, ~50 GB free disk |
+| Workflow | Compute | Credentials needed |
+|---|---|---|
+| `make test` / `make check` / `make install` / `examples/inspect_library.py` | CPU only, no Internet | none |
+| Benchmark with a hosted Sub-Agent (Gemini drop-in, see "Swapping Sub-Agent" below) | CPU only + outbound Gemini | Gemini (Vertex AI) |
+| Local Qwen2.5-VL-7B Sub-Agent for `make demo` / `make benchmark` / `make evolve` | **1 × GPU ≥ 24 GB** (L40S / A100 / H100) | Gemini + HF (for gated benchmark dataset) |
+| Full paper reproduction (`make reproduce`) | **≥ 4 GPUs**, ~4–6 h wall-clock, ~50 GB free disk | Gemini + HF |
+
+`make help` lists the same matrix at the command line.
 
 ## Install
 
