@@ -53,20 +53,20 @@ echo "[$(timestamp)] vLLM starting in background (PID: ${VLLM_PIDS[-1]})"
 # Step 4: Wait for all endpoints to be healthy
 echo ""
 echo "[$(timestamp)] Step 4/7: Waiting for endpoints to be ready..."
-MAX_WAIT=300  # 5 minutes
-WAITED=0
+PER_PORT_MAX_WAIT=600  # 10 minutes per port (vLLM cold start can be slow)
 for port in $(seq 8000 8015); do
     echo -n "  Waiting for port $port..."
+    waited=0
     until curl -sf "http://localhost:$port/v1/models" > /dev/null 2>&1; do
         sleep 5
-        WAITED=$((WAITED + 5))
-        if [ "$WAITED" -ge "$MAX_WAIT" ]; then
-            echo " TIMEOUT"
-            echo "ERROR: Endpoint on port $port did not start within ${MAX_WAIT}s"
+        waited=$((waited + 5))
+        if [ "$waited" -ge "$PER_PORT_MAX_WAIT" ]; then
+            echo " TIMEOUT after ${PER_PORT_MAX_WAIT}s"
+            echo "ERROR: Endpoint on port $port did not start. Check vllm logs."
             exit 1
         fi
     done
-    echo " OK"
+    echo " OK (${waited}s)"
 done
 echo "[$(timestamp)] All 16 endpoints ready."
 
