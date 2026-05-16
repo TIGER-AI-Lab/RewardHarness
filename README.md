@@ -227,7 +227,7 @@ RewardHarness/
 ├── configs/              # default.yaml + vLLM endpoints
 ├── vanilla/              # Baseline benchmark scripts (Claude, Gemini, etc.)
 ├── score-guidelines/     # Reference rubrics
-├── data/                 # Dataset checksums (run download_data.sh to populate)
+├── data/                 # Local cache target (datasets actually live in ~/.cache/huggingface)
 ├── Makefile              # `make help` lists install / test / demo / benchmark / reproduce
 ├── CITATION.cff          # GitHub-rendered "Cite this repository" widget
 ├── LICENSE               # Apache 2.0
