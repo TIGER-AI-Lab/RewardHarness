@@ -2,6 +2,31 @@
 
 All notable changes to RewardHarness are recorded here. Versions follow [SemVer](https://semver.org/). Dates are in ISO 8601 (UTC).
 
+## [0.1.1] — 2026-05-16
+
+### Security
+
+- **Removed hardcoded internal API key** that was inadvertently shipped in `vanilla/bench_wanqing.py` and three `vanilla/gemini_bench_*.py` scripts in `v0.1.0`. The file `vanilla/bench_wanqing.py` is deleted; the three remaining scripts now read `GEMINI_GATEWAY_BASE_URL` and `GEMINI_GATEWAY_API_KEY` from the environment. See `SECURITY.md` for full disclosure timeline.
+
+### Added
+
+- `SECURITY.md` &mdash; responsible-disclosure policy and supported-version matrix.
+- Substantial post-release polish across docs and examples:
+  - `WALKTHROUGH.md` (9-step clone-to-first-judgment), `TROUBLESHOOTING.md`, `OUTPUTS.md`, `CONTRIBUTING.md`, `CHANGELOG.md`.
+  - `examples/seed_library/` (2 Skills + 1 Tool starter), `examples/show_reasoning_format.py`, `examples/score_pair.py`, `examples/sample_evolution_log.json`, `examples/sample_benchmark_results.json`.
+  - `scripts/check_env.py` preflight; `make check` target.
+  - `pyproject.toml` for editable install; `.env.example`; `requirements-vllm.txt` split out from the core deps.
+  - GitHub issue templates + repo description/topics; CI workflow file prepared but not yet pushed (waiting on workflow scope).
+
+### Changed
+
+- `make demo` and `make benchmark` now default to `--library-dir examples/seed_library` so first-time users get non-trivial output without doing a 4&ndash;6 h evolution first.
+- `src/__init__.py` exposes `__version__`.
+- README adds a "Swapping in a different VLM as Sub-Agent" guide; Hardware-requirements table now lists credentials needed per workflow.
+- Mermaid architecture diagram in README; per-folder READMEs (`tests/`, `examples/`, `vanilla/`, `score-guidelines/`).
+
+[0.1.1]: https://github.com/TIGER-AI-Lab/RewardHarness/releases/tag/v0.1.1
+
 ## [0.1.0] — 2026-05-15
 
 Initial open-source release. Paper: [arXiv 2605.08703](https://arxiv.org/abs/2605.08703). Project page: [rewardharness.com](https://rewardharness.com).

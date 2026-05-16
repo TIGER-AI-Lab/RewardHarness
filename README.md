@@ -229,6 +229,10 @@ Hit a wall? See [`TROUBLESHOOTING.md`](TROUBLESHOOTING.md) for fixes to common i
 
 PRs welcome &mdash; see [`CONTRIBUTING.md`](CONTRIBUTING.md) for the short list of rules (open an issue first for non-trivial changes, run `make check && make test`, no `Co-Authored-By` trailers).
 
+## Security
+
+Found a credential leak or other security issue? Please email the maintainers privately &mdash; see [`SECURITY.md`](SECURITY.md) for the disclosure policy and supported-version matrix.
+
 ## Citation
 
 ```bibtex
