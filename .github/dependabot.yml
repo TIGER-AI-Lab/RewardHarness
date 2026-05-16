@@ -1,0 +1,39 @@
+version: 2
+
+updates:
+  # Python dependencies (core + vLLM extra)
+  - package-ecosystem: pip
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: "America/Vancouver"
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - security
+    commit-message:
+      prefix: deps
+      include: scope
+    # Group all non-security updates into one PR per week to reduce churn.
+    # Security updates always open as separate PRs immediately.
+    groups:
+      python-deps:
+        applies-to: version-updates
+        update-types:
+          - minor
+          - patch
+
+  # GitHub Actions versions (relevant once .github/workflows/ exists)
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: monthly
+      day: first-monday
+    open-pull-requests-limit: 3
+    labels:
+      - dependencies
+      - ci
+    commit-message:
+      prefix: ci
