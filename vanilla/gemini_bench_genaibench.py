@@ -26,8 +26,8 @@ from datasets import load_dataset
 from openai import OpenAI
 from tqdm import tqdm
 
-BASE_URL = "https://wanqing-api.corp.kuaishou.com/api/gateway/v1/endpoints"
-API_KEY = "lod8673a84mjaxsdllujqkm2zoy02e77rh87"
+BASE_URL = os.environ.get("GEMINI_GATEWAY_BASE_URL", "https://your-gateway.example.com/v1")
+API_KEY = os.environ.get("GEMINI_GATEWAY_API_KEY", "")
 
 # GenAI-Bench official pairwise template for image_edition
 SYSTEM_PROMPT = """Please act as an impartial judge and a professional digital artist to evaluate the quality of the responses provided by two AI image edition models to the user inputs displayed below. You will be given model A's edited image and model B's edited image. Your job is to evaluate which assistant's edited image is better.
@@ -178,9 +178,9 @@ def main():
 
     # Verify proxy
     client = OpenAI(base_url=BASE_URL, api_key=API_KEY)
-    # models = client.models.list()  # skip for wanqing
-    available = [args.model]  # wanqing: skip validation
-    # assert args.model in available  # wanqing: skip, f"{args.model} not in {available}"
+    # models = client.models.list()  # skip for internal gateway
+    available = [args.model]  # internal gateway: skip validation
+    # assert args.model in available  # internal gateway: skip, f"{args.model} not in {available}"
     print(f"Proxy OK. Available models: {available}")
 
     # Load dataset

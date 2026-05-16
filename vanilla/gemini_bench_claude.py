@@ -29,8 +29,8 @@ from datasets import load_dataset
 from openai import OpenAI
 from tqdm import tqdm
 
-BASE_URL = "https://wanqing-api.corp.kuaishou.com/api/gateway/v1/endpoints"
-API_KEY = "lod8673a84mjaxsdllujqkm2zoy02e77rh87"
+BASE_URL = os.environ.get("GEMINI_GATEWAY_BASE_URL", "https://your-gateway.example.com/v1")
+API_KEY = os.environ.get("GEMINI_GATEWAY_API_KEY", "")
 
 SYSTEM_PROMPT = """You are an expert image editing quality evaluator. You will compare two edited images (A and B) produced from the same source image following an editing instruction.
 
@@ -222,9 +222,9 @@ def main():
 
     # Verify proxy
     client = OpenAI(base_url=BASE_URL, api_key=API_KEY)
-    # models = client.models.list()  # skip for wanqing
-    available = [args.model]  # wanqing: skip validation
-    # assert args.model in available  # wanqing: skip, f"{args.model} not in {available}"
+    # models = client.models.list()  # skip for internal gateway
+    available = [args.model]  # internal gateway: skip validation
+    # assert args.model in available  # internal gateway: skip, f"{args.model} not in {available}"
     print(f"Proxy OK. Available models: {available}")
 
     # Load dataset
