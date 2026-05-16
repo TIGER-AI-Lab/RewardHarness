@@ -3,6 +3,7 @@
 [![arXiv](https://img.shields.io/badge/arXiv-2605.08703-b31b1b.svg)](https://arxiv.org/abs/2605.08703)
 [![HF Paper](https://img.shields.io/badge/🤗_Paper-2605.08703-yellow.svg)](https://huggingface.co/papers/2605.08703)
 [![Project Page](https://img.shields.io/badge/Project-rewardharness.com-6D7CFF.svg)](https://rewardharness.com)
+[![Release](https://img.shields.io/github/v/release/TIGER-AI-Lab/RewardHarness?label=release&color=6D7CFF)](https://github.com/TIGER-AI-Lab/RewardHarness/releases/latest)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/downloads/)
 
