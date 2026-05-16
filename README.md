@@ -10,6 +10,15 @@
 
 Code release for [*RewardHarness: Self-Evolving Agentic Post-Training*](https://arxiv.org/abs/2605.08703) (arXiv 2605.08703). Project page: [rewardharness.com](https://rewardharness.com).
 
+## What you can do with this code
+
+- **Score image edits** &mdash; use the evolved Library + frozen Sub-Agent to produce a 1&ndash;4 preference judgment between two edited candidates of the same source image and instruction.
+- **Reproduce paper numbers** &mdash; one command (`make reproduce`) runs the full pipeline (env setup → vLLM serve → 5-iter evolution → benchmark) and prints the K=2/3/4 + GenAI-Bench accuracies in `results/`.
+- **Evolve your own library** &mdash; point `scripts/run_evolution.py` at any preference dataset of <a href="OUTPUTS.md#after-make-demo--make-evolve--scriptsrun_evolutionpy">the same shape</a> (~100 examples is enough) to grow a Skills + Tools library for *your* evaluation criteria. No reward-model training required.
+- **Drop in as a GRPO reward signal** &mdash; the evolved Library outputs a scalar score that's directly compatible with the EditReward GRPO normalization (see paper §3.2).
+
+Read [`WALKTHROUGH.md`](WALKTHROUGH.md) for the 9-step path from `git clone` to your first preference judgment.
+
 ## Updates
 
 - **2026-05-15** — Paper featured on [Hugging Face Daily Papers](https://huggingface.co/papers/2605.08703).
