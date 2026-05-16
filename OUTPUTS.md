@@ -24,6 +24,8 @@ results/<run>/
 
 ### `evolution_log.json`
 
+See [`examples/sample_evolution_log.json`](examples/sample_evolution_log.json) for a full 5-iteration sample you can `jq`/diff against your own runs.
+
 A JSON array. One entry per iteration. Schema:
 
 ```jsonc
@@ -88,6 +90,8 @@ results/
 ```
 
 ### `benchmark_results.json`
+
+See [`examples/sample_benchmark_results.json`](examples/sample_benchmark_results.json) for a full sample matching the paper's Qwen numbers.
 
 ```jsonc
 {

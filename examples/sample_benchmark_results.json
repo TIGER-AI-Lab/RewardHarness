@@ -1,0 +1,27 @@
+{
+  "_about": "Illustrative sample matching the paper's headline numbers for RewardHarness (Qwen) on EditReward-Bench + GenAI-Bench. Real numbers from your own runs will vary by run, model version, and library state.",
+  "_library_dir": "results/my_run/checkpoints/best",
+  "_sub_agent": "Qwen2.5-VL-7B-Instruct (via vLLM)",
+  "_orchestrator": "gemini-3.1-pro-preview",
+  "k2": {
+    "accuracy": 0.579,
+    "n_total": 700,
+    "n_correct": 405
+  },
+  "k3": {
+    "accuracy": 0.467,
+    "n_total": 350,
+    "n_correct": 163
+  },
+  "k4": {
+    "accuracy": 0.108,
+    "n_total": 175,
+    "n_correct": 19
+  },
+  "genai_bench": {
+    "accuracy": 0.675,
+    "n_total": 600,
+    "n_correct": 405
+  },
+  "average": 0.457
+}
