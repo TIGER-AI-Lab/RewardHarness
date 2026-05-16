@@ -194,6 +194,10 @@ RewardHarness/
 
 New here? [`WALKTHROUGH.md`](WALKTHROUGH.md) is the numbered checklist from `git clone` to your first preference judgment (~15 min for CPU-only inspection, ~30 min plus serving time for a full demo).
 
+## Output artifacts
+
+What's in `results/<run>/` after a run, the full `evolution_log.json` and `benchmark_results.json` schemas, and which checkpoint to feed back to `--library-dir` &mdash; all in [`OUTPUTS.md`](OUTPUTS.md).
+
 ## Troubleshooting
 
 Hit a wall? See [`TROUBLESHOOTING.md`](TROUBLESHOOTING.md) for fixes to common install / auth / vLLM / dataset pitfalls.
