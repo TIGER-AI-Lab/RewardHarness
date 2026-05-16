@@ -15,8 +15,15 @@ from openai import OpenAI
 
 logger = logging.getLogger(__name__)
 
+# SCORE_TEMPLATES_DIR resolves relative to src/, so it works in a source
+# checkout (where score-guidelines/ sits at the repo root, two levels up).
+# For wheel/sdist installs we include score-guidelines via MANIFEST.in;
+# users can override the path with the REWARDHARNESS_TEMPLATES_DIR env var.
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SCORE_TEMPLATES_DIR = os.path.join(PROJECT_ROOT, "score-guidelines")
+SCORE_TEMPLATES_DIR = os.environ.get(
+    "REWARDHARNESS_TEMPLATES_DIR",
+    os.path.join(PROJECT_ROOT, "score-guidelines"),
+)
 MAX_TOOL_CALLS = 5
 
 BASE_INSTRUCTIONS_NO_TOOLS = """You are an expert image editing quality evaluator comparing two edited images (A and B) against a source image.

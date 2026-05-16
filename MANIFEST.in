@@ -1,0 +1,5 @@
+include README.md LICENSE CITATION.cff CHANGELOG.md
+include requirements.txt requirements-vllm.txt
+include configs/*.yaml configs/*.txt
+recursive-include score-guidelines *.md
+recursive-include examples/seed_library *.json *.md
