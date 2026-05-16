@@ -7,9 +7,9 @@ help:
 	@echo "  make install     Install Python dependencies (core only)"
 	@echo "  make check       Preflight: verify env vars, credentials, endpoints"
 	@echo "  make test        Run the test suite (no GPU / no network)"
-	@echo "  make demo        Run a 1-iteration evolution smoke test"
-	@echo "  make evolve      Full evolution run (configs/default.yaml)"
-	@echo "  make benchmark   K=2/3/4 accuracy on EditReward-Bench (read-only)"
+	@echo "  make demo        1-iter smoke test from the seed library (examples/seed_library)"
+	@echo "  make evolve      Full evolution run (configs/default.yaml, starts from empty library)"
+	@echo "  make benchmark   K=2/3/4 accuracy on EditReward-Bench, scoring with seed_library (read-only)"
 	@echo "  make reproduce   End-to-end paper reproduction (≥ 4 GPUs, ~4-6 h)"
 	@echo "  make clean       Remove caches and generated artifacts"
 	@echo ""
@@ -28,6 +28,7 @@ test:
 demo:
 	python scripts/run_evolution.py \
 	  --config configs/default.yaml \
+	  --library-dir examples/seed_library \
 	  --results-dir results/demo/ \
 	  --max-iters 1
 
@@ -38,7 +39,9 @@ evolve:
 	  --max-iters 200
 
 benchmark:
-	python scripts/run_benchmark.py --config configs/default.yaml
+	python scripts/run_benchmark.py \
+	  --config configs/default.yaml \
+	  --library-dir examples/seed_library
 
 reproduce:
 	bash scripts/reproduce.sh
