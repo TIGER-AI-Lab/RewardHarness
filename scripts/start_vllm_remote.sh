@@ -4,11 +4,23 @@
 # with $PORT, $GPU_MEM, and $GPU_ID set. Pins the Slurm + CUDA paths so the
 # python venv resolves its native deps correctly even when called from a
 # non-login shell.
+#
+# The default paths below match a Bright Cluster Manager install (the
+# `/cm/...` layout). On a different cluster, override via:
+#
+#     SLURM_PREFIX=/opt/slurm \
+#     CUDA_LIBS=/usr/local/cuda/lib64 \
+#     bash scripts/start_vllm_remote.sh <PORT> <GPU_MEM> <GPU_ID>
+#
+# or set them once at the top of your sbatch wrapper.
 
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/cm/shared/apps/slurm/current/bin"
-export CPATH="/cm/shared/apps/slurm/current/include"
-export LIBRARY_PATH="/cm/shared/apps/slurm/current/lib64/slurm:/cm/shared/apps/slurm/current/lib64"
-export LD_LIBRARY_PATH="/cm/local/apps/cuda/libs/current/lib64:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu"
+SLURM_PREFIX="${SLURM_PREFIX:-/cm/shared/apps/slurm/current}"
+CUDA_LIBS="${CUDA_LIBS:-/cm/local/apps/cuda/libs/current/lib64}"
+
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:${SLURM_PREFIX}/bin"
+export CPATH="${SLURM_PREFIX}/include"
+export LIBRARY_PATH="${SLURM_PREFIX}/lib64/slurm:${SLURM_PREFIX}/lib64"
+export LD_LIBRARY_PATH="${CUDA_LIBS}:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu"
 unset BASH_ENV
 
 PORT=$1
