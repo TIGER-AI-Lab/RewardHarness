@@ -68,8 +68,9 @@ def main():
     print("-" * 64)
     print(textwrap.dedent("""
         Parsing rules (see src/sub_agent.py):
-          - The Sub-Agent is allowed up to N tool calls per judgment
-            (default: 3), bounded by config.
+          - The Sub-Agent is allowed up to MAX_TOOL_CALLS tool dispatches
+            per judgment (constant in src/sub_agent.py, currently 5). After
+            that, one final turn is allowed for the <answer> only.
           - If no <answer> is emitted, FALLBACK_ANSWER is used (tie, 2/2/2/2).
           - The "preference" field must be exactly "A", "B", or "tie".
           - All four score fields must be integers in [1, 4].
