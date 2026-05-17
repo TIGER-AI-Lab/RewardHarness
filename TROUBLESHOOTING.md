@@ -74,11 +74,17 @@ Then verify the endpoint is healthy before evolution:
 
 ```bash
 curl -s http://localhost:8000/v1/models | jq .data[0].id
-# → "Qwen/Qwen2.5-VL-7B-Instruct"
+# → "Qwen2.5-VL-7B-Instruct"
 ```
 
+(That's what `--served-model-name` resolves to in `scripts/serve_vllm_multi.sh`; the HuggingFace path `Qwen/Qwen2.5-VL-7B-Instruct` is the *weights*, not the served identifier.)
+
 **`OutOfMemoryError: CUDA out of memory`**
-Lower `--gpu-memory-utilization` (default 0.9) in `serve_vllm_multi.sh`, or shard the model across more GPUs with `--tensor-parallel-size`.
+Lower `GPU_MEM` (default 0.85, controls `--gpu-memory-utilization`) when launching `serve_vllm_multi.sh`, or shard the model across more GPUs with `--tensor-parallel-size`. Example:
+
+```bash
+GPU_MEM=0.6 bash scripts/serve_vllm_multi.sh
+```
 
 **Endpoints listed in `configs/endpoints.txt` but pipeline says "0 available"**
 The Sub-Agent picks endpoints round-robin and removes any that fail a health check. Re-run the health probe in `scripts/reproduce.sh` step 4 to see which ports are responding.
