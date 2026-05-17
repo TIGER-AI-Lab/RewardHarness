@@ -61,6 +61,8 @@ def main():
                    help="path to evolved Library (default: examples/seed_library)")
     p.add_argument("--endpoints", default="configs/endpoints.txt",
                    help="path to vLLM endpoints file")
+    p.add_argument("--show-chain", action="store_true",
+                   help="also print the full <think>/<tool>/<obs>/<answer> reasoning chain")
     args = p.parse_args()
 
     print(f"==> Library: {args.library_dir}")
@@ -89,7 +91,11 @@ def main():
         indent=2,
     ))
     if "chain" in result:
-        print(f"\n(reasoning chain trace omitted — re-run with `result['chain']` to inspect)")
+        if args.show_chain:
+            print("\n==> Reasoning chain")
+            print(result["chain"])
+        else:
+            print("\n(reasoning chain omitted — re-run with --show-chain to print it)")
 
 
 if __name__ == "__main__":
