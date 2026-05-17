@@ -27,6 +27,7 @@ import os
 import sys
 import urllib.error
 import urllib.request
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 GREEN, RED, YELLOW, RESET = "\033[32m", "\033[31m", "\033[33m", "\033[0m"
@@ -93,6 +94,18 @@ def check_credentials_file() -> bool:
     return True
 
 
+def _probe_one(url: str, timeout: float) -> tuple[str, str]:
+    """Return (url, status_line). status_line is human-readable; '' on success."""
+    try:
+        req = urllib.request.Request(f"{url.rstrip('/')}/models")
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            if r.status == 200:
+                return url, ""
+            return url, f"HTTP {r.status}"
+    except (urllib.error.URLError, TimeoutError, OSError) as e:
+        return url, f"{type(e).__name__}: {e}"
+
+
 def check_endpoints(endpoints_path: str, timeout: float = 3.0) -> bool:
     p = Path(endpoints_path)
     if not p.is_file():
@@ -106,18 +119,15 @@ def check_endpoints(endpoints_path: str, timeout: float = 3.0) -> bool:
     if not urls:
         print(f"  [{WARN}] no endpoints listed in {endpoints_path}")
         return True
+    # Probe in parallel so 16 unreachable endpoints take ~timeout, not 16*timeout.
     ok_count = 0
-    for url in urls:
-        try:
-            req = urllib.request.Request(f"{url.rstrip('/')}/models")
-            with urllib.request.urlopen(req, timeout=timeout) as r:
-                if r.status == 200:
-                    ok_count += 1
-                    print(f"  [{PASS}] {url}")
-                else:
-                    print(f"  [{WARN}] {url} -> HTTP {r.status}")
-        except (urllib.error.URLError, TimeoutError, OSError) as e:
-            print(f"  [{WARN}] {url} -> {type(e).__name__}: {e}")
+    with ThreadPoolExecutor(max_workers=min(16, len(urls))) as ex:
+        for url, err in ex.map(lambda u: _probe_one(u, timeout), urls):
+            if not err:
+                ok_count += 1
+                print(f"  [{PASS}] {url}")
+            else:
+                print(f"  [{WARN}] {url} -> {err}")
     if ok_count == 0:
         print(f"  [{WARN}] no endpoints reachable — bring one up with scripts/serve_vllm_multi.sh")
     else:
