@@ -2,14 +2,30 @@
 # serve_vllm_multi.sh — Start multiple vLLM endpoints for Qwen2.5-VL-7B-Instruct
 # Default: 4 GPUs × 2 endpoints per GPU = 8 endpoints (ports 8000-8007)
 # L40S (46GB): 0.45 per endpoint × 2 = 90% per GPU
+#
+# The SLURM/CUDA path block below is only needed on clusters whose login-shell
+# init leaks broken paths into LD_LIBRARY_PATH (e.g. Compute Canada + Bright
+# Cluster Manager). The defaults below match the BCM layout (the `/cm/...`
+# tree). On a clean Ubuntu/RHEL box, leave the env unset; on a different
+# cluster, override before invoking:
+#
+#     SLURM_PREFIX=/opt/slurm \
+#     CUDA_LIBS=/usr/local/cuda/lib64 \
+#     bash scripts/serve_vllm_multi.sh
+#
+# Setting RH_SKIP_ENV_PIN=1 disables the block entirely (recommended on
+# vanilla servers).
 set -euo pipefail
 
-# Clean broken /cvmfs paths from environment (Compute Canada module system issue)
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/cm/shared/apps/slurm/current/bin"
-export CPATH="/cm/shared/apps/slurm/current/include"
-export LIBRARY_PATH="/cm/shared/apps/slurm/current/lib64/slurm:/cm/shared/apps/slurm/current/lib64"
-export LD_LIBRARY_PATH="/cm/local/apps/cuda/libs/current/lib64:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu"
-unset BASH_ENV
+if [ -z "${RH_SKIP_ENV_PIN:-}" ]; then
+    SLURM_PREFIX="${SLURM_PREFIX:-/cm/shared/apps/slurm/current}"
+    CUDA_LIBS="${CUDA_LIBS:-/cm/local/apps/cuda/libs/current/lib64}"
+    export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:${SLURM_PREFIX}/bin"
+    export CPATH="${SLURM_PREFIX}/include"
+    export LIBRARY_PATH="${SLURM_PREFIX}/lib64/slurm:${SLURM_PREFIX}/lib64"
+    export LD_LIBRARY_PATH="${CUDA_LIBS}:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu"
+    unset BASH_ENV
+fi
 
 # Model path — update to match your local snapshot
 MODEL="${VLLM_MODEL_PATH:-Qwen/Qwen2.5-VL-7B-Instruct}"
