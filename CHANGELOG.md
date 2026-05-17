@@ -28,6 +28,10 @@ Post-v0.1.2 polish, slated for v0.1.3:
 
 - `scripts/run_evolution.py` now has the executable bit set, matching its siblings.
 - `scripts/start_vllm_remote.sh` gained a header docstring explaining the SSH/Slurm invocation pattern.
+- `scripts/reproduce.sh` step 4 now resets the `waited` counter per vLLM port (was a shared accumulator across all 16 ports, so the last few ports got near-zero timeout budget) and bumps per-port budget to 10 min for cold-start safety.
+- `scripts/setup_env.sh` step labels harmonised &mdash; was `[1/3]`/`[2/3]`/`[3/3]`/`[4/5]`/`[5/5]`, now consistently `[N/5]`.
+- `scripts/serve_vllm_multi.sh` &mdash; Bright Cluster Manager paths (`/cm/...`) are now overridable via `SLURM_PREFIX`, `CUDA_LIBS`, or skippable entirely with `RH_SKIP_ENV_PIN=1`. Previously broke `LD_LIBRARY_PATH` on vanilla Ubuntu/RHEL hosts.
+- `scripts/download_data.sh` &mdash; dropped a dead checksum-generation step that wrote a `data/checksums.txt` no other script ever read. Replaced with a one-liner showing how to compare HuggingFace's built-in `_fingerprint` instead.
 
 ## [0.1.2] — 2026-05-16
 
