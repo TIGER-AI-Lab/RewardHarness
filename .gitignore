@@ -15,6 +15,9 @@ build/
 .mypy_cache/
 .ruff_cache/
 .coverage
+.coverage.*
+htmlcov/
+.migration-coverage.json
 .tox/
 
 # Experiment outputs (large; not in public release)

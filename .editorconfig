@@ -18,6 +18,13 @@ indent_style = tab
 [*.sh]
 indent_size = 2
 
+[*.py]
+max_line_length = 100
+
+[*.tsv]
+indent_style = tab
+trim_trailing_whitespace = false
+
 # Keep test fixtures byte-exact
 [tests/fixtures/**]
 trim_trailing_whitespace = false

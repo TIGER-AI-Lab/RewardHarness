@@ -1,0 +1,1098 @@
+{
+  "schema_version": 1,
+  "baseline_sha": "8b599f2b5addd9d27c9802797a0832760ee688ab",
+  "tracked_files": 168,
+  "entries": [
+    {
+      "old_path": ".editorconfig",
+      "change": "modified",
+      "category": "project",
+      "rationale": "Align project configuration or metadata with v0.2 architecture and quality gates."
+    },
+    {
+      "old_path": ".env.example",
+      "change": "modified",
+      "category": "project",
+      "rationale": "Align project configuration or metadata with v0.2 architecture and quality gates."
+    },
+    {
+      "old_path": ".github/ISSUE_TEMPLATE/bug_report.md",
+      "change": "modified",
+      "category": "documentation",
+      "rationale": "Update v0.2 package, CLI, schema, or resource guidance."
+    },
+    {
+      "old_path": ".github/ISSUE_TEMPLATE/config.yml",
+      "change": "modified",
+      "category": "automation",
+      "rationale": "Update contribution, dependency, CI, or release automation for v0.2."
+    },
+    {
+      "old_path": ".github/ISSUE_TEMPLATE/feature_request.md",
+      "change": "modified",
+      "category": "documentation",
+      "rationale": "Update v0.2 package, CLI, schema, or resource guidance."
+    },
+    {
+      "old_path": ".github/dependabot.yml",
+      "change": "modified",
+      "category": "automation",
+      "rationale": "Update contribution, dependency, CI, or release automation for v0.2."
+    },
+    {
+      "old_path": ".github/workflows/ci.yml",
+      "change": "modified",
+      "category": "automation",
+      "rationale": "Update contribution, dependency, CI, or release automation for v0.2."
+    },
+    {
+      "old_path": ".gitignore",
+      "change": "modified",
+      "category": "project",
+      "rationale": "Align project configuration or metadata with v0.2 architecture and quality gates."
+    },
+    {
+      "old_path": "CHANGELOG.md",
+      "change": "modified",
+      "category": "documentation",
+      "rationale": "Update v0.2 package, CLI, schema, or resource guidance."
+    },
+    {
+      "old_path": "CITATION.cff",
+      "change": "modified",
+      "category": "project",
+      "rationale": "Align project configuration or metadata with v0.2 architecture and quality gates."
+    },
+    {
+      "old_path": "CLAUDE.md",
+      "change": "modified",
+      "category": "documentation",
+      "rationale": "Update v0.2 package, CLI, schema, or resource guidance."
+    },
+    {
+      "old_path": "CONTRIBUTING.md",
+      "change": "modified",
+      "category": "documentation",
+      "rationale": "Update v0.2 package, CLI, schema, or resource guidance."
+    },
+    {
+      "old_path": "LICENSE",
+      "change": "modified",
+      "category": "legal",
+      "rationale": "Add project SPDX and copyright identification without changing Apache terms."
+    },
+    {
+      "old_path": "MANIFEST.in",
+      "change": "modified",
+      "category": "project",
+      "rationale": "Align project configuration or metadata with v0.2 architecture and quality gates."
+    },
+    {
+      "old_path": "Makefile",
+      "change": "modified",
+      "category": "project",
+      "rationale": "Align project configuration or metadata with v0.2 architecture and quality gates."
+    },
+    {
+      "old_path": "OUTPUTS.md",
+      "change": "modified",
+      "category": "documentation",
+      "rationale": "Update v0.2 package, CLI, schema, or resource guidance."
+    },
+    {
+      "old_path": "README.md",
+      "change": "modified",
+      "category": "documentation",
+      "rationale": "Update v0.2 package, CLI, schema, or resource guidance."
+    },
+    {
+      "old_path": "SECURITY.md",
+      "change": "modified",
+      "category": "documentation",
+      "rationale": "Update v0.2 package, CLI, schema, or resource guidance."
+    },
+    {
+      "old_path": "TROUBLESHOOTING.md",
+      "change": "modified",
+      "category": "documentation",
+      "rationale": "Update v0.2 package, CLI, schema, or resource guidance."
+    },
+    {
+      "old_path": "WALKTHROUGH.md",
+      "change": "modified",
+      "category": "documentation",
+      "rationale": "Update v0.2 package, CLI, schema, or resource guidance."
+    },
+    {
+      "old_path": "configs/default.yaml",
+      "change": "modified",
+      "category": "project",
+      "rationale": "Align project configuration or metadata with v0.2 architecture and quality gates."
+    },
+    {
+      "old_path": "configs/endpoints.txt",
+      "change": "modified",
+      "category": "project",
+      "rationale": "Align project configuration or metadata with v0.2 architecture and quality gates."
+    },
+    {
+      "old_path": "data/.gitkeep",
+      "change": "deleted",
+      "category": "workspace",
+      "rationale": "Replace placeholder with documented or packaged content."
+    },
+    {
+      "old_path": "examples/README.md",
+      "change": "modified",
+      "category": "documentation",
+      "rationale": "Update v0.2 package, CLI, schema, or resource guidance."
+    },
+    {
+      "old_path": "examples/inspect_library.py",
+      "change": "modified",
+      "category": "python",
+      "rationale": "Migrate package/API boundaries, typing, tests, or standardized code style."
+    },
+    {
+      "old_path": "examples/sample_benchmark_results.json",
+      "change": "modified",
+      "category": "schema",
+      "rationale": "Add versioned schema or provenance metadata."
+    },
+    {
+      "old_path": "examples/sample_evolution_log.json",
+      "change": "modified",
+      "category": "schema",
+      "rationale": "Add versioned schema or provenance metadata."
+    },
+    {
+      "old_path": "examples/score_pair.py",
+      "change": "modified",
+      "category": "python",
+      "rationale": "Migrate package/API boundaries, typing, tests, or standardized code style."
+    },
+    {
+      "old_path": "examples/seed_library/registry.json",
+      "change": "modified",
+      "category": "schema",
+      "rationale": "Add versioned schema or provenance metadata."
+    },
+    {
+      "old_path": "examples/seed_library/skills/instruction-following-completeness/SKILL.md",
+      "change": "modified",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "examples/seed_library/skills/realism-and-artifact-penalties/SKILL.md",
+      "change": "modified",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "examples/seed_library/tools/text-and-ocr-analyzer/SKILL.md",
+      "change": "modified",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "examples/show_reasoning_format.py",
+      "change": "modified",
+      "category": "python",
+      "rationale": "Migrate package/API boundaries, typing, tests, or standardized code style."
+    },
+    {
+      "old_path": "pyproject.toml",
+      "change": "modified",
+      "category": "project",
+      "rationale": "Align project configuration or metadata with v0.2 architecture and quality gates."
+    },
+    {
+      "old_path": "requirements-dev.txt",
+      "change": "modified",
+      "category": "project",
+      "rationale": "Align project configuration or metadata with v0.2 architecture and quality gates."
+    },
+    {
+      "old_path": "requirements-vllm.txt",
+      "change": "modified",
+      "category": "project",
+      "rationale": "Align project configuration or metadata with v0.2 architecture and quality gates."
+    },
+    {
+      "old_path": "requirements.txt",
+      "change": "modified",
+      "category": "project",
+      "rationale": "Align project configuration or metadata with v0.2 architecture and quality gates."
+    },
+    {
+      "old_path": "score-guidelines/README.md",
+      "change": "renamed",
+      "new_path": "rewardharness/resources/score_guidelines/README.md",
+      "category": "documentation",
+      "rationale": "Update v0.2 package, CLI, schema, or resource guidance."
+    },
+    {
+      "old_path": "score-guidelines/template1_instruction_following.md",
+      "change": "renamed",
+      "new_path": "rewardharness/resources/score_guidelines/template1_instruction_following.md",
+      "category": "documentation",
+      "rationale": "Update v0.2 package, CLI, schema, or resource guidance."
+    },
+    {
+      "old_path": "score-guidelines/template2_visual_quality.md",
+      "change": "renamed",
+      "new_path": "rewardharness/resources/score_guidelines/template2_visual_quality.md",
+      "category": "documentation",
+      "rationale": "Update v0.2 package, CLI, schema, or resource guidance."
+    },
+    {
+      "old_path": "scripts/_kill_vllm.sh",
+      "change": "modified",
+      "category": "shell",
+      "rationale": "Adopt shared strict-mode runtime and consistent failure handling."
+    },
+    {
+      "old_path": "scripts/_launch_all_vllm.sh",
+      "change": "modified",
+      "category": "shell",
+      "rationale": "Adopt shared strict-mode runtime and consistent failure handling."
+    },
+    {
+      "old_path": "scripts/check_env.py",
+      "change": "modified",
+      "category": "python",
+      "rationale": "Migrate package/API boundaries, typing, tests, or standardized code style."
+    },
+    {
+      "old_path": "scripts/check_links.sh",
+      "change": "modified",
+      "category": "shell",
+      "rationale": "Adopt shared strict-mode runtime and consistent failure handling."
+    },
+    {
+      "old_path": "scripts/download_data.sh",
+      "change": "modified",
+      "category": "shell",
+      "rationale": "Adopt shared strict-mode runtime and consistent failure handling."
+    },
+    {
+      "old_path": "scripts/reproduce.sh",
+      "change": "modified",
+      "category": "shell",
+      "rationale": "Adopt shared strict-mode runtime and consistent failure handling."
+    },
+    {
+      "old_path": "scripts/run_all_benchmarks.sh",
+      "change": "modified",
+      "category": "shell",
+      "rationale": "Adopt shared strict-mode runtime and consistent failure handling."
+    },
+    {
+      "old_path": "scripts/run_benchmark.py",
+      "change": "modified",
+      "category": "python",
+      "rationale": "Migrate package/API boundaries, typing, tests, or standardized code style."
+    },
+    {
+      "old_path": "scripts/run_evolution.py",
+      "change": "modified",
+      "category": "python",
+      "rationale": "Migrate package/API boundaries, typing, tests, or standardized code style."
+    },
+    {
+      "old_path": "scripts/run_evolution_seed.sh",
+      "change": "modified",
+      "category": "shell",
+      "rationale": "Adopt shared strict-mode runtime and consistent failure handling."
+    },
+    {
+      "old_path": "scripts/sbatch_vllm.sh",
+      "change": "modified",
+      "category": "shell",
+      "rationale": "Adopt shared strict-mode runtime and consistent failure handling."
+    },
+    {
+      "old_path": "scripts/serve_vllm_multi.sh",
+      "change": "modified",
+      "category": "shell",
+      "rationale": "Adopt shared strict-mode runtime and consistent failure handling."
+    },
+    {
+      "old_path": "scripts/setup_env.sh",
+      "change": "modified",
+      "category": "shell",
+      "rationale": "Adopt shared strict-mode runtime and consistent failure handling."
+    },
+    {
+      "old_path": "scripts/start_vllm_remote.sh",
+      "change": "modified",
+      "category": "shell",
+      "rationale": "Adopt shared strict-mode runtime and consistent failure handling."
+    },
+    {
+      "old_path": "src/__init__.py",
+      "change": "modified",
+      "category": "python",
+      "rationale": "Migrate package/API boundaries, typing, tests, or standardized code style."
+    },
+    {
+      "old_path": "src/chain_analyzer.py",
+      "change": "modified",
+      "category": "python",
+      "rationale": "Migrate package/API boundaries, typing, tests, or standardized code style."
+    },
+    {
+      "old_path": "src/endpoint_pool.py",
+      "change": "modified",
+      "category": "python",
+      "rationale": "Migrate package/API boundaries, typing, tests, or standardized code style."
+    },
+    {
+      "old_path": "src/evaluator.py",
+      "change": "modified",
+      "category": "python",
+      "rationale": "Migrate package/API boundaries, typing, tests, or standardized code style."
+    },
+    {
+      "old_path": "src/evolver.py",
+      "change": "modified",
+      "category": "python",
+      "rationale": "Migrate package/API boundaries, typing, tests, or standardized code style."
+    },
+    {
+      "old_path": "src/gemini_client.py",
+      "change": "modified",
+      "category": "python",
+      "rationale": "Migrate package/API boundaries, typing, tests, or standardized code style."
+    },
+    {
+      "old_path": "src/library/__init__.py",
+      "change": "modified",
+      "category": "python",
+      "rationale": "Migrate package/API boundaries, typing, tests, or standardized code style."
+    },
+    {
+      "old_path": "src/library/registry.json",
+      "change": "deleted",
+      "category": "schema",
+      "rationale": "Add versioned schema or provenance metadata."
+    },
+    {
+      "old_path": "src/library/skills/.gitkeep",
+      "change": "deleted",
+      "category": "workspace",
+      "rationale": "Replace placeholder with documented or packaged content."
+    },
+    {
+      "old_path": "src/library/skills/evaluating-thematic-and-setting-accuracy/SKILL.md",
+      "change": "renamed",
+      "new_path": "rewardharness/resources/library/skills/evaluating-thematic-and-setting-accuracy/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library/skills/score-calibration/SKILL.md",
+      "change": "renamed",
+      "new_path": "rewardharness/resources/library/skills/score-calibration/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library/skills/verifying-multi-attribute-objects/SKILL.md",
+      "change": "renamed",
+      "new_path": "rewardharness/resources/library/skills/verifying-multi-attribute-objects/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library/tools/.gitkeep",
+      "change": "deleted",
+      "category": "workspace",
+      "rationale": "Replace placeholder with documented or packaged content."
+    },
+    {
+      "old_path": "src/library/tools/fine-grained-object-verifier/SKILL.md",
+      "change": "renamed",
+      "new_path": "rewardharness/resources/library/tools/fine-grained-object-verifier/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library/tools/image-quality-and-artifact-analyzer/SKILL.md",
+      "change": "renamed",
+      "new_path": "rewardharness/resources/library/tools/image-quality-and-artifact-analyzer/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library/tools/visual-text-and-layout-analyzer/SKILL.md",
+      "change": "renamed",
+      "new_path": "rewardharness/resources/library/tools/visual-text-and-layout-analyzer/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v1/registry.json",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v1/registry.json",
+      "category": "schema",
+      "rationale": "Add versioned schema or provenance metadata."
+    },
+    {
+      "old_path": "src/library_gemini_v1/skills/evaluating-background-changes/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v1/skills/evaluating-background-changes/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v1/skills/evaluating-multi-step-edits/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v1/skills/evaluating-multi-step-edits/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v1/skills/evaluating-object-replacements/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v1/skills/evaluating-object-replacements/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v1/skills/evaluating-style-transfers/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v1/skills/evaluating-style-transfers/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v1/skills/evaluating-text-rendering/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v1/skills/evaluating-text-rendering/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v1/tools/compare_images/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v1/tools/compare_images/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v2/registry.json",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v2/registry.json",
+      "category": "schema",
+      "rationale": "Add versioned schema or provenance metadata."
+    },
+    {
+      "old_path": "src/library_gemini_v2/skills/artifact-and-structure-preservation/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v2/skills/artifact-and-structure-preservation/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v2/skills/artistic-and-cultural-references/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v2/skills/artistic-and-cultural-references/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v2/skills/embrace-intended-drastic-changes/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v2/skills/embrace-intended-drastic-changes/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v2/skills/enforce-logical-consistency/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v2/skills/enforce-logical-consistency/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v2/skills/entity-definition-activation/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v2/skills/entity-definition-activation/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v2/skills/environmental-blending-and-lighting-adaptation/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v2/skills/environmental-blending-and-lighting-adaptation/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v2/skills/evaluate-insertions-and-anatomical-integrity/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v2/skills/evaluate-insertions-and-anatomical-integrity/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v2/skills/evaluate-physical-plausibility/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v2/skills/evaluate-physical-plausibility/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v2/skills/evaluate-text-additions/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v2/skills/evaluate-text-additions/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v2/skills/holistic-evaluation-vs-tunnel-vision/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v2/skills/holistic-evaluation-vs-tunnel-vision/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v2/skills/instruction-over-naturalness/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v2/skills/instruction-over-naturalness/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v2/skills/mitigate-positional-bias/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v2/skills/mitigate-positional-bias/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v2/skills/object-replacement-proportions-and-exaggeration/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v2/skills/object-replacement-proportions-and-exaggeration/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v2/skills/overcoming-default-to-a-bias/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v2/skills/overcoming-default-to-a-bias/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v2/skills/penalize-gibberish-text/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v2/skills/penalize-gibberish-text/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v2/skills/penalize-unintended-style-changes/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v2/skills/penalize-unintended-style-changes/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v2/skills/preserve-subject-interaction-and-pose/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v2/skills/preserve-subject-interaction-and-pose/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v2/skills/prevent-image-feature-swapping/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v2/skills/prevent-image-feature-swapping/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v2/skills/reasoning-preference-alignment/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v2/skills/reasoning-preference-alignment/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v2/skills/strict-semantic-and-conceptual-alignment/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v2/skills/strict-semantic-and-conceptual-alignment/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v2/skills/subject-vs-setting-modifications/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v2/skills/subject-vs-setting-modifications/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v2/skills/verify-extreme-claims-and-hallucinations/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v2/skills/verify-extreme-claims-and-hallucinations/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v2/skills/verify-instruction-target-and-spatial-relations/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v2/skills/verify-instruction-target-and-spatial-relations/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v2/tools/object-locator-and-counter/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v2/tools/object-locator-and-counter/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v2/tools/side-by-side-image-comparator/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v2/tools/side-by-side-image-comparator/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v2/tools/text-and-spelling-checker/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v2/tools/text-and-spelling-checker/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v2/tools/visual-detail-and-setting-analyzer/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v2/tools/visual-detail-and-setting-analyzer/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v2/tools/visual-question-answering/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v2/tools/visual-question-answering/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v3/registry.json",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v3/registry.json",
+      "category": "schema",
+      "rationale": "Add versioned schema or provenance metadata."
+    },
+    {
+      "old_path": "src/library_gemini_v3/skills/evaluating-multiple-constraints/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v3/skills/evaluating-multiple-constraints/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v3/skills/evaluating-style-transfers/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v3/skills/evaluating-style-transfers/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v3/skills/evaluating-text-additions/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v3/skills/evaluating-text-additions/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v3/tools/image-difference-checker/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v3/tools/image-difference-checker/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v3/tools/visual-question-answering/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v3/tools/visual-question-answering/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v4/registry.json",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v4/registry.json",
+      "category": "schema",
+      "rationale": "Add versioned schema or provenance metadata."
+    },
+    {
+      "old_path": "src/library_gemini_v4/skills/artist-and-style-knowledge/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v4/skills/artist-and-style-knowledge/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v4/skills/artistic-style-transfer-evaluation/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v4/skills/artistic-style-transfer-evaluation/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v4/skills/background-and-scene-transformation/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v4/skills/background-and-scene-transformation/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v4/skills/counting-and-spatial-reasoning/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v4/skills/counting-and-spatial-reasoning/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v4/skills/direct-vision-reliance/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v4/skills/direct-vision-reliance/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v4/skills/exclusivity-and-preservation/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v4/skills/exclusivity-and-preservation/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v4/skills/multi-attribute-verification/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v4/skills/multi-attribute-verification/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v4/skills/multi-part-instruction-evaluation/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v4/skills/multi-part-instruction-evaluation/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v4/skills/object-extraction-evaluation/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v4/skills/object-extraction-evaluation/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v4/skills/scene-and-atmosphere-transformation/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v4/skills/scene-and-atmosphere-transformation/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v4/skills/spatial-and-relational-edits/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v4/skills/spatial-and-relational-edits/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v4/skills/text-rendering-evaluation/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v4/skills/text-rendering-evaluation/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v5/registry.json",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v5/registry.json",
+      "category": "schema",
+      "rationale": "Add versioned schema or provenance metadata."
+    },
+    {
+      "old_path": "src/library_gemini_v5/skills/penalize-over-editing/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v5/skills/penalize-over-editing/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v5/skills/structure-and-subject-preservation/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v5/skills/structure-and-subject-preservation/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v5/skills/verify-image-content-and-ocr/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v5/skills/verify-image-content-and-ocr/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v5/skills/world-knowledge-and-entities/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v5/skills/world-knowledge-and-entities/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v5/tools/text-and-ocr-verifier/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v5/tools/text-and-ocr-verifier/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v5/tools/visual-content-verifier/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v5/tools/visual-content-verifier/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v5_broken_router/registry.json",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v5-broken-router/registry.json",
+      "category": "schema",
+      "rationale": "Add versioned schema or provenance metadata."
+    },
+    {
+      "old_path": "src/library_gemini_v5_broken_router/skills/mandatory-ocr-for-text/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v5-broken-router/skills/mandatory-ocr-for-text/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v5_broken_router/skills/reasoning-preference-alignment/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v5-broken-router/skills/reasoning-preference-alignment/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v5_broken_router/skills/world-knowledge-and-style-awareness/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v5-broken-router/skills/world-knowledge-and-style-awareness/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v5_broken_router/tools/text-and-ocr-analyzer/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v5-broken-router/tools/text-and-ocr-analyzer/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v5_old/registry.json",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v5-old/registry.json",
+      "category": "schema",
+      "rationale": "Add versioned schema or provenance metadata."
+    },
+    {
+      "old_path": "src/library_gemini_v5_old/skills/object-attribute-verification/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v5-old/skills/object-attribute-verification/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v5_old/skills/spatial-and-relational-reasoning/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v5-old/skills/spatial-and-relational-reasoning/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v5_old/skills/text-rendering-evaluation/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v5-old/skills/text-rendering-evaluation/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v5_old/skills/thematic-and-style-transformation/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v5-old/skills/thematic-and-style-transformation/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v5_old/skills/vqa-query-best-practices/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v5-old/skills/vqa-query-best-practices/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/library_gemini_v5_old/tools/visual-question-answering/SKILL.md",
+      "change": "renamed",
+      "new_path": "libraries/archive/gemini-v5-old/tools/visual-question-answering/SKILL.md",
+      "category": "library",
+      "rationale": "Upgrade Skill/Tool frontmatter to schema version 2 and archive provenance."
+    },
+    {
+      "old_path": "src/pipeline.py",
+      "change": "modified",
+      "category": "python",
+      "rationale": "Migrate package/API boundaries, typing, tests, or standardized code style."
+    },
+    {
+      "old_path": "src/router.py",
+      "change": "modified",
+      "category": "python",
+      "rationale": "Migrate package/API boundaries, typing, tests, or standardized code style."
+    },
+    {
+      "old_path": "src/sub_agent.py",
+      "change": "modified",
+      "category": "python",
+      "rationale": "Migrate package/API boundaries, typing, tests, or standardized code style."
+    },
+    {
+      "old_path": "tests/README.md",
+      "change": "modified",
+      "category": "documentation",
+      "rationale": "Update v0.2 package, CLI, schema, or resource guidance."
+    },
+    {
+      "old_path": "tests/__init__.py",
+      "change": "modified",
+      "category": "python",
+      "rationale": "Migrate package/API boundaries, typing, tests, or standardized code style."
+    },
+    {
+      "old_path": "tests/conftest.py",
+      "change": "modified",
+      "category": "python",
+      "rationale": "Migrate package/API boundaries, typing, tests, or standardized code style."
+    },
+    {
+      "old_path": "tests/test_chain_evolver.py",
+      "change": "modified",
+      "category": "python",
+      "rationale": "Migrate package/API boundaries, typing, tests, or standardized code style."
+    },
+    {
+      "old_path": "tests/test_check_env.py",
+      "change": "modified",
+      "category": "python",
+      "rationale": "Migrate package/API boundaries, typing, tests, or standardized code style."
+    },
+    {
+      "old_path": "tests/test_evaluator.py",
+      "change": "modified",
+      "category": "python",
+      "rationale": "Migrate package/API boundaries, typing, tests, or standardized code style."
+    },
+    {
+      "old_path": "tests/test_library.py",
+      "change": "modified",
+      "category": "python",
+      "rationale": "Migrate package/API boundaries, typing, tests, or standardized code style."
+    },
+    {
+      "old_path": "tests/test_library_integration.py",
+      "change": "modified",
+      "category": "python",
+      "rationale": "Migrate package/API boundaries, typing, tests, or standardized code style."
+    },
+    {
+      "old_path": "tests/test_pipeline.py",
+      "change": "modified",
+      "category": "python",
+      "rationale": "Migrate package/API boundaries, typing, tests, or standardized code style."
+    },
+    {
+      "old_path": "tests/test_router.py",
+      "change": "modified",
+      "category": "python",
+      "rationale": "Migrate package/API boundaries, typing, tests, or standardized code style."
+    },
+    {
+      "old_path": "tests/test_sub_agent.py",
+      "change": "modified",
+      "category": "python",
+      "rationale": "Migrate package/API boundaries, typing, tests, or standardized code style."
+    },
+    {
+      "old_path": "vanilla/README.md",
+      "change": "modified",
+      "category": "documentation",
+      "rationale": "Update v0.2 package, CLI, schema, or resource guidance."
+    },
+    {
+      "old_path": "vanilla/bench_claude.py",
+      "change": "modified",
+      "category": "python",
+      "rationale": "Migrate package/API boundaries, typing, tests, or standardized code style."
+    },
+    {
+      "old_path": "vanilla/bench_genaibench.py",
+      "change": "modified",
+      "category": "python",
+      "rationale": "Migrate package/API boundaries, typing, tests, or standardized code style."
+    },
+    {
+      "old_path": "vanilla/bench_imagenhub.py",
+      "change": "modified",
+      "category": "python",
+      "rationale": "Migrate package/API boundaries, typing, tests, or standardized code style."
+    },
+    {
+      "old_path": "vanilla/gemini_bench_claude.py",
+      "change": "modified",
+      "category": "python",
+      "rationale": "Migrate package/API boundaries, typing, tests, or standardized code style."
+    },
+    {
+      "old_path": "vanilla/gemini_bench_genaibench.py",
+      "change": "modified",
+      "category": "python",
+      "rationale": "Migrate package/API boundaries, typing, tests, or standardized code style."
+    },
+    {
+      "old_path": "vanilla/gemini_bench_imagenhub.py",
+      "change": "modified",
+      "category": "python",
+      "rationale": "Migrate package/API boundaries, typing, tests, or standardized code style."
+    },
+    {
+      "old_path": "vanilla/imagenhub_data/rater1.tsv",
+      "change": "modified",
+      "category": "ratings",
+      "rationale": "Add explicit schema metadata while preserving every original rating value."
+    },
+    {
+      "old_path": "vanilla/imagenhub_data/rater2.tsv",
+      "change": "modified",
+      "category": "ratings",
+      "rationale": "Add explicit schema metadata while preserving every original rating value."
+    },
+    {
+      "old_path": "vanilla/imagenhub_data/rater3.tsv",
+      "change": "modified",
+      "category": "ratings",
+      "rationale": "Add explicit schema metadata while preserving every original rating value."
+    }
+  ]
+}

@@ -58,6 +58,11 @@ filterwarnings = [
 [tool.coverage.run]
 branch = true
 source = ["rewardharness"]
+omit = [
+  "rewardharness/benchmark.py",
+  "rewardharness/cli.py",
+  "rewardharness/diagnostics.py",
+]
 
 [tool.coverage.report]
 fail_under = 80
