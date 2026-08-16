@@ -1,13 +1,11 @@
 """Integration tests for SelfEvolutionPipeline."""
 
 import json
-import os
-import pytest
-from unittest.mock import MagicMock, patch, PropertyMock
+from unittest.mock import MagicMock, patch
 
-from src.pipeline import SelfEvolutionPipeline
-from src.library import Library
-from src.evaluator import evaluate_prediction, compute_kpair_accuracy
+import pytest
+
+from rewardharness.evolution.pipeline import SelfEvolutionPipeline
 
 
 @pytest.fixture
@@ -31,8 +29,14 @@ def config():
 def mock_train_examples():
     """Minimal fake train examples."""
     return [
-        {"source_img": "src_b64", "edited_A": "a_b64", "edited_B": "b_b64",
-         "prompt": f"edit {i}", "gt": "A" if i % 2 == 0 else "B", "group_id": i}
+        {
+            "source_img": "src_b64",
+            "edited_A": "a_b64",
+            "edited_B": "b_b64",
+            "prompt": f"edit {i}",
+            "gt": "A" if i % 2 == 0 else "B",
+            "group_id": i,
+        }
         for i in range(4)
     ]
 
@@ -41,8 +45,14 @@ def mock_train_examples():
 def mock_val_examples():
     """Minimal fake val examples."""
     return [
-        {"source_img": "src_b64", "edited_A": "a_b64", "edited_B": "b_b64",
-         "prompt": f"val edit {i}", "gt": "A", "group_id": i}
+        {
+            "source_img": "src_b64",
+            "edited_A": "a_b64",
+            "edited_B": "b_b64",
+            "prompt": f"val edit {i}",
+            "gt": "A",
+            "group_id": i,
+        }
         for i in range(2)
     ]
 
@@ -56,12 +66,21 @@ class TestPipelineValidation:
 
 
 class TestPipelineEvolution:
-    @patch("src.pipeline.EndpointPool")
-    @patch("src.router.call_gemini")
-    @patch("src.chain_analyzer.call_gemini")
-    @patch("src.sub_agent.OpenAI")
-    def test_two_iteration_run(self, MockSubVLLM, mock_chain_gemini, mock_router_gemini,
-                                MockPool, config, tmp_path, mock_train_examples, mock_val_examples):
+    @patch("rewardharness.evolution.pipeline.EndpointPool")
+    @patch("rewardharness.evaluation.router.call_gemini")
+    @patch("rewardharness.evolution.analyzer.call_gemini")
+    @patch("rewardharness.evaluation.engine.OpenAI")
+    def test_two_iteration_run(
+        self,
+        MockSubVLLM,
+        mock_chain_gemini,
+        mock_router_gemini,
+        MockPool,
+        config,
+        tmp_path,
+        mock_train_examples,
+        mock_val_examples,
+    ):
         """Pipeline completes 2 iterations with mocked components."""
         # Setup mocks
         mock_pool = MagicMock()
@@ -79,24 +98,41 @@ class TestPipelineEvolution:
         results_dir.mkdir()
 
         # Mock vLLM SubAgent responses
-        answer = json.dumps({
-            "preference": "A", "score_A_instruction": 3, "score_A_quality": 3,
-            "score_B_instruction": 2, "score_B_quality": 2, "reasoning": "A better"
-        })
+        answer = json.dumps(
+            {
+                "preference": "A",
+                "score_A_instruction": 3,
+                "score_A_quality": 3,
+                "score_B_instruction": 2,
+                "score_B_quality": 2,
+                "reasoning": "A better",
+            }
+        )
         mock_vllm = MagicMock()
         mock_vllm.chat.completions.create.return_value.choices = [MagicMock()]
-        mock_vllm.chat.completions.create.return_value.choices[0].message.content = f'<answer>{answer}</answer>'
+        mock_vllm.chat.completions.create.return_value.choices[
+            0
+        ].message.content = f"<answer>{answer}</answer>"
         MockSubVLLM.return_value = mock_vllm
 
         # Mock Router Gemini (empty library → won't be called for iter 0)
         mock_router_gemini.return_value = json.dumps({"skills": [], "tools": []})
 
         # Mock ChainAnalyzer Gemini
-        signals = json.dumps({
-            "skill_updates": [{"action": "add", "name": "test-skill", "description": "Test", "content_md": "## Test"}],
-            "tool_updates": [],
-            "analysis_summary": "Added test skill"
-        })
+        signals = json.dumps(
+            {
+                "skill_updates": [
+                    {
+                        "action": "add",
+                        "name": "test-skill",
+                        "description": "Test",
+                        "content_md": "## Test",
+                    }
+                ],
+                "tool_updates": [],
+                "analysis_summary": "Added test skill",
+            }
+        )
         mock_chain_gemini.return_value = signals
 
         config["evolution"]["max_iterations"] = 2
@@ -106,9 +142,7 @@ class TestPipelineEvolution:
         pipeline.checkpoint_dir = str(results_dir / "checkpoints")
 
         log = pipeline.evolve(
-            n_iterations=2,
-            train_split=mock_train_examples,
-            val_split=mock_val_examples
+            n_iterations=2, train_split=mock_train_examples, val_split=mock_val_examples
         )
 
         assert len(log) == 2
@@ -119,13 +153,21 @@ class TestPipelineEvolution:
         assert "tool_action" in log[1]
         assert "best_val_acc" in log[1]
 
-    @patch("src.pipeline.EndpointPool")
-    @patch("src.router.call_gemini")
-    @patch("src.chain_analyzer.call_gemini")
-    @patch("src.sub_agent.OpenAI")
-    def test_keep_on_equal_val_acc(self, MockSubVLLM, mock_chain_gemini,
-                                   mock_router_gemini, MockPool,
-                                   config, tmp_path, mock_train_examples, mock_val_examples):
+    @patch("rewardharness.evolution.pipeline.EndpointPool")
+    @patch("rewardharness.evaluation.router.call_gemini")
+    @patch("rewardharness.evolution.analyzer.call_gemini")
+    @patch("rewardharness.evaluation.engine.OpenAI")
+    def test_keep_on_equal_val_acc(
+        self,
+        MockSubVLLM,
+        mock_chain_gemini,
+        mock_router_gemini,
+        MockPool,
+        config,
+        tmp_path,
+        mock_train_examples,
+        mock_val_examples,
+    ):
         """Equal val accuracy triggers keep (>= condition)."""
         mock_pool = MagicMock()
         mock_pool.next.return_value = "http://localhost:8000/v1"
@@ -141,23 +183,40 @@ class TestPipelineEvolution:
         results_dir.mkdir()
 
         # SubAgent always predicts "A" → some correct, some wrong
-        answer_a = json.dumps({
-            "preference": "A", "score_A_instruction": 3, "score_A_quality": 3,
-            "score_B_instruction": 2, "score_B_quality": 2, "reasoning": "A"
-        })
+        answer_a = json.dumps(
+            {
+                "preference": "A",
+                "score_A_instruction": 3,
+                "score_A_quality": 3,
+                "score_B_instruction": 2,
+                "score_B_quality": 2,
+                "reasoning": "A",
+            }
+        )
         mock_vllm = MagicMock()
         mock_vllm.chat.completions.create.return_value.choices = [MagicMock()]
-        mock_vllm.chat.completions.create.return_value.choices[0].message.content = f'<answer>{answer_a}</answer>'
+        mock_vllm.chat.completions.create.return_value.choices[
+            0
+        ].message.content = f"<answer>{answer_a}</answer>"
         MockSubVLLM.return_value = mock_vllm
 
         mock_router_gemini.return_value = json.dumps({"skills": [], "tools": []})
 
         # ChainAnalyzer suggests adding a skill
-        signals = json.dumps({
-            "skill_updates": [{"action": "add", "name": "bad-skill", "description": "Bad", "content_md": "## Bad"}],
-            "tool_updates": [],
-            "analysis_summary": "test"
-        })
+        signals = json.dumps(
+            {
+                "skill_updates": [
+                    {
+                        "action": "add",
+                        "name": "bad-skill",
+                        "description": "Bad",
+                        "content_md": "## Bad",
+                    }
+                ],
+                "tool_updates": [],
+                "analysis_summary": "test",
+            }
+        )
         mock_chain_gemini.return_value = signals
 
         pipeline = SelfEvolutionPipeline(config, library_dir=str(lib_dir))
@@ -165,7 +224,9 @@ class TestPipelineEvolution:
         pipeline.checkpoint_dir = str(results_dir / "checkpoints")
 
         # Since predictions don't change and val_acc stays same -> tie -> keep (>= condition)
-        log = pipeline.evolve(n_iterations=2, train_split=mock_train_examples, val_split=mock_val_examples)
+        log = pipeline.evolve(
+            n_iterations=2, train_split=mock_train_examples, val_split=mock_val_examples
+        )
 
         assert log[1]["action"] == "keep"
         assert log[1]["skill_action"] == "keep"

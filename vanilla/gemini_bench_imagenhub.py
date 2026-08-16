@@ -1,9 +1,4 @@
 #!/usr/bin/env python3
-import os, urllib.request
-for _k in [k for k in os.environ if "proxy" in k.lower()]: del os.environ[_k]
-urllib.request.getproxies = lambda: {}
-
-
 """
 Vanilla Claude benchmark on ImagenHub Text-Guided Image Editing.
 VIEScore-style pointwise scoring (4-dimension 0-10) → Spearman correlation with human GT.
@@ -21,20 +16,23 @@ import base64
 import json
 import math
 import os
+import pickle
 import re
 import time
+import urllib.request
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from io import BytesIO
-from pathlib import Path
 
-import numpy as np
 import requests
-from datasets import load_dataset
 from openai import OpenAI
 from PIL import Image
 from scipy.stats import spearmanr
 from tqdm import tqdm
+
+for _key in [key for key in os.environ if "proxy" in key.lower()]:
+    del os.environ[_key]
+urllib.request.getproxies = lambda: {}
 
 BASE_URL = os.environ.get("GEMINI_GATEWAY_BASE_URL", "https://your-gateway.example.com/v1")
 API_KEY = os.environ.get("GEMINI_GATEWAY_API_KEY", "")
@@ -42,8 +40,15 @@ API_KEY = os.environ.get("GEMINI_GATEWAY_API_KEY", "")
 MUSEUM_BASE = "https://chromaica.github.io/Museum/ImagenHub_Text-Guided_IE"
 
 MODELS_WITH_RATINGS = [
-    "CycleDiffusion", "DiffEdit", "Imagic", "InstructPix2Pix",
-    "MagicBrush", "Pix2PixZero", "Prompt2prompt", "SDEdit", "Text2Live"
+    "CycleDiffusion",
+    "DiffEdit",
+    "Imagic",
+    "InstructPix2Pix",
+    "MagicBrush",
+    "Pix2PixZero",
+    "Prompt2prompt",
+    "SDEdit",
+    "Text2Live",
 ]
 
 # VIEScore template (from EditReward)
@@ -112,7 +117,10 @@ def parse_viescore(response: str) -> list:
         pass
 
     # Fallback: find any array of 4 numbers
-    match = re.search(r'\[\s*(\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)\s*\]', response)
+    match = re.search(
+        r"\[\s*(\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)\s*\]",
+        response,
+    )
     if match:
         scores = [float(match.group(i)) for i in range(1, 5)]
         if all(0 <= s <= 10 for s in scores):
@@ -160,9 +168,14 @@ def load_human_ratings(ratings_dir: str) -> dict:
     return result
 
 
-def evaluate_sample(source_img: Image.Image, edited_img: Image.Image,
-                    instruction: str, source_caption: str, target_caption: str,
-                    model: str) -> dict:
+def evaluate_sample(
+    source_img: Image.Image,
+    edited_img: Image.Image,
+    instruction: str,
+    source_caption: str,
+    target_caption: str,
+    model: str,
+) -> dict:
     """Score a single (source, edited) pair with VIEScore template."""
     client = OpenAI(base_url=BASE_URL, api_key=API_KEY)
 
@@ -170,13 +183,17 @@ def evaluate_sample(source_img: Image.Image, edited_img: Image.Image,
     edited_b64 = image_to_base64(edited_img)
 
     user_content = [
-        {"type": "text", "text": f"Source Image prompt: {source_caption}\nTarget Image prompt after editing: {target_caption}\nEditing instruction: {instruction}\n\nSource Image:"},
+        {
+            "type": "text",
+            "text": f"Source Image prompt: {source_caption}\nTarget Image prompt after editing: {target_caption}\nEditing instruction: {instruction}\n\nSource Image:",
+        },
         {"type": "image_url", "image_url": {"url": source_b64}},
         {"type": "text", "text": "\nAI Edited Image:"},
         {"type": "image_url", "image_url": {"url": edited_b64}},
     ]
 
     import time as _time
+
     for _attempt in range(5):
         try:
             resp = client.chat.completions.create(
@@ -189,10 +206,10 @@ def evaluate_sample(source_img: Image.Image, edited_img: Image.Image,
             )
             break
         except Exception as _e:
-            if "429" in str(_e) or "TooManyRequests" in str(_e) or "Connection" in str(_e):
-                if _attempt < 4:
-                    _time.sleep(2 ** (_attempt + 1))
-                    continue
+            retryable = any(token in str(_e) for token in ("429", "TooManyRequests", "Connection"))
+            if retryable and _attempt < 4:
+                _time.sleep(2 ** (_attempt + 1))
+                continue
             raise
 
     response_text = resp.choices[0].message.content or ""
@@ -207,8 +224,10 @@ def evaluate_sample(source_img: Image.Image, edited_img: Image.Image,
 
 def fisher_z_avg(correlations: list) -> float:
     """Fisher Z-transform average of Spearman correlations."""
-    z_values = [0.5 * math.log((1 + r) / (1 - r)) if abs(r) < 1 else float('inf') * (1 if r > 0 else -1)
-                for r in correlations]
+    z_values = [
+        0.5 * math.log((1 + r) / (1 - r)) if abs(r) < 1 else float("inf") * (1 if r > 0 else -1)
+        for r in correlations
+    ]
     z_values = [z for z in z_values if math.isfinite(z)]
     if not z_values:
         return 0.0
@@ -232,9 +251,8 @@ def main():
     print(f"Concurrency: {args.concurrency}")
 
     # Verify proxy
-    client = OpenAI(base_url=BASE_URL, api_key=API_KEY)
+    OpenAI(base_url=BASE_URL, api_key=API_KEY)
     # models = client.models.list()  # skip for internal gateway
-    available = [args.model]  # internal gateway: skip validation
     # assert args.model in available  # internal gateway: skip, f"{args.model} not in {available}"
 
     # Load human ratings
@@ -244,7 +262,9 @@ def main():
 
     # Load dataset for instructions and source images
     print("Loading ImagenHub dataset...")
-    import pickle; dataset = pickle.load(open(os.path.join(os.path.dirname(__file__), ".dataset_cache", "imagenhub.pkl"), "rb"))
+    cache_path = os.path.join(os.path.dirname(__file__), ".dataset_cache", "imagenhub.pkl")
+    with open(cache_path, "rb") as handle:
+        dataset = pickle.load(handle)
     print(f"Loaded {len(dataset)} samples")
 
     # Build lookup: uid -> dataset row
@@ -261,18 +281,22 @@ def main():
         row = ds_lookup[uid]
         for editing_model, gt_score in model_scores.items():
             edited_url = f"{MUSEUM_BASE}/{editing_model}/{uid}"
-            tasks.append({
-                "uid": uid,
-                "editing_model": editing_model,
-                "source_img": row["source_img"],
-                "edited_url": edited_url,
-                "instruction": row["instruction"],
-                "source_caption": row.get("source_global_caption", ""),
-                "target_caption": row.get("target_global_caption", ""),
-                "gt_score": gt_score,
-            })
+            tasks.append(
+                {
+                    "uid": uid,
+                    "editing_model": editing_model,
+                    "source_img": row["source_img"],
+                    "edited_url": edited_url,
+                    "instruction": row["instruction"],
+                    "source_caption": row.get("source_global_caption", ""),
+                    "target_caption": row.get("target_global_caption", ""),
+                    "gt_score": gt_score,
+                }
+            )
 
-    print(f"Total evaluation tasks: {len(tasks)} ({len(human_ratings)} samples x {len(MODELS_WITH_RATINGS)} models)")
+    print(
+        f"Total evaluation tasks: {len(tasks)} ({len(human_ratings)} samples x {len(MODELS_WITH_RATINGS)} models)"
+    )
 
     # Check for existing results
     results_file = os.path.join(results_dir, f"{args.model}_imagenhub.json")
@@ -300,9 +324,12 @@ def main():
             # Download edited image
             edited_img = download_image(task["edited_url"])
             result = evaluate_sample(
-                task["source_img"], edited_img,
-                task["instruction"], task["source_caption"], task["target_caption"],
-                args.model
+                task["source_img"],
+                edited_img,
+                task["instruction"],
+                task["source_caption"],
+                task["target_caption"],
+                args.model,
             )
             return {
                 "uid": task["uid"],
@@ -327,20 +354,24 @@ def main():
                             _save_partial(results_file, args.model, all_results)
                     except Exception as e:
                         errors += 1
-                        all_results.append({
-                            "uid": task["uid"],
-                            "editing_model": task["editing_model"],
-                            "gt_score": task["gt_score"],
-                            "scores": None,
-                            "aggregate": None,
-                            "response": str(e),
-                        })
+                        all_results.append(
+                            {
+                                "uid": task["uid"],
+                                "editing_model": task["editing_model"],
+                                "gt_score": task["gt_score"],
+                                "scores": None,
+                                "aggregate": None,
+                                "response": str(e),
+                            }
+                        )
                         if errors <= 5:
-                            tqdm.write(f"[ERROR] {task['uid']}/{task['editing_model']}: {str(e)[:100]}")
+                            tqdm.write(
+                                f"[ERROR] {task['uid']}/{task['editing_model']}: {str(e)[:100]}"
+                            )
                     pbar.update(1)
 
         elapsed = time.perf_counter() - t0
-        print(f"Completed in {elapsed:.1f}s ({len(to_process)/elapsed:.1f} tasks/s)")
+        print(f"Completed in {elapsed:.1f}s ({len(to_process) / elapsed:.1f} tasks/s)")
         if errors:
             print(f"Errors: {errors}")
 
@@ -377,10 +408,13 @@ def main():
         "benchmark": "ImagenHub",
         "spearman_avg": pct,
         "spearman_raw": avg_spearman,
-        "per_model_spearman": {m: spearmanr(
-            [r["aggregate"] for r in by_model[m]],
-            [r["gt_score"] for r in by_model[m]]
-        ).statistic for m in MODELS_WITH_RATINGS if len(by_model[m]) >= 3},
+        "per_model_spearman": {
+            m: spearmanr(
+                [r["aggregate"] for r in by_model[m]], [r["gt_score"] for r in by_model[m]]
+            ).statistic
+            for m in MODELS_WITH_RATINGS
+            if len(by_model[m]) >= 3
+        },
         "n_valid": len(valid),
         "n_total": len(all_results),
         "results": all_results,
@@ -403,7 +437,9 @@ def main():
 
 def _save_partial(path, model, results):
     with open(path, "w") as f:
-        json.dump({"model": model, "benchmark": "ImagenHub", "results": results}, f, indent=2, default=str)
+        json.dump(
+            {"model": model, "benchmark": "ImagenHub", "results": results}, f, indent=2, default=str
+        )
 
 
 if __name__ == "__main__":

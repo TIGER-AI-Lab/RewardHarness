@@ -1,7 +1,9 @@
 ---
+schema_version: 2
 name: instruction-following-completeness
-type: skill
-description: Score completeness of instruction execution. Partial edits get partial credit; missed sub-steps cost points.
+kind: skill
+description: Score completeness of instruction execution. Partial edits get partial
+  credit; missed sub-steps cost points.
 ---
 
 # Instruction Following Completeness

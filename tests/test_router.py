@@ -1,11 +1,10 @@
 """Unit tests for Router."""
 
 import json
-import pytest
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
-from src.router import Router
-from src.library import Library
+from rewardharness.evaluation.router import Router
+from rewardharness.library import Library
 
 
 class TestRouter:
@@ -21,8 +20,10 @@ class TestRouter:
         lib.add_tool("tool-ocr", "Read text", "OCR prompt", {}, {}, "## OCR\nReads text.")
 
         # Mock Gemini API to select both
-        with patch("src.router.call_gemini") as mock_gemini:
-            mock_gemini.return_value = json.dumps({"skills": ["color-check"], "tools": ["tool-ocr"]})
+        with patch("rewardharness.evaluation.router.call_gemini") as mock_gemini:
+            mock_gemini.return_value = json.dumps(
+                {"skills": ["color-check"], "tools": ["tool-ocr"]}
+            )
 
             router = Router(lib)
             result = router.prepare_context("add blue text overlay")
@@ -40,7 +41,7 @@ class TestRouter:
         lib.add_skill("s3", "Skill 3", "Content 3")
 
         # Gemini selects all 3 -- no limit
-        with patch("src.router.call_gemini") as mock_gemini:
+        with patch("rewardharness.evaluation.router.call_gemini") as mock_gemini:
             mock_gemini.return_value = json.dumps({"skills": ["s1", "s2", "s3"], "tools": []})
 
             router = Router(lib)
@@ -55,7 +56,7 @@ class TestRouter:
         lib = Library(str(tmp_library))
         lib.add_skill("s1", "Skill 1", "Content 1")
 
-        with patch("src.router.call_gemini") as mock_gemini:
+        with patch("rewardharness.evaluation.router.call_gemini") as mock_gemini:
             mock_gemini.return_value = '{"skills": ["s1"], "tools": []}'
             router = Router(lib)
             result = router.prepare_context("test")
@@ -69,7 +70,7 @@ class TestRouter:
         for i in range(11):
             lib.add_skill(f"s{i}", f"Skill {i}", f"Content {i}")
 
-        with patch("src.router.call_gemini") as mock_gemini:
+        with patch("rewardharness.evaluation.router.call_gemini") as mock_gemini:
             mock_gemini.return_value = "not valid json"
 
             router = Router(lib)
@@ -82,7 +83,7 @@ class TestRouter:
         lib = Library(str(tmp_library))
         lib.add_skill("s1", "Skill 1", "Content 1")
 
-        with patch("src.router.call_gemini") as mock_gemini:
+        with patch("rewardharness.evaluation.router.call_gemini") as mock_gemini:
             mock_gemini.return_value = '```json\n{"skills": ["s1"], "tools": []}\n```'
 
             router = Router(lib)
@@ -95,7 +96,7 @@ class TestRouter:
         lib = Library(str(tmp_library))
         lib.add_skill("s1", "Skill 1", "Content 1")
 
-        with patch("src.router.call_gemini") as mock_gemini:
+        with patch("rewardharness.evaluation.router.call_gemini") as mock_gemini:
             mock_gemini.return_value = 'Here is the result: {"skills": ["s1"], "tools": []} done'
 
             router = Router(lib)
@@ -107,8 +108,10 @@ class TestRouter:
         lib = Library(str(tmp_library))
         lib.add_skill("real-skill", "Real", "Real content")
 
-        with patch("src.router.call_gemini") as mock_gemini:
-            mock_gemini.return_value = json.dumps({"skills": ["real-skill", "fake-skill"], "tools": ["fake-tool"]})
+        with patch("rewardharness.evaluation.router.call_gemini") as mock_gemini:
+            mock_gemini.return_value = json.dumps(
+                {"skills": ["real-skill", "fake-skill"], "tools": ["fake-tool"]}
+            )
 
             router = Router(lib)
             result = router.prepare_context("test")

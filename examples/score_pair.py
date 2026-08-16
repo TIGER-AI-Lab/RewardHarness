@@ -47,10 +47,10 @@ import sys
 # Import from repo root
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from src.endpoint_pool import EndpointPool
-from src.library import Library
-from src.router import Router
-from src.sub_agent import SubAgent
+from rewardharness.clients.endpoints import EndpointPool
+from rewardharness.evaluation.engine import SubAgent
+from rewardharness.evaluation.router import Router
+from rewardharness.library import Library
 
 
 def b64(path: str) -> str:
@@ -64,26 +64,34 @@ def main():
     p.add_argument("--candidate-a", required=True, help="path to candidate A")
     p.add_argument("--candidate-b", required=True, help="path to candidate B")
     p.add_argument("--prompt", required=True, help="editing instruction")
-    p.add_argument("--library-dir", default="examples/seed_library",
-                   help="path to evolved Library (default: examples/seed_library)")
-    p.add_argument("--endpoints", default="configs/endpoints.txt",
-                   help="path to vLLM endpoints file")
-    p.add_argument("--show-chain", action="store_true",
-                   help="also print the full <think>/<tool>/<obs>/<answer> reasoning chain")
+    p.add_argument(
+        "--library-dir",
+        default="examples/seed_library",
+        help="path to evolved Library (default: examples/seed_library)",
+    )
+    p.add_argument(
+        "--endpoints", default="configs/endpoints.txt", help="path to vLLM endpoints file"
+    )
+    p.add_argument(
+        "--show-chain",
+        action="store_true",
+        help="also print the full <think>/<tool>/<obs>/<answer> reasoning chain",
+    )
     args = p.parse_args()
 
     print(f"==> Library: {args.library_dir}")
     lib = Library(args.library_dir)
     print(f"    {len(lib.registry)} entries: {sorted(lib.registry.keys())}")
 
-    print(f"\n==> Router (Gemini) selects relevant skills/tools for the prompt")
+    print("\n==> Router (Gemini) selects relevant skills/tools for the prompt")
     router = Router(lib)
     skill_context = router.prepare_context(args.prompt)
     print(f"    context bytes: {len(skill_context)}")
 
     pool = EndpointPool(endpoints_file=args.endpoints)
-    from src.sub_agent import SUBAGENT_MODEL
-    print(f"\n==> SubAgent (vLLM) scores the pair")
+    from rewardharness.evaluation.engine import SUBAGENT_MODEL
+
+    print("\n==> SubAgent (vLLM) scores the pair")
     print(f"    model id: {SUBAGENT_MODEL!r}  (override with REWARDHARNESS_SUBAGENT_MODEL)")
     print(f"    endpoints: {pool.size} listed in {args.endpoints}")
     agent = SubAgent(lib, pool)
@@ -96,10 +104,12 @@ def main():
     )
 
     print("\n==> Result")
-    print(json.dumps(
-        {k: v for k, v in result.items() if k != "chain"},
-        indent=2,
-    ))
+    print(
+        json.dumps(
+            {k: v for k, v in result.items() if k != "chain"},
+            indent=2,
+        )
+    )
     if "chain" in result:
         if args.show_chain:
             print("\n==> Reasoning chain")

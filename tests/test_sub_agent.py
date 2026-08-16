@@ -1,16 +1,20 @@
 """Unit tests for SubAgent."""
 
 import json
-import pytest
-from unittest.mock import MagicMock, patch, call
+from unittest.mock import MagicMock, patch
 
-from src.sub_agent import SubAgent, BASE_INSTRUCTIONS_NO_TOOLS, TOOL_INSTRUCTIONS, FALLBACK_ANSWER
+import pytest
+
+from rewardharness.evaluation.engine import (
+    SubAgent,
+)
 
 
 class TestSubAgent:
     @pytest.fixture
     def mock_library(self, tmp_library):
-        from src.library import Library
+        from rewardharness.library import Library
+
         lib = Library(str(tmp_library))
         return lib
 
@@ -26,18 +30,24 @@ class TestSubAgent:
 
     def test_direct_answer_no_tools(self, sub_agent):
         """SubAgent returns answer directly without tool calls."""
-        answer_json = json.dumps({
-            "preference": "A",
-            "score_A_instruction": 4, "score_A_quality": 3,
-            "score_B_instruction": 2, "score_B_quality": 2,
-            "reasoning": "A follows instruction better"
-        })
-        vllm_output = f'<think>Comparing images</think>\n<answer>{answer_json}</answer>'
+        answer_json = json.dumps(
+            {
+                "preference": "A",
+                "score_A_instruction": 4,
+                "score_A_quality": 3,
+                "score_B_instruction": 2,
+                "score_B_quality": 2,
+                "reasoning": "A follows instruction better",
+            }
+        )
+        vllm_output = f"<think>Comparing images</think>\n<answer>{answer_json}</answer>"
 
-        with patch("src.sub_agent.OpenAI") as MockOpenAI:
+        with patch("rewardharness.evaluation.engine.OpenAI") as MockOpenAI:
             mock_client = MagicMock()
             mock_client.chat.completions.create.return_value.choices = [MagicMock()]
-            mock_client.chat.completions.create.return_value.choices[0].message.content = vllm_output
+            mock_client.chat.completions.create.return_value.choices[
+                0
+            ].message.content = vllm_output
             MockOpenAI.return_value = mock_client
 
             result = sub_agent.evaluate("src_b64", "a_b64", "b_b64", "add text", "")
@@ -52,15 +62,20 @@ class TestSubAgent:
         mock_library.add_tool("tool-ocr", "OCR", "You are OCR", {}, {}, "## OCR")
 
         tool_call_output = '<think>Need OCR</think>\n<tool>{"name": "tool-ocr", "images": ["b64"], "query": "read"}</tool>'
-        answer_json = json.dumps({
-            "preference": "B",
-            "score_A_instruction": 2, "score_A_quality": 2,
-            "score_B_instruction": 4, "score_B_quality": 3,
-            "reasoning": "B has correct text"
-        })
-        answer_output = f'<think>OCR shows B correct</think>\n<answer>{answer_json}</answer>'
+        answer_json = json.dumps(
+            {
+                "preference": "B",
+                "score_A_instruction": 2,
+                "score_A_quality": 2,
+                "score_B_instruction": 4,
+                "score_B_quality": 3,
+                "reasoning": "B has correct text",
+            }
+        )
+        answer_output = f"<think>OCR shows B correct</think>\n<answer>{answer_json}</answer>"
 
         call_count = [0]
+
         def mock_create(**kwargs):
             resp = MagicMock()
             resp.choices = [MagicMock()]
@@ -71,12 +86,14 @@ class TestSubAgent:
             call_count[0] += 1
             return resp
 
-        with patch("src.sub_agent.OpenAI") as MockVLLM:
+        with patch("rewardharness.evaluation.engine.OpenAI") as MockVLLM:
             mock_vllm = MagicMock()
             mock_vllm.chat.completions.create.side_effect = mock_create
             MockVLLM.return_value = mock_vllm
 
-            with patch.object(mock_library, "call_tool", return_value={"text": "Hello", "confidence": 0.9}) as mock_call_tool:
+            with patch.object(
+                mock_library, "call_tool", return_value={"text": "Hello", "confidence": 0.9}
+            ) as mock_call_tool:
                 result = sub_agent.evaluate("src", "a", "b", "add text", "")
 
         assert result["preference"] == "B"
@@ -84,8 +101,10 @@ class TestSubAgent:
 
     def test_tool_parse_extracts_json(self, sub_agent):
         """<tool> tag content is correctly parsed as JSON."""
-        from src.sub_agent import SubAgent
-        tool_text = '<tool>{"name": "tool-detect", "images": ["abc"], "query": "find objects"}</tool>'
+
+        tool_text = (
+            '<tool>{"name": "tool-detect", "images": ["abc"], "query": "find objects"}</tool>'
+        )
         sa = sub_agent
         parsed = sa._parse_tool_call(tool_text)
         assert parsed["name"] == "tool-detect"
@@ -100,10 +119,12 @@ class TestSubAgent:
 
     def test_fallback_on_no_answer(self, sub_agent):
         """Returns fallback when SubAgent never outputs <answer>."""
-        with patch("src.sub_agent.OpenAI") as MockVLLM:
+        with patch("rewardharness.evaluation.engine.OpenAI") as MockVLLM:
             mock_vllm = MagicMock()
             mock_vllm.chat.completions.create.return_value.choices = [MagicMock()]
-            mock_vllm.chat.completions.create.return_value.choices[0].message.content = "<think>I'm confused</think>"
+            mock_vllm.chat.completions.create.return_value.choices[
+                0
+            ].message.content = "<think>I'm confused</think>"
             MockVLLM.return_value = mock_vllm
 
             result = sub_agent.evaluate("src", "a", "b", "test", "")
@@ -117,7 +138,7 @@ class TestSubAgent:
 
         tool_output = '<tool>{"name": "tool-test", "images": [], "query": "test"}</tool>'
 
-        with patch("src.sub_agent.OpenAI") as MockVLLM:
+        with patch("rewardharness.evaluation.engine.OpenAI") as MockVLLM:
             mock_vllm = MagicMock()
             mock_vllm.chat.completions.create.return_value.choices = [MagicMock()]
             mock_vllm.chat.completions.create.return_value.choices[0].message.content = tool_output
@@ -130,17 +151,23 @@ class TestSubAgent:
 
     def test_empty_context_pure_reasoning(self, sub_agent):
         """With empty skill_context, SubAgent uses pure Qwen reasoning."""
-        answer_json = json.dumps({
-            "preference": "A",
-            "score_A_instruction": 3, "score_A_quality": 3,
-            "score_B_instruction": 2, "score_B_quality": 2,
-            "reasoning": "A better"
-        })
+        answer_json = json.dumps(
+            {
+                "preference": "A",
+                "score_A_instruction": 3,
+                "score_A_quality": 3,
+                "score_B_instruction": 2,
+                "score_B_quality": 2,
+                "reasoning": "A better",
+            }
+        )
 
-        with patch("src.sub_agent.OpenAI") as MockVLLM:
+        with patch("rewardharness.evaluation.engine.OpenAI") as MockVLLM:
             mock_vllm = MagicMock()
             mock_vllm.chat.completions.create.return_value.choices = [MagicMock()]
-            mock_vllm.chat.completions.create.return_value.choices[0].message.content = f'<answer>{answer_json}</answer>'
+            mock_vllm.chat.completions.create.return_value.choices[
+                0
+            ].message.content = f"<answer>{answer_json}</answer>"
             MockVLLM.return_value = mock_vllm
 
             result = sub_agent.evaluate("src", "a", "b", "test", "")  # empty context
@@ -150,18 +177,26 @@ class TestSubAgent:
     def test_subagent_model_override(self, sub_agent):
         """The model id sent to vLLM is read from src.sub_agent.SUBAGENT_MODEL,
         which itself is sourced from $REWARDHARNESS_SUBAGENT_MODEL at import time."""
-        answer_json = json.dumps({
-            "preference": "A",
-            "score_A_instruction": 3, "score_A_quality": 3,
-            "score_B_instruction": 2, "score_B_quality": 2,
-            "reasoning": "A"
-        })
+        answer_json = json.dumps(
+            {
+                "preference": "A",
+                "score_A_instruction": 3,
+                "score_A_quality": 3,
+                "score_B_instruction": 2,
+                "score_B_quality": 2,
+                "reasoning": "A",
+            }
+        )
 
-        with patch("src.sub_agent.SUBAGENT_MODEL", "my-org/my-vlm-7b"), \
-             patch("src.sub_agent.OpenAI") as MockVLLM:
+        with (
+            patch("rewardharness.evaluation.engine.SUBAGENT_MODEL", "my-org/my-vlm-7b"),
+            patch("rewardharness.evaluation.engine.OpenAI") as MockVLLM,
+        ):
             mock_vllm = MagicMock()
             mock_vllm.chat.completions.create.return_value.choices = [MagicMock()]
-            mock_vllm.chat.completions.create.return_value.choices[0].message.content = f'<answer>{answer_json}</answer>'
+            mock_vllm.chat.completions.create.return_value.choices[
+                0
+            ].message.content = f"<answer>{answer_json}</answer>"
             MockVLLM.return_value = mock_vllm
 
             sub_agent.evaluate("src", "a", "b", "test", "")
@@ -175,18 +210,32 @@ class TestSubAgent:
         mock_library.add_tool("tool-fail", "Fail", "fail prompt", {}, {}, "## Fail")
 
         call_count = [0]
+
         def mock_create(**kwargs):
             resp = MagicMock()
             resp.choices = [MagicMock()]
             if call_count[0] == 0:
-                resp.choices[0].message.content = '<tool>{"name": "tool-fail", "images": [], "query": "test"}</tool>'
+                resp.choices[
+                    0
+                ].message.content = (
+                    '<tool>{"name": "tool-fail", "images": [], "query": "test"}</tool>'
+                )
             else:
-                answer = json.dumps({"preference": "A", "score_A_instruction": 3, "score_A_quality": 3, "score_B_instruction": 2, "score_B_quality": 2, "reasoning": "ok"})
-                resp.choices[0].message.content = f'<answer>{answer}</answer>'
+                answer = json.dumps(
+                    {
+                        "preference": "A",
+                        "score_A_instruction": 3,
+                        "score_A_quality": 3,
+                        "score_B_instruction": 2,
+                        "score_B_quality": 2,
+                        "reasoning": "ok",
+                    }
+                )
+                resp.choices[0].message.content = f"<answer>{answer}</answer>"
             call_count[0] += 1
             return resp
 
-        with patch("src.sub_agent.OpenAI") as MockVLLM:
+        with patch("rewardharness.evaluation.engine.OpenAI") as MockVLLM:
             mock_vllm = MagicMock()
             mock_vllm.chat.completions.create.side_effect = mock_create
             MockVLLM.return_value = mock_vllm

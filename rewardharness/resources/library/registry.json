@@ -1,0 +1,39 @@
+{
+  "schema_version": 2,
+  "library": {
+    "id": "library",
+    "status": "active"
+  },
+  "entries": {
+    "score-calibration": {
+      "description": "Calibrated scoring guidance for evaluating a single edited image using the full 1-4 scale.",
+      "path": "skills/score-calibration/SKILL.md",
+      "kind": "skill"
+    },
+    "image-quality-and-artifact-analyzer": {
+      "description": "Analyzes a single edited image for visual artifacts, distortions, blurriness, unnatural lighting, and over-editing.",
+      "path": "tools/image-quality-and-artifact-analyzer/SKILL.md",
+      "kind": "tool"
+    },
+    "evaluating-thematic-and-setting-accuracy": {
+      "description": "Guidelines for evaluating full setting transformations and ensuring exact thematic matches.",
+      "path": "skills/evaluating-thematic-and-setting-accuracy/SKILL.md",
+      "kind": "skill"
+    },
+    "verifying-multi-attribute-objects": {
+      "description": "Guidelines for evaluating prompts that request objects with multiple specific attributes (e.g., material, color, specific parts).",
+      "path": "skills/verifying-multi-attribute-objects/SKILL.md",
+      "kind": "skill"
+    },
+    "visual-text-and-layout-analyzer": {
+      "description": "Analyzes images for exact text content (OCR), spelling, object counting, and spatial relationships (e.g., under, in front of).",
+      "path": "tools/visual-text-and-layout-analyzer/SKILL.md",
+      "kind": "tool"
+    },
+    "fine-grained-object-verifier": {
+      "description": "Verifies the presence, exact attributes, and transformations of specific objects (e.g., 'clear plastic bottle with a nipple').",
+      "path": "tools/fine-grained-object-verifier/SKILL.md",
+      "kind": "tool"
+    }
+  }
+}

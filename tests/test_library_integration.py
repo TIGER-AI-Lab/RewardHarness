@@ -4,13 +4,10 @@ snapshot/restore and registry persistence.
 Run with:  cd /path/to/your/reward-harness-checkout && python -m pytest tests/test_library_integration.py -v
 """
 
-import json
-import os
-
 import pytest
 import yaml
 
-from src.library import Library
+from rewardharness.library import Library
 
 
 class TestLibraryFullLifecycle:
@@ -86,7 +83,7 @@ class TestLibraryFullLifecycle:
         raw = skill_path.read_text()
         fm = self._parse_frontmatter(raw)
         assert fm["name"] == "color-check"
-        assert fm["type"] == "skill"
+        assert fm["kind"] == "skill"
         assert fm["description"] == "Check color consistency"
 
         # Body check
@@ -128,14 +125,12 @@ class TestLibraryFullLifecycle:
         raw = self._read_skill_md("skills/edge-detect/SKILL.md")
         fm = self._parse_frontmatter(raw)
         assert fm["name"] == "edge-detect"
-        assert fm["type"] == "skill"
+        assert fm["kind"] == "skill"
         assert fm["description"] == "Edge sharpness"
 
     def test_04b_update_skill_with_new_description(self):
         self.lib.add_skill("edge-detect", "Edge sharpness", "## Old Body")
-        self.lib.update_skill(
-            "edge-detect", "## Updated Body", new_description="Better edge check"
-        )
+        self.lib.update_skill("edge-detect", "## Updated Body", new_description="Better edge check")
 
         result = self.lib.get_skill("edge-detect")
         assert result["description"] == "Better edge check"
@@ -161,7 +156,7 @@ class TestLibraryFullLifecycle:
         raw = tool_path.read_text()
         fm = self._parse_frontmatter(raw)
         assert fm["name"] == "tool-ocr"
-        assert fm["type"] == "tool"
+        assert fm["kind"] == "tool"
         assert fm["description"] == "Extract text from images"
         assert fm["system_prompt"] == "You are an OCR tool. Return JSON."
         assert fm["input_schema"] == {"images": "list[base64_str]", "query": "str"}
@@ -176,8 +171,11 @@ class TestLibraryFullLifecycle:
 
     def test_06_update_tool_only_changes_system_prompt(self):
         self.lib.add_tool(
-            "tool-ocr", "Extract text", "Original OCR prompt",
-            {"images": "list"}, {"text": "str"},
+            "tool-ocr",
+            "Extract text",
+            "Original OCR prompt",
+            {"images": "list"},
+            {"text": "str"},
             "## OCR Tool\nOriginal body content.",
         )
 
@@ -205,8 +203,11 @@ class TestLibraryFullLifecycle:
 
     def test_07_get_tool_returns_correct_system_prompt(self):
         self.lib.add_tool(
-            "tool-seg", "Segment regions", "You are a segmentation tool.",
-            {"images": "list"}, {"regions": "list"},
+            "tool-seg",
+            "Segment regions",
+            "You are a segmentation tool.",
+            {"images": "list"},
+            {"regions": "list"},
             "## Segmentation\nIdentify regions.",
         )
 
@@ -223,9 +224,7 @@ class TestLibraryFullLifecycle:
 
     def test_08_snapshot_captures_all(self):
         self.lib.add_skill("s1", "Skill one", "## S1 Body")
-        self.lib.add_tool(
-            "t1", "Tool one", "sys prompt 1", {"in": "x"}, {"out": "y"}, "## T1 Body"
-        )
+        self.lib.add_tool("t1", "Tool one", "sys prompt 1", {"in": "x"}, {"out": "y"}, "## T1 Body")
 
         snap = self.lib.snapshot()
 
@@ -248,18 +247,14 @@ class TestLibraryFullLifecycle:
     def test_09_10_add_after_snapshot_then_restore(self):
         # Setup: add initial items
         self.lib.add_skill("s1", "Skill one", "## S1 Body")
-        self.lib.add_tool(
-            "t1", "Tool one", "sys prompt 1", {"in": "x"}, {"out": "y"}, "## T1 Body"
-        )
+        self.lib.add_tool("t1", "Tool one", "sys prompt 1", {"in": "x"}, {"out": "y"}, "## T1 Body")
 
         # Take snapshot
         snap = self.lib.snapshot()
 
         # Step 9: Add more items after snapshot
         self.lib.add_skill("s2", "Skill two", "## S2 Body")
-        self.lib.add_tool(
-            "t2", "Tool two", "sys prompt 2", {}, {}, "## T2 Body"
-        )
+        self.lib.add_tool("t2", "Tool two", "sys prompt 2", {}, {}, "## T2 Body")
         # Also modify an existing item
         self.lib.update_skill("s1", "## S1 Modified Body")
 
@@ -284,9 +279,7 @@ class TestLibraryFullLifecycle:
         assert "s1" in self.lib.registry
         assert "t1" in self.lib.registry
         s1 = self.lib.get_skill("s1")
-        assert "## S1 Body" in s1["content"], (
-            "Restored skill must have original body, not modified"
-        )
+        assert "## S1 Body" in s1["content"], "Restored skill must have original body, not modified"
         assert "Modified" not in s1["content"]
 
         t1 = self.lib.get_tool("t1")
@@ -306,8 +299,12 @@ class TestLibraryFullLifecycle:
     def test_11_registry_persistence(self):
         self.lib.add_skill("persistent-skill", "Persists across loads", "## Persist")
         self.lib.add_tool(
-            "persistent-tool", "Also persists", "persist prompt",
-            {"in": "a"}, {"out": "b"}, "## Persist Tool"
+            "persistent-tool",
+            "Also persists",
+            "persist prompt",
+            {"in": "a"},
+            {"out": "b"},
+            "## Persist Tool",
         )
 
         # Create a completely new Library instance from the same directory
@@ -346,7 +343,7 @@ class TestLibraryFullLifecycle:
         raw = self._read_skill_md("skills/eval-color/SKILL.md")
         fm = self._parse_frontmatter(raw)
         assert fm["name"] == "eval-color"
-        assert fm["type"] == "skill"
+        assert fm["kind"] == "skill"
         body = self._parse_body(raw)
         assert "Check hues" in body
 
@@ -365,8 +362,11 @@ class TestLibraryFullLifecycle:
 
         # 5. add_tool
         self.lib.add_tool(
-            "vlm-ocr", "OCR tool", "You read text.",
-            {"images": "list"}, {"text": "str"},
+            "vlm-ocr",
+            "OCR tool",
+            "You read text.",
+            {"images": "list"},
+            {"text": "str"},
             "## OCR\nRead text from images.",
         )
         raw_tool = self._read_skill_md("tools/vlm-ocr/SKILL.md")

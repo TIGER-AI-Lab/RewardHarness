@@ -21,9 +21,7 @@ import time
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from io import BytesIO
-from pathlib import Path
 
-import numpy as np
 import requests
 from datasets import load_dataset
 from openai import OpenAI
@@ -37,8 +35,15 @@ API_KEY = os.environ.get("CLAUDE_API_KEY", "demo")
 MUSEUM_BASE = "https://chromaica.github.io/Museum/ImagenHub_Text-Guided_IE"
 
 MODELS_WITH_RATINGS = [
-    "CycleDiffusion", "DiffEdit", "Imagic", "InstructPix2Pix",
-    "MagicBrush", "Pix2PixZero", "Prompt2prompt", "SDEdit", "Text2Live"
+    "CycleDiffusion",
+    "DiffEdit",
+    "Imagic",
+    "InstructPix2Pix",
+    "MagicBrush",
+    "Pix2PixZero",
+    "Prompt2prompt",
+    "SDEdit",
+    "Text2Live",
 ]
 
 # VIEScore template (from EditReward)
@@ -107,7 +112,10 @@ def parse_viescore(response: str) -> list:
         pass
 
     # Fallback: find any array of 4 numbers
-    match = re.search(r'\[\s*(\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)\s*\]', response)
+    match = re.search(
+        r"\[\s*(\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)\s*\]",
+        response,
+    )
     if match:
         scores = [float(match.group(i)) for i in range(1, 5)]
         if all(0 <= s <= 10 for s in scores):
@@ -155,9 +163,14 @@ def load_human_ratings(ratings_dir: str) -> dict:
     return result
 
 
-def evaluate_sample(source_img: Image.Image, edited_img: Image.Image,
-                    instruction: str, source_caption: str, target_caption: str,
-                    model: str) -> dict:
+def evaluate_sample(
+    source_img: Image.Image,
+    edited_img: Image.Image,
+    instruction: str,
+    source_caption: str,
+    target_caption: str,
+    model: str,
+) -> dict:
     """Score a single (source, edited) pair with VIEScore template."""
     client = OpenAI(base_url=BASE_URL, api_key=API_KEY)
 
@@ -165,7 +178,10 @@ def evaluate_sample(source_img: Image.Image, edited_img: Image.Image,
     edited_b64 = image_to_base64(edited_img)
 
     user_content = [
-        {"type": "text", "text": f"Source Image prompt: {source_caption}\nTarget Image prompt after editing: {target_caption}\nEditing instruction: {instruction}\n\nSource Image:"},
+        {
+            "type": "text",
+            "text": f"Source Image prompt: {source_caption}\nTarget Image prompt after editing: {target_caption}\nEditing instruction: {instruction}\n\nSource Image:",
+        },
         {"type": "image_url", "image_url": {"url": source_b64}},
         {"type": "text", "text": "\nAI Edited Image:"},
         {"type": "image_url", "image_url": {"url": edited_b64}},
@@ -192,8 +208,10 @@ def evaluate_sample(source_img: Image.Image, edited_img: Image.Image,
 
 def fisher_z_avg(correlations: list) -> float:
     """Fisher Z-transform average of Spearman correlations."""
-    z_values = [0.5 * math.log((1 + r) / (1 - r)) if abs(r) < 1 else float('inf') * (1 if r > 0 else -1)
-                for r in correlations]
+    z_values = [
+        0.5 * math.log((1 + r) / (1 - r)) if abs(r) < 1 else float("inf") * (1 if r > 0 else -1)
+        for r in correlations
+    ]
     z_values = [z for z in z_values if math.isfinite(z)]
     if not z_values:
         return 0.0
@@ -246,18 +264,22 @@ def main():
         row = ds_lookup[uid]
         for editing_model, gt_score in model_scores.items():
             edited_url = f"{MUSEUM_BASE}/{editing_model}/{uid}"
-            tasks.append({
-                "uid": uid,
-                "editing_model": editing_model,
-                "source_img": row["source_img"],
-                "edited_url": edited_url,
-                "instruction": row["instruction"],
-                "source_caption": row.get("source_global_caption", ""),
-                "target_caption": row.get("target_global_caption", ""),
-                "gt_score": gt_score,
-            })
+            tasks.append(
+                {
+                    "uid": uid,
+                    "editing_model": editing_model,
+                    "source_img": row["source_img"],
+                    "edited_url": edited_url,
+                    "instruction": row["instruction"],
+                    "source_caption": row.get("source_global_caption", ""),
+                    "target_caption": row.get("target_global_caption", ""),
+                    "gt_score": gt_score,
+                }
+            )
 
-    print(f"Total evaluation tasks: {len(tasks)} ({len(human_ratings)} samples x {len(MODELS_WITH_RATINGS)} models)")
+    print(
+        f"Total evaluation tasks: {len(tasks)} ({len(human_ratings)} samples x {len(MODELS_WITH_RATINGS)} models)"
+    )
 
     # Check for existing results
     results_file = os.path.join(results_dir, f"{args.model}_imagenhub.json")
@@ -285,9 +307,12 @@ def main():
             # Download edited image
             edited_img = download_image(task["edited_url"])
             result = evaluate_sample(
-                task["source_img"], edited_img,
-                task["instruction"], task["source_caption"], task["target_caption"],
-                args.model
+                task["source_img"],
+                edited_img,
+                task["instruction"],
+                task["source_caption"],
+                task["target_caption"],
+                args.model,
             )
             return {
                 "uid": task["uid"],
@@ -312,20 +337,24 @@ def main():
                             _save_partial(results_file, args.model, all_results)
                     except Exception as e:
                         errors += 1
-                        all_results.append({
-                            "uid": task["uid"],
-                            "editing_model": task["editing_model"],
-                            "gt_score": task["gt_score"],
-                            "scores": None,
-                            "aggregate": None,
-                            "response": str(e),
-                        })
+                        all_results.append(
+                            {
+                                "uid": task["uid"],
+                                "editing_model": task["editing_model"],
+                                "gt_score": task["gt_score"],
+                                "scores": None,
+                                "aggregate": None,
+                                "response": str(e),
+                            }
+                        )
                         if errors <= 5:
-                            tqdm.write(f"[ERROR] {task['uid']}/{task['editing_model']}: {str(e)[:100]}")
+                            tqdm.write(
+                                f"[ERROR] {task['uid']}/{task['editing_model']}: {str(e)[:100]}"
+                            )
                     pbar.update(1)
 
         elapsed = time.perf_counter() - t0
-        print(f"Completed in {elapsed:.1f}s ({len(to_process)/elapsed:.1f} tasks/s)")
+        print(f"Completed in {elapsed:.1f}s ({len(to_process) / elapsed:.1f} tasks/s)")
         if errors:
             print(f"Errors: {errors}")
 
@@ -362,10 +391,13 @@ def main():
         "benchmark": "ImagenHub",
         "spearman_avg": pct,
         "spearman_raw": avg_spearman,
-        "per_model_spearman": {m: spearmanr(
-            [r["aggregate"] for r in by_model[m]],
-            [r["gt_score"] for r in by_model[m]]
-        ).statistic for m in MODELS_WITH_RATINGS if len(by_model[m]) >= 3},
+        "per_model_spearman": {
+            m: spearmanr(
+                [r["aggregate"] for r in by_model[m]], [r["gt_score"] for r in by_model[m]]
+            ).statistic
+            for m in MODELS_WITH_RATINGS
+            if len(by_model[m]) >= 3
+        },
         "n_valid": len(valid),
         "n_total": len(all_results),
         "results": all_results,
@@ -388,7 +420,9 @@ def main():
 
 def _save_partial(path, model, results):
     with open(path, "w") as f:
-        json.dump({"model": model, "benchmark": "ImagenHub", "results": results}, f, indent=2, default=str)
+        json.dump(
+            {"model": model, "benchmark": "ImagenHub", "results": results}, f, indent=2, default=str
+        )
 
 
 if __name__ == "__main__":

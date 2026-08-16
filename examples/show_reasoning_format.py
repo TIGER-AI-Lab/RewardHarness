@@ -10,7 +10,6 @@ No external calls; safe to run with just stdlib.
 
 import textwrap
 
-
 EXAMPLE_CHAIN = """\
 <think>
 The prompt asks to add a "Sale" sign on the storefront. I need to check three
@@ -55,18 +54,21 @@ preserved.
 def main():
     print("RewardHarness Sub-Agent reasoning chain — example output")
     print("=" * 64)
-    print(textwrap.dedent("""
+    print(
+        textwrap.dedent("""
         Tag legend:
           <think>   internal reasoning, ignored by the scorer
           <tool>    optional structured call to a Tool from the Library
           <obs>     tool result injected back into the chain
           <answer>  final JSON verdict — the only part read by the pipeline
-    """))
+    """)
+    )
     print("Example trace (one preference judgment):")
     print("-" * 64)
     print(EXAMPLE_CHAIN)
     print("-" * 64)
-    print(textwrap.dedent("""
+    print(
+        textwrap.dedent("""
         Parsing rules (see src/sub_agent.py):
           - The Sub-Agent is allowed up to MAX_TOOL_CALLS tool dispatches
             per judgment (constant in src/sub_agent.py, currently 5). After
@@ -77,7 +79,8 @@ def main():
 
         The evolved library (in src/library/) determines which Tools are
         offered and which Skills shape the Sub-Agent's rubric application.
-    """))
+    """)
+    )
 
 
 if __name__ == "__main__":

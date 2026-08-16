@@ -88,15 +88,7 @@ VOTE_CORRECT = {
 
 def is_correct(model_vote: str, vote_type: str) -> bool:
     """Check if model vote matches human vote."""
-    if vote_type == "leftvote":
-        return model_vote in ("A>B",)
-    elif vote_type == "rightvote":
-        return model_vote in ("B>A",)
-    elif vote_type == "tievote":
-        return model_vote in ("A=B=Good", "A=B")
-    elif vote_type == "bothbad_vote":
-        return model_vote in ("A=B=Bad", "A=B")
-    return False
+    return model_vote in VOTE_CORRECT.get(vote_type, set())
 
 
 def evaluate_sample(example: dict, model: str, idx: int) -> dict:
@@ -112,13 +104,19 @@ def evaluate_sample(example: dict, model: str, idx: int) -> dict:
     right_b64 = image_to_base64(example["right_output_image"])
 
     user_content = [
-        {"type": "text", "text": f"Source Image prompt: {source_prompt}\nTarget Image prompt after editing: {target_prompt}\nEditing instruction: {instruct_prompt}\n\nSource Image:"},
+        {
+            "type": "text",
+            "text": f"Source Image prompt: {source_prompt}\nTarget Image prompt after editing: {target_prompt}\nEditing instruction: {instruct_prompt}\n\nSource Image:",
+        },
         {"type": "image_url", "image_url": {"url": source_b64}},
         {"type": "text", "text": "\nModel A Edited Image:"},
         {"type": "image_url", "image_url": {"url": left_b64}},
         {"type": "text", "text": "\nModel B Edited Image:"},
         {"type": "image_url", "image_url": {"url": right_b64}},
-        {"type": "text", "text": "\nCompare the two edited images. Which better follows the editing instruction with higher visual quality? Output your verdict."},
+        {
+            "type": "text",
+            "text": "\nCompare the two edited images. Which better follows the editing instruction with higher visual quality? Output your verdict.",
+        },
     ]
 
     resp = client.chat.completions.create(
@@ -181,7 +179,7 @@ def main():
 
     samples = list(dataset)
     if args.max_examples:
-        samples = samples[:args.max_examples]
+        samples = samples[: args.max_examples]
 
     # Check for existing partial results
     results_file = os.path.join(results_dir, f"{args.model}_genaibench.json")
@@ -221,19 +219,21 @@ def main():
                             _save_partial(results_file, args.model, all_results)
                     except Exception as e:
                         errors += 1
-                        all_results.append({
-                            "idx": idx,
-                            "vote_type": "unknown",
-                            "model_vote": "Error",
-                            "is_correct": False,
-                            "response": str(e),
-                        })
+                        all_results.append(
+                            {
+                                "idx": idx,
+                                "vote_type": "unknown",
+                                "model_vote": "Error",
+                                "is_correct": False,
+                                "response": str(e),
+                            }
+                        )
                         if errors <= 5:
                             tqdm.write(f"[ERROR] idx={idx}: {str(e)[:100]}")
                     pbar.update(1)
 
         elapsed = time.perf_counter() - t0
-        print(f"Completed in {elapsed:.1f}s ({len(to_process)/elapsed:.1f} samples/s)")
+        print(f"Completed in {elapsed:.1f}s ({len(to_process) / elapsed:.1f} samples/s)")
         if errors:
             print(f"Errors: {errors}")
 
@@ -243,9 +243,9 @@ def main():
     accuracy = n_correct / len(valid) if valid else 0
     pct = round(accuracy * 100, 1)
 
-    print(f"\n{'='*60}")
+    print(f"\n{'=' * 60}")
     print(f"RESULTS: {args.model} on GenAI-Bench (image_edition)")
-    print(f"{'='*60}")
+    print(f"{'=' * 60}")
     print(f"Accuracy: {pct}% ({n_correct}/{len(valid)})")
 
     # Vote distribution of model
@@ -259,7 +259,9 @@ def main():
         vt_samples = [r for r in valid if r["vote_type"] == vt]
         if vt_samples:
             vt_correct = sum(1 for r in vt_samples if r["is_correct"])
-            print(f"  {vt}: {vt_correct}/{len(vt_samples)} = {vt_correct/len(vt_samples)*100:.1f}%")
+            print(
+                f"  {vt}: {vt_correct}/{len(vt_samples)} = {vt_correct / len(vt_samples) * 100:.1f}%"
+            )
 
     # Save final results
     final = {
@@ -293,7 +295,12 @@ def main():
 
 def _save_partial(path, model, results):
     with open(path, "w") as f:
-        json.dump({"model": model, "benchmark": "GenAI-Bench", "results": results}, f, indent=2, default=str)
+        json.dump(
+            {"model": model, "benchmark": "GenAI-Bench", "results": results},
+            f,
+            indent=2,
+            default=str,
+        )
 
 
 if __name__ == "__main__":

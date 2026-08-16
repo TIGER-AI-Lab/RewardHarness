@@ -1,9 +1,4 @@
 #!/usr/bin/env python3
-import os, urllib.request
-for _k in [k for k in os.environ if "proxy" in k.lower()]: del os.environ[_k]
-urllib.request.getproxies = lambda: {}
-
-
 """
 Vanilla Claude benchmark on TIGER-Lab/GenAI-Bench (image_edition).
 Pairwise 4-class accuracy: A>B, B>A, A=B=Good, A=B=Bad.
@@ -16,18 +11,30 @@ import argparse
 import base64
 import json
 import os
+import pickle
 import re
 import time
+import urllib.request
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from io import BytesIO
 
-from datasets import load_dataset
 from openai import OpenAI
 from tqdm import tqdm
 
+for _key in [key for key in os.environ if "proxy" in key.lower()]:
+    del os.environ[_key]
+urllib.request.getproxies = lambda: {}
+
 BASE_URL = os.environ.get("GEMINI_GATEWAY_BASE_URL", "https://your-gateway.example.com/v1")
 API_KEY = os.environ.get("GEMINI_GATEWAY_API_KEY", "")
+
+EXPECTED_VOTES = {
+    "leftvote": {"A>B"},
+    "rightvote": {"B>A"},
+    "tievote": {"A=B=Good", "A=B"},
+    "bothbad_vote": {"A=B=Bad", "A=B"},
+}
 
 # GenAI-Bench official pairwise template for image_edition
 SYSTEM_PROMPT = """Please act as an impartial judge and a professional digital artist to evaluate the quality of the responses provided by two AI image edition models to the user inputs displayed below. You will be given model A's edited image and model B's edited image. Your job is to evaluate which assistant's edited image is better.
@@ -93,15 +100,7 @@ VOTE_CORRECT = {
 
 def is_correct(model_vote: str, vote_type: str) -> bool:
     """Check if model vote matches human vote."""
-    if vote_type == "leftvote":
-        return model_vote in ("A>B",)
-    elif vote_type == "rightvote":
-        return model_vote in ("B>A",)
-    elif vote_type == "tievote":
-        return model_vote in ("A=B=Good", "A=B")
-    elif vote_type == "bothbad_vote":
-        return model_vote in ("A=B=Bad", "A=B")
-    return False
+    return model_vote in EXPECTED_VOTES.get(vote_type, set())
 
 
 def evaluate_sample(example: dict, model: str, idx: int) -> dict:
@@ -117,16 +116,23 @@ def evaluate_sample(example: dict, model: str, idx: int) -> dict:
     right_b64 = image_to_base64(example["right_output_image"])
 
     user_content = [
-        {"type": "text", "text": f"Source Image prompt: {source_prompt}\nTarget Image prompt after editing: {target_prompt}\nEditing instruction: {instruct_prompt}\n\nSource Image:"},
+        {
+            "type": "text",
+            "text": f"Source Image prompt: {source_prompt}\nTarget Image prompt after editing: {target_prompt}\nEditing instruction: {instruct_prompt}\n\nSource Image:",
+        },
         {"type": "image_url", "image_url": {"url": source_b64}},
         {"type": "text", "text": "\nModel A Edited Image:"},
         {"type": "image_url", "image_url": {"url": left_b64}},
         {"type": "text", "text": "\nModel B Edited Image:"},
         {"type": "image_url", "image_url": {"url": right_b64}},
-        {"type": "text", "text": "\nCompare the two edited images. Which better follows the editing instruction with higher visual quality? Output your verdict."},
+        {
+            "type": "text",
+            "text": "\nCompare the two edited images. Which better follows the editing instruction with higher visual quality? Output your verdict.",
+        },
     ]
 
     import time as _time
+
     for _attempt in range(5):
         try:
             resp = client.chat.completions.create(
@@ -139,10 +145,10 @@ def evaluate_sample(example: dict, model: str, idx: int) -> dict:
             )
             break
         except Exception as _e:
-            if "429" in str(_e) or "TooManyRequests" in str(_e) or "Connection" in str(_e):
-                if _attempt < 4:
-                    _time.sleep(2 ** (_attempt + 1))
-                    continue
+            retryable = any(token in str(_e) for token in ("429", "TooManyRequests", "Connection"))
+            if retryable and _attempt < 4:
+                _time.sleep(2 ** (_attempt + 1))
+                continue
             raise
 
     response_text = resp.choices[0].message.content or ""
@@ -177,7 +183,7 @@ def main():
     print(f"Concurrency: {args.concurrency}")
 
     # Verify proxy
-    client = OpenAI(base_url=BASE_URL, api_key=API_KEY)
+    OpenAI(base_url=BASE_URL, api_key=API_KEY)
     # models = client.models.list()  # skip for internal gateway
     available = [args.model]  # internal gateway: skip validation
     # assert args.model in available  # internal gateway: skip, f"{args.model} not in {available}"
@@ -185,7 +191,9 @@ def main():
 
     # Load dataset
     print("Loading GenAI-Bench image_edition test_v1...")
-    import pickle; dataset = pickle.load(open(os.path.join(os.path.dirname(__file__), ".dataset_cache", "genaibench.pkl"), "rb"))
+    cache_path = os.path.join(os.path.dirname(__file__), ".dataset_cache", "genaibench.pkl")
+    with open(cache_path, "rb") as handle:
+        dataset = pickle.load(handle)
     print(f"Loaded {len(dataset)} samples")
 
     # Vote distribution
@@ -196,7 +204,7 @@ def main():
 
     samples = list(dataset)
     if args.max_examples:
-        samples = samples[:args.max_examples]
+        samples = samples[: args.max_examples]
 
     # Check for existing partial results
     results_file = os.path.join(results_dir, f"{args.model}_genaibench.json")
@@ -236,19 +244,21 @@ def main():
                             _save_partial(results_file, args.model, all_results)
                     except Exception as e:
                         errors += 1
-                        all_results.append({
-                            "idx": idx,
-                            "vote_type": "unknown",
-                            "model_vote": "Error",
-                            "is_correct": False,
-                            "response": str(e),
-                        })
+                        all_results.append(
+                            {
+                                "idx": idx,
+                                "vote_type": "unknown",
+                                "model_vote": "Error",
+                                "is_correct": False,
+                                "response": str(e),
+                            }
+                        )
                         if errors <= 5:
                             tqdm.write(f"[ERROR] idx={idx}: {str(e)[:100]}")
                     pbar.update(1)
 
         elapsed = time.perf_counter() - t0
-        print(f"Completed in {elapsed:.1f}s ({len(to_process)/elapsed:.1f} samples/s)")
+        print(f"Completed in {elapsed:.1f}s ({len(to_process) / elapsed:.1f} samples/s)")
         if errors:
             print(f"Errors: {errors}")
 
@@ -258,9 +268,9 @@ def main():
     accuracy = n_correct / len(valid) if valid else 0
     pct = round(accuracy * 100, 1)
 
-    print(f"\n{'='*60}")
+    print(f"\n{'=' * 60}")
     print(f"RESULTS: {args.model} on GenAI-Bench (image_edition)")
-    print(f"{'='*60}")
+    print(f"{'=' * 60}")
     print(f"Accuracy: {pct}% ({n_correct}/{len(valid)})")
 
     # Vote distribution of model
@@ -274,7 +284,9 @@ def main():
         vt_samples = [r for r in valid if r["vote_type"] == vt]
         if vt_samples:
             vt_correct = sum(1 for r in vt_samples if r["is_correct"])
-            print(f"  {vt}: {vt_correct}/{len(vt_samples)} = {vt_correct/len(vt_samples)*100:.1f}%")
+            print(
+                f"  {vt}: {vt_correct}/{len(vt_samples)} = {vt_correct / len(vt_samples) * 100:.1f}%"
+            )
 
     # Save final results
     final = {
@@ -308,7 +320,12 @@ def main():
 
 def _save_partial(path, model, results):
     with open(path, "w") as f:
-        json.dump({"model": model, "benchmark": "GenAI-Bench", "results": results}, f, indent=2, default=str)
+        json.dump(
+            {"model": model, "benchmark": "GenAI-Bench", "results": results},
+            f,
+            indent=2,
+            default=str,
+        )
 
 
 if __name__ == "__main__":

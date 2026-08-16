@@ -1,7 +1,8 @@
 """Unit tests for Evaluator."""
 
 import pytest
-from src.evaluator import evaluate_prediction, compute_kpair_accuracy
+
+from rewardharness.evaluation.metrics import compute_kpair_accuracy, evaluate_prediction
 
 
 class TestEvaluatePrediction:

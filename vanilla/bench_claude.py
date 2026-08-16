@@ -14,7 +14,6 @@ import base64
 import json
 import os
 import re
-import sys
 import time
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -131,7 +130,10 @@ def evaluate_pair(example: dict, model: str, idx: int) -> dict:
         {"type": "image_url", "image_url": {"url": cand1_b64}},
         {"type": "text", "text": "Edited Image B:"},
         {"type": "image_url", "image_url": {"url": cand2_b64}},
-        {"type": "text", "text": "Compare Image A and Image B. Which better follows the editing instruction with higher visual quality? Output your verdict."},
+        {
+            "type": "text",
+            "text": "Compare Image A and Image B. Which better follows the editing instruction with higher visual quality? Output your verdict.",
+        },
     ]
 
     resp = client.chat.completions.create(
@@ -147,7 +149,7 @@ def evaluate_pair(example: dict, model: str, idx: int) -> dict:
     model_vote = parse_response(response_text)
     gt = parse_ranking(example["ranking"], example["comparison_type"])
 
-    is_correct = (model_vote == gt)
+    is_correct = model_vote == gt
 
     return {
         "id": example["id"],
@@ -174,7 +176,7 @@ def compute_group_accuracy(pair_results: list, k: int) -> dict:
     correct_groups = 0
     total_groups = 0
 
-    for group_id, samples in groups.items():
+    for samples in groups.values():
         if len(samples) == expected_pairs:
             total_groups += 1
             if all(s["is_correct"] for s in samples):
@@ -194,7 +196,9 @@ def main():
     parser.add_argument("--model", default="claude-sonnet-4-6", help="Claude model name")
     parser.add_argument("--concurrency", type=int, default=256, help="Concurrent requests")
     parser.add_argument("--dataset", default="TIGER-Lab/EditReward-Bench", help="Dataset name")
-    parser.add_argument("--max-examples", type=int, default=None, help="Limit examples (for testing)")
+    parser.add_argument(
+        "--max-examples", type=int, default=None, help="Limit examples (for testing)"
+    )
     parser.add_argument("--results-dir", default=None, help="Results directory")
     args = parser.parse_args()
 
@@ -234,11 +238,11 @@ def main():
 
         pairs = k_groups[k]
         if args.max_examples:
-            pairs = pairs[:args.max_examples]
+            pairs = pairs[: args.max_examples]
 
-        print(f"\n{'='*60}")
+        print(f"\n{'=' * 60}")
         print(f"Running K={k} evaluation ({len(pairs)} pairs, concurrency={args.concurrency})")
-        print(f"{'='*60}")
+        print(f"{'=' * 60}")
 
         # Check for existing partial results
         results_file = os.path.join(results_dir, f"{args.model}_k{k}.json")
@@ -278,20 +282,22 @@ def main():
                                 _save_partial(results_file, args.model, k, pair_results)
                         except Exception as e:
                             errors += 1
-                            pair_results.append({
-                                "id": f"error_{idx}",
-                                "idx": idx,
-                                "gt": "unknown",
-                                "model_vote": "Unknown",
-                                "is_correct": False,
-                                "response": str(e),
-                            })
+                            pair_results.append(
+                                {
+                                    "id": f"error_{idx}",
+                                    "idx": idx,
+                                    "gt": "unknown",
+                                    "model_vote": "Unknown",
+                                    "is_correct": False,
+                                    "response": str(e),
+                                }
+                            )
                             if errors <= 5:
                                 tqdm.write(f"[ERROR] idx={idx}: {str(e)[:100]}")
                         pbar.update(1)
 
             elapsed = time.perf_counter() - t0
-            print(f"Completed in {elapsed:.1f}s ({len(to_process)/elapsed:.1f} pairs/s)")
+            print(f"Completed in {elapsed:.1f}s ({len(to_process) / elapsed:.1f} pairs/s)")
             if errors:
                 print(f"Errors: {errors}")
 
@@ -330,9 +336,9 @@ def main():
         print(f"Saved to {results_file}")
 
     # Print summary
-    print(f"\n{'='*60}")
+    print(f"\n{'=' * 60}")
     print(f"SUMMARY: {args.model}")
-    print(f"{'='*60}")
+    print(f"{'=' * 60}")
     for k in [2, 3, 4]:
         key = f"k{k}"
         if key in all_results:
@@ -349,11 +355,16 @@ def main():
 def _save_partial(path, model, k, pair_results):
     """Save intermediate results for resume."""
     with open(path, "w") as f:
-        json.dump({
-            "model": model,
-            "k": k,
-            "pair_results": pair_results,
-        }, f, indent=2, default=str)
+        json.dump(
+            {
+                "model": model,
+                "k": k,
+                "pair_results": pair_results,
+            },
+            f,
+            indent=2,
+            default=str,
+        )
 
 
 if __name__ == "__main__":

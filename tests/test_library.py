@@ -1,17 +1,19 @@
 """Unit tests for Library class."""
 
 import json
-import os
-import pytest
 from unittest.mock import MagicMock, patch
 
-from src.library import Library
+import pytest
+
+from rewardharness.library import Library
 
 
 class TestLibrarySkills:
     def test_add_skill(self, tmp_library):
         lib = Library(str(tmp_library))
-        lib.add_skill("color-check", "Check color consistency", "## Color Check\nVerify colors match.")
+        lib.add_skill(
+            "color-check", "Check color consistency", "## Color Check\nVerify colors match."
+        )
 
         assert "color-check" in lib.registry
         assert lib.registry["color-check"]["type"] == "skill"
@@ -20,7 +22,9 @@ class TestLibrarySkills:
 
     def test_get_skill(self, tmp_library):
         lib = Library(str(tmp_library))
-        lib.add_skill("color-check", "Check color consistency", "## Color Check\nVerify colors match.")
+        lib.add_skill(
+            "color-check", "Check color consistency", "## Color Check\nVerify colors match."
+        )
 
         skill = lib.get_skill("color-check")
         assert skill["name"] == "color-check"
@@ -59,11 +63,12 @@ class TestLibraryTools:
     def test_add_tool(self, tmp_library):
         lib = Library(str(tmp_library))
         lib.add_tool(
-            "tool-ocr", "Extract text from images",
+            "tool-ocr",
+            "Extract text from images",
             "You are an OCR tool. Return JSON.",
             {"images": "list[base64_str]", "query": "str"},
             {"text": "str", "confidence": "float"},
-            "## Tool: OCR\nExtracts text."
+            "## Tool: OCR\nExtracts text.",
         )
 
         assert "tool-ocr" in lib.registry
@@ -72,10 +77,12 @@ class TestLibraryTools:
     def test_get_tool(self, tmp_library):
         lib = Library(str(tmp_library))
         lib.add_tool(
-            "tool-ocr", "Extract text from images",
+            "tool-ocr",
+            "Extract text from images",
             "You are an OCR tool.",
-            {"images": "list[base64_str]"}, {"text": "str"},
-            "## Tool: OCR\nExtracts text."
+            {"images": "list[base64_str]"},
+            {"text": "str"},
+            "## Tool: OCR\nExtracts text.",
         )
 
         tool = lib.get_tool("tool-ocr")
@@ -85,9 +92,12 @@ class TestLibraryTools:
     def test_update_tool_system_prompt(self, tmp_library):
         lib = Library(str(tmp_library))
         lib.add_tool(
-            "tool-ocr", "Extract text", "Original prompt",
-            {"images": "list"}, {"text": "str"},
-            "## OCR Tool body"
+            "tool-ocr",
+            "Extract text",
+            "Original prompt",
+            {"images": "list"},
+            {"text": "str"},
+            "## OCR Tool body",
         )
         lib.update_tool("tool-ocr", "Updated prompt")
 
@@ -101,21 +111,26 @@ class TestLibraryTools:
         """call_tool must use OpenAI API (vLLM), NOT subprocess."""
         lib = Library(str(tmp_library))
         lib.add_tool(
-            "tool-ocr", "Extract text",
+            "tool-ocr",
+            "Extract text",
             "You are an OCR tool. Return JSON.",
-            {"images": "list"}, {"text": "str"},
-            "## OCR"
+            {"images": "list"},
+            {"text": "str"},
+            "## OCR",
         )
 
         mock_pool = MagicMock()
         mock_pool.next.return_value = "http://localhost:8000/v1"
 
         # Mock openai.OpenAI
-        mock_vllm_client.chat.completions.create.return_value.choices[0].message.content = \
-            json.dumps({"text": "Hello", "confidence": 0.95})
+        mock_vllm_client.chat.completions.create.return_value.choices[
+            0
+        ].message.content = json.dumps({"text": "Hello", "confidence": 0.95})
 
-        with patch("src.library.openai.OpenAI", return_value=mock_vllm_client):
-            result = lib.call_tool("tool-ocr", {"images": ["base64data"], "query": "read text"}, mock_pool)
+        with patch("rewardharness.library.repository.openai.OpenAI", return_value=mock_vllm_client):
+            result = lib.call_tool(
+                "tool-ocr", {"images": ["base64data"], "query": "read text"}, mock_pool
+            )
 
         assert result["text"] == "Hello"
         assert result["confidence"] == 0.95
@@ -129,18 +144,23 @@ class TestLibraryTools:
         call, so VLM-swap configurations don't break inside <tool> blocks."""
         lib = Library(str(tmp_library))
         lib.add_tool(
-            "tool-ocr", "Extract text",
+            "tool-ocr",
+            "Extract text",
             "You are an OCR tool. Return JSON.",
-            {"images": "list"}, {"text": "str"},
-            "## OCR"
+            {"images": "list"},
+            {"text": "str"},
+            "## OCR",
         )
         mock_pool = MagicMock()
         mock_pool.next.return_value = "http://localhost:8000/v1"
-        mock_vllm_client.chat.completions.create.return_value.choices[0].message.content = \
-            json.dumps({"text": "ok"})
+        mock_vllm_client.chat.completions.create.return_value.choices[
+            0
+        ].message.content = json.dumps({"text": "ok"})
 
-        with patch("src.library.SUBAGENT_MODEL", "my-org/my-vlm-7b"), \
-             patch("src.library.openai.OpenAI", return_value=mock_vllm_client):
+        with (
+            patch("rewardharness.library.repository.SUBAGENT_MODEL", "my-org/my-vlm-7b"),
+            patch("rewardharness.library.repository.openai.OpenAI", return_value=mock_vllm_client),
+        ):
             lib.call_tool("tool-ocr", {"images": ["b64"], "query": "read"}, mock_pool)
 
         # Every call to chat.completions.create must carry the patched model

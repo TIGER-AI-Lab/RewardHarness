@@ -1,7 +1,9 @@
 ---
+schema_version: 2
 name: realism-and-artifact-penalties
-type: skill
-description: Guidance on penalizing artifacts while allowing conceptual unrealism if requested by the prompt.
+kind: skill
+description: Guidance on penalizing artifacts while allowing conceptual unrealism
+  if requested by the prompt.
 ---
 
 # Realism and Artifact Penalties

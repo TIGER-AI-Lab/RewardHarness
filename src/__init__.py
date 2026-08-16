@@ -1,6 +1,9 @@
-"""RewardHarness — self-evolving agentic reward framework.
+"""Compatibility namespace for RewardHarness 0.1 imports.
 
-See https://rewardharness.com or https://arxiv.org/abs/2605.08703.
+New code should import from :mod:`rewardharness`. The ``src`` namespace will
+remain available through the 0.2 release series.
 """
 
-__version__ = "0.1.2"
+from rewardharness import __version__
+
+__all__ = ["__version__"]

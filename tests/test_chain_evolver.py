@@ -9,19 +9,18 @@ Tests the full flow:
 
 import json
 import os
-
-import pytest
-import yaml
 from unittest.mock import MagicMock, patch
 
-from src.chain_analyzer import ChainAnalyzer
-from src.evolver import Evolver
-from src.library import Library
+import pytest
 
+from rewardharness.evolution.analyzer import ChainAnalyzer
+from rewardharness.evolution.evolver import Evolver
+from rewardharness.library import Library
 
 # ---------------------------------------------------------------------------
 # Fixtures
 # ---------------------------------------------------------------------------
+
 
 @pytest.fixture
 def failure_examples():
@@ -115,8 +114,8 @@ def fixed_signals():
                 "system_prompt": (
                     "You are an artifact detection specialist. Examine the "
                     "boundary between edited and unedited regions. "
-                    "Return JSON: {\"has_artifacts\": bool, \"severity\": 1-4, "
-                    "\"locations\": [str]}"
+                    'Return JSON: {"has_artifacts": bool, "severity": 1-4, '
+                    '"locations": [str]}'
                 ),
                 "input_schema": {"images": "list[base64_str]", "query": "str"},
                 "output_schema": {
@@ -152,14 +151,18 @@ def library_on_disk(tmp_path):
 # ChainAnalyzer unit tests
 # ---------------------------------------------------------------------------
 
+
 class TestChainAnalyzerFormat:
     """Verify _format_example produces expected text."""
 
     def test_format_correct(self):
         analyzer = ChainAnalyzer.__new__(ChainAnalyzer)
         ex = {
-            "group_id": "g1", "prompt": "test", "gt": "A",
-            "prediction": "A", "correct": True,
+            "group_id": "g1",
+            "prompt": "test",
+            "gt": "A",
+            "prediction": "A",
+            "correct": True,
             "reasoning_chain": "chain text",
         }
         text = analyzer._format_example(ex)
@@ -170,8 +173,11 @@ class TestChainAnalyzerFormat:
     def test_format_incorrect(self):
         analyzer = ChainAnalyzer.__new__(ChainAnalyzer)
         ex = {
-            "group_id": "g2", "prompt": "edit", "gt": "B",
-            "prediction": "A", "correct": False,
+            "group_id": "g2",
+            "prompt": "edit",
+            "gt": "B",
+            "prediction": "A",
+            "correct": False,
             "reasoning_chain": "wrong chain",
         }
         text = analyzer._format_example(ex)
@@ -194,8 +200,7 @@ class TestChainAnalyzerValidation:
 
     def test_valid_skill_add(self):
         a = self._make_analyzer()
-        updates = [{"action": "add", "name": "s1",
-                     "description": "desc", "content_md": "body"}]
+        updates = [{"action": "add", "name": "s1", "description": "desc", "content_md": "body"}]
         result = a._validate_skill_updates(updates)
         assert len(result) == 1
 
@@ -245,8 +250,7 @@ class TestChainAnalyzerValidation:
 
     def test_valid_tool_add(self):
         a = self._make_analyzer()
-        updates = [{"action": "add", "name": "t1",
-                     "description": "desc", "system_prompt": "sp"}]
+        updates = [{"action": "add", "name": "t1", "description": "desc", "system_prompt": "sp"}]
         result = a._validate_tool_updates(updates)
         assert len(result) == 1
 
@@ -304,9 +308,9 @@ class TestChainAnalyzerValidation:
 # ChainAnalyzer.analyze() with mocked Claude API
 # ---------------------------------------------------------------------------
 
-class TestChainAnalyzerAnalyze:
 
-    @patch("src.chain_analyzer.call_gemini")
+class TestChainAnalyzerAnalyze:
+    @patch("rewardharness.evolution.analyzer.call_gemini")
     def test_analyze_returns_signals(self, mock_gemini, failure_examples, fixed_signals):
         """ChainAnalyzer.analyze() calls Gemini and returns parsed signals."""
         mock_gemini.return_value = json.dumps(fixed_signals)
@@ -335,7 +339,7 @@ class TestChainAnalyzerAnalyze:
         assert signals["skill_updates"][0]["name"] == "instruction-fidelity-check"
         assert signals["tool_updates"][0]["name"] == "edge-artifact-detector"
 
-    @patch("src.chain_analyzer.call_gemini")
+    @patch("rewardharness.evolution.analyzer.call_gemini")
     def test_analyze_json_in_fenced_block(self, mock_gemini, failure_examples, fixed_signals):
         """ChainAnalyzer handles JSON wrapped in ```json ... ``` fences."""
         mock_gemini.return_value = (
@@ -350,7 +354,7 @@ class TestChainAnalyzerAnalyze:
         assert len(signals["skill_updates"]) == 2
         assert signals["skill_updates"][1]["name"] == "artifact-detection-rubric"
 
-    @patch("src.chain_analyzer.call_gemini")
+    @patch("rewardharness.evolution.analyzer.call_gemini")
     def test_analyze_invalid_json_fallback(self, mock_gemini, failure_examples):
         """ChainAnalyzer returns empty signals on unparseable response."""
         mock_gemini.return_value = "This is not JSON at all {{{broken"
@@ -362,17 +366,20 @@ class TestChainAnalyzerAnalyze:
         assert signals["tool_updates"] == []
         assert "Failed to parse" in signals["analysis_summary"]
 
-    @patch("src.chain_analyzer.call_gemini")
+    @patch("rewardharness.evolution.analyzer.call_gemini")
     def test_analyze_validation_filters_malformed(self, mock_gemini, failure_examples):
         """Malformed entries inside skill_updates/tool_updates are filtered out."""
         bad_signals = {
             "skill_updates": [
                 # Valid
-                {"action": "add", "name": "good-skill",
-                 "description": "ok", "content_md": "## Good"},
+                {
+                    "action": "add",
+                    "name": "good-skill",
+                    "description": "ok",
+                    "content_md": "## Good",
+                },
                 # Invalid: missing content_md
-                {"action": "add", "name": "bad-skill",
-                 "description": "ok"},
+                {"action": "add", "name": "bad-skill", "description": "ok"},
             ],
             "tool_updates": [
                 # Invalid: missing system_prompt
@@ -394,8 +401,8 @@ class TestChainAnalyzerAnalyze:
 # Evolver.apply_signals() -> Library -> SKILL.md on disk
 # ---------------------------------------------------------------------------
 
-class TestEvolverApplySignals:
 
+class TestEvolverApplySignals:
     def test_add_skills_writes_skill_md(self, library_on_disk, fixed_signals):
         """Evolver writes SKILL.md files with correct frontmatter and body."""
         evolver = Evolver(library_on_disk, endpoint_pool=None)
@@ -406,8 +413,7 @@ class TestEvolverApplySignals:
 
         # ---- Check skill: instruction-fidelity-check ----
         skill_path = os.path.join(
-            library_on_disk.base_dir, "skills",
-            "instruction-fidelity-check", "SKILL.md"
+            library_on_disk.base_dir, "skills", "instruction-fidelity-check", "SKILL.md"
         )
         assert os.path.exists(skill_path), f"SKILL.md not written at {skill_path}"
 
@@ -416,15 +422,14 @@ class TestEvolverApplySignals:
         body = parsed["body"]
 
         assert fm["name"] == "instruction-fidelity-check"
-        assert fm["type"] == "skill"
+        assert fm["kind"] == "skill"
         assert "instruction" in fm["description"].lower()
         assert "## Instruction Fidelity Check" in body
         assert "Common Failure Modes" in body
 
         # ---- Check skill: artifact-detection-rubric ----
         skill2_path = os.path.join(
-            library_on_disk.base_dir, "skills",
-            "artifact-detection-rubric", "SKILL.md"
+            library_on_disk.base_dir, "skills", "artifact-detection-rubric", "SKILL.md"
         )
         assert os.path.exists(skill2_path)
         parsed2 = library_on_disk._parse_skill_md(skill2_path)
@@ -433,14 +438,13 @@ class TestEvolverApplySignals:
 
         # ---- Check tool: edge-artifact-detector ----
         tool_path = os.path.join(
-            library_on_disk.base_dir, "tools",
-            "edge-artifact-detector", "SKILL.md"
+            library_on_disk.base_dir, "tools", "edge-artifact-detector", "SKILL.md"
         )
         assert os.path.exists(tool_path)
         tool_parsed = library_on_disk._parse_skill_md(tool_path)
         tfm = tool_parsed["frontmatter"]
         assert tfm["name"] == "edge-artifact-detector"
-        assert tfm["type"] == "tool"
+        assert tfm["kind"] == "tool"
         assert "artifact detection specialist" in tfm["system_prompt"]
         assert tfm["input_schema"] == {"images": "list[base64_str]", "query": "str"}
 
@@ -462,9 +466,7 @@ class TestEvolverApplySignals:
     def test_update_existing_skill(self, library_on_disk):
         """Evolver handles 'update' action for existing skills."""
         # First add a skill
-        library_on_disk.add_skill(
-            "old-skill", "Old description", "## Old Content"
-        )
+        library_on_disk.add_skill("old-skill", "Old description", "## Old Content")
 
         signals = {
             "skill_updates": [
@@ -507,14 +509,20 @@ class TestEvolverApplySignals:
     def test_empty_signals(self, library_on_disk):
         """Empty signals produce zero changes."""
         evolver = Evolver(library_on_disk, endpoint_pool=None)
-        applied = evolver.apply_signals({
-            "skill_updates": [],
-            "tool_updates": [],
-            "analysis_summary": "nothing to do",
-        })
+        applied = evolver.apply_signals(
+            {
+                "skill_updates": [],
+                "tool_updates": [],
+                "analysis_summary": "nothing to do",
+            }
+        )
         assert applied == {
-            "skills_added": 0, "skills_updated": 0, "skills_deleted": 0,
-            "tools_added": 0, "tools_updated": 0, "tools_deleted": 0,
+            "skills_added": 0,
+            "skills_updated": 0,
+            "skills_deleted": 0,
+            "tools_added": 0,
+            "tools_updated": 0,
+            "tools_deleted": 0,
         }
 
     def test_signals_with_missing_keys_safe(self, library_on_disk):
@@ -533,10 +541,12 @@ class TestEvolverApplySignals:
         assert "to-delete" in library_on_disk.registry
 
         # Delete via signals
-        applied = evolver.apply_signals({
-            "skill_updates": [{"action": "delete", "name": "to-delete", "reason": "redundant"}],
-            "tool_updates": [],
-        })
+        applied = evolver.apply_signals(
+            {
+                "skill_updates": [{"action": "delete", "name": "to-delete", "reason": "redundant"}],
+                "tool_updates": [],
+            }
+        )
         assert applied["skills_deleted"] == 1
         assert "to-delete" not in library_on_disk.registry
 
@@ -548,20 +558,24 @@ class TestEvolverApplySignals:
         assert "tool-del" in library_on_disk.registry
 
         # Delete via signals
-        applied = evolver.apply_signals({
-            "skill_updates": [],
-            "tool_updates": [{"action": "delete", "name": "tool-del", "reason": "harmful"}],
-        })
+        applied = evolver.apply_signals(
+            {
+                "skill_updates": [],
+                "tool_updates": [{"action": "delete", "name": "tool-del", "reason": "harmful"}],
+            }
+        )
         assert applied["tools_deleted"] == 1
         assert "tool-del" not in library_on_disk.registry
 
     def test_delete_nonexistent_skill_logs_error(self, library_on_disk):
         """Deleting a nonexistent skill logs error but doesn't crash."""
         evolver = Evolver(library_on_disk, endpoint_pool=None)
-        applied = evolver.apply_signals({
-            "skill_updates": [{"action": "delete", "name": "nonexistent"}],
-            "tool_updates": [],
-        })
+        applied = evolver.apply_signals(
+            {
+                "skill_updates": [{"action": "delete", "name": "nonexistent"}],
+                "tool_updates": [],
+            }
+        )
         assert applied["skills_deleted"] == 0
 
     def test_validate_tool_prompt_honours_subagent_model(self, library_on_disk):
@@ -580,12 +594,16 @@ class TestEvolverApplySignals:
         mock_client.chat.completions.create.return_value.choices[0].message.content = '{"ok": true}'
 
         evolver = Evolver(library_on_disk, endpoint_pool=mock_pool)
-        with patch("src.evolver.SUBAGENT_MODEL", "my-org/my-vlm-7b"), \
-             patch("src.evolver.OpenAI", return_value=mock_client):
+        with (
+            patch("rewardharness.evolution.evolver.SUBAGENT_MODEL", "my-org/my-vlm-7b"),
+            patch("rewardharness.evolution.evolver.OpenAI", return_value=mock_client),
+        ):
             evolver._validate_tool_prompt(
-                name="tool-x", description="d",
+                name="tool-x",
+                description="d",
                 system_prompt="sp",
-                min_samples=2, max_refinement_rounds=1,
+                min_samples=2,
+                max_refinement_rounds=1,
             )
 
         # Every chat.completions.create call must carry the patched model
@@ -598,9 +616,9 @@ class TestEvolverApplySignals:
 # End-to-end integration: ChainAnalyzer -> Evolver -> Disk
 # ---------------------------------------------------------------------------
 
-class TestChainEvolverIntegration:
 
-    @patch("src.chain_analyzer.call_gemini")
+class TestChainEvolverIntegration:
+    @patch("rewardharness.evolution.analyzer.call_gemini")
     def test_full_chain_analyzer_to_evolver(
         self, mock_gemini, failure_examples, fixed_signals, library_on_disk
     ):
@@ -623,9 +641,7 @@ class TestChainEvolverIntegration:
 
         # Verify SKILL.md files on disk
         for skill_name in ["instruction-fidelity-check", "artifact-detection-rubric"]:
-            path = os.path.join(
-                library_on_disk.base_dir, "skills", skill_name, "SKILL.md"
-            )
+            path = os.path.join(library_on_disk.base_dir, "skills", skill_name, "SKILL.md")
             assert os.path.exists(path), f"Missing: {path}"
 
             with open(path) as f:
@@ -637,28 +653,28 @@ class TestChainEvolverIntegration:
 
             parsed = library_on_disk._parse_skill_md(path)
             assert parsed["frontmatter"]["name"] == skill_name
-            assert parsed["frontmatter"]["type"] == "skill"
+            assert parsed["frontmatter"]["kind"] == "skill"
             assert len(parsed["body"]) > 0
 
         # Verify tool SKILL.md
         tool_path = os.path.join(
-            library_on_disk.base_dir, "tools",
-            "edge-artifact-detector", "SKILL.md"
+            library_on_disk.base_dir, "tools", "edge-artifact-detector", "SKILL.md"
         )
         assert os.path.exists(tool_path)
         tool_parsed = library_on_disk._parse_skill_md(tool_path)
-        assert tool_parsed["frontmatter"]["type"] == "tool"
+        assert tool_parsed["frontmatter"]["kind"] == "tool"
         assert "system_prompt" in tool_parsed["frontmatter"]
 
         # Verify registry persistence
         reg_path = os.path.join(library_on_disk.base_dir, "registry.json")
         with open(reg_path) as f:
             disk_reg = json.load(f)
-        assert len(disk_reg) == 3
-        assert "instruction-fidelity-check" in disk_reg
-        assert "edge-artifact-detector" in disk_reg
+        assert disk_reg["schema_version"] == 2
+        assert len(disk_reg["entries"]) == 3
+        assert "instruction-fidelity-check" in disk_reg["entries"]
+        assert "edge-artifact-detector" in disk_reg["entries"]
 
-    @patch("src.chain_analyzer.call_gemini")
+    @patch("rewardharness.evolution.analyzer.call_gemini")
     def test_snapshot_restore_after_evolution(
         self, mock_gemini, failure_examples, fixed_signals, library_on_disk
     ):
@@ -689,8 +705,7 @@ class TestChainEvolverIntegration:
 
         # Verify files cleaned up
         skill_path = os.path.join(
-            library_on_disk.base_dir, "skills",
-            "instruction-fidelity-check", "SKILL.md"
+            library_on_disk.base_dir, "skills", "instruction-fidelity-check", "SKILL.md"
         )
         assert not os.path.exists(skill_path)
 
