@@ -47,11 +47,11 @@ def mock_val_examples():
     ]
 
 
-class TestPipelineAssert:
+class TestPipelineValidation:
     def test_benchmark_data_blocked(self, config, tmp_path):
         """Pipeline constructor must reject EditReward-Bench as train data."""
         config["evolution"]["train_dataset"] = "TIGER-Lab/EditReward-Bench"
-        with pytest.raises(AssertionError, match="Benchmark data must NOT be used"):
+        with pytest.raises(ValueError, match="Benchmark data must NOT be used"):
             SelfEvolutionPipeline(config, library_dir=str(tmp_path))
 
 

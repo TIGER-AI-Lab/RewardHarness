@@ -42,8 +42,8 @@ class SelfEvolutionPipeline:
             results_dir: path to results directory (default: results/)
         """
         train_dataset = config["evolution"]["train_dataset"]
-        assert "EditReward-Bench" not in train_dataset, \
-            "Benchmark data must NOT be used during evolution!"
+        if "EditReward-Bench" in train_dataset:
+            raise ValueError("Benchmark data must NOT be used during evolution!")
 
         self.config = config
         self.lib_dir = library_dir or os.path.join(PROJECT_ROOT, "src", "library")
