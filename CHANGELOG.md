@@ -8,6 +8,10 @@ Post-v0.1.2 polish, slated for v0.1.3:
 
 ### Added
 
+- Active GitHub Actions CI now runs the test suite on Python 3.10&ndash;3.12,
+  smoke-tests library inspection, and builds + validates wheel/sdist artifacts.
+- `requirements-dev.txt`, `make install-dev`, and `make release-check` provide a
+  reproducible maintainer path for testing and validating distributions.
 - `scripts/check_links.sh` &mdash; audits every markdown link in the docs (relative paths always; external URLs with `--external`).
 - `WALKTHROUGH.md` &mdash; 5-step Vertex AI service-account setup guide with direct GCP console deep-links; step 8 now shows the fast `python scripts/run_benchmark.py --config configs/default.yaml` paper-reproduction path against the shipped `src/library/` (no evolution required first).
 - README release badge auto-updates from the latest GitHub tag.
@@ -20,6 +24,8 @@ Post-v0.1.2 polish, slated for v0.1.3:
 
 ### Changed
 
+- Test and release tooling is no longer installed as package runtime
+  dependencies; published metadata now uses the SPDX `Apache-2.0` expression.
 - `CLAUDE.md` rewritten with an explicit "for AI coding agents" preamble; dropped the internal-only `a-tool/edit-reward/` reference; tightened the no-coauthor rule to also forbid AI-attribution footers.
 - `Makefile` &mdash; `make benchmark` defaults to the paper-evolved `src/library/` (6 entries) instead of `examples/seed_library/` (3 entries). New users running `make benchmark` to verify paper headline numbers now see the actual paper accuracy instead of seed-library accuracy.
 - README "Repository layout": `data/` row clarified (HuggingFace caches into `~/.cache/huggingface/`, not the repo's `data/` dir).
@@ -43,6 +49,8 @@ Post-v0.1.2 polish, slated for v0.1.3:
 
 ### Fixed
 
+- The evolution pipeline's benchmark-data guard now raises an explicit error,
+  so it remains active when Python runs with optimizations enabled.
 - `scripts/run_evolution.py` now has the executable bit set, matching its siblings.
 - `scripts/start_vllm_remote.sh` gained a header docstring explaining the SSH/Slurm invocation pattern, and now respects the same env-var conventions as `serve_vllm_multi.sh` (`VLLM_PYTHON`, `VLLM_MODEL_PATH`, `REWARDHARNESS_SUBAGENT_MODEL` via `--served-model-name`, `MAX_MODEL_LEN`).
 - `scripts/reproduce.sh` step 4 now resets the `waited` counter per vLLM port (was a shared accumulator across all 16 ports, so the last few ports got near-zero timeout budget) and bumps per-port budget to 10 min for cold-start safety. **Also major fix:** step 4 reads `configs/endpoints.txt` (the same file the pipeline reads) instead of hardcoded ports 8000-8015, which mismatched `serve_vllm_multi.sh`'s 4-endpoint default and caused ~2 hours of timeout failure on default-config runs.
