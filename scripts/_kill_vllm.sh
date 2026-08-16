@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/common.sh"
 # Kill vLLM processes safely without affecting parent
 trap '' TERM HUP
 for pid in $(pgrep -f "vllm.entrypoints" 2>/dev/null); do

@@ -145,13 +145,17 @@ def load_human_ratings(ratings_dir: str) -> dict:
         tsv_path = os.path.join(ratings_dir, f"rater{i}.tsv")
         with open(tsv_path) as f:
             header = f.readline().strip().split("\t")
-            models = header[1:]  # skip 'uid'
+            model_columns = [
+                (index, name)
+                for index, name in enumerate(header)
+                if name not in {"uid", "schema_version"}
+            ]
             for line in f:
                 parts = line.strip().split("\t")
                 uid = parts[0]
-                for j, model in enumerate(models):
+                for column_index, model in model_columns:
                     try:
-                        sc_pq = ast.literal_eval(parts[j + 1])
+                        sc_pq = ast.literal_eval(parts[column_index])
                         sc, pq = float(sc_pq[0]), float(sc_pq[1])
                         score = math.sqrt(sc * pq)
                         all_ratings[uid][model].append(score)

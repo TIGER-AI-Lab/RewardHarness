@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/common.sh"
 # start_vllm_remote.sh — Boot a single vLLM endpoint on an assigned GPU.
 # Intended to be invoked over SSH against a remote node (or by a Slurm task)
 # with $PORT, $GPU_MEM, and $GPU_ID set. Pins the Slurm + CUDA paths so the

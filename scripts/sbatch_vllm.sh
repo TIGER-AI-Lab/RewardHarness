@@ -10,7 +10,7 @@
 #SBATCH --cpus-per-gpu=16
 #SBATCH --mem=500G
 #SBATCH --output=/tmp/vllm-slurm-%j.log
-set -euo pipefail
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/common.sh"
 
 # Override these with `export VAR=… ; sbatch scripts/sbatch_vllm.sh`
 # RH_ROOT must be set to your RewardHarness checkout (no default — fail fast

@@ -15,7 +15,7 @@
 #
 # Setting RH_SKIP_ENV_PIN=1 disables the block entirely (recommended on
 # vanilla servers).
-set -euo pipefail
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/common.sh"
 
 if [ -z "${RH_SKIP_ENV_PIN:-}" ]; then
     SLURM_PREFIX="${SLURM_PREFIX:-/cm/shared/apps/slurm/current}"

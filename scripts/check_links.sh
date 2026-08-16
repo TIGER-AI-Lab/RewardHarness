@@ -11,7 +11,7 @@
 #   bash scripts/check_links.sh             # local file checks only (fast)
 #   bash scripts/check_links.sh --external  # also curl every external URL
 
-set -euo pipefail
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/common.sh"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"

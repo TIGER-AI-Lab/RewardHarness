@@ -2,7 +2,7 @@
 # Run benchmarks on ALL checkpoints (iter_0 through iter_9) sequentially.
 # Each benchmark takes ~7 min, total ~70 min.
 # Results saved to results/benchmark_iter_N.json
-set -uo pipefail
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/common.sh"
 
 PYTHON="${VLLM_PYTHON:-python}"
 PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # reproduce.sh — End-to-end reproducibility script for RewardHarness
 # Runs setup → download → serve → evolution → benchmark → print results
-set -euo pipefail
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/common.sh"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"

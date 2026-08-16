@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # download_data.sh — Download datasets for RewardHarness pipeline
-set -euo pipefail
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/common.sh"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"

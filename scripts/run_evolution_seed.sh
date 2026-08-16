@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Run evolution with a specific seed. Creates isolated library + results.
 # Usage: bash scripts/run_evolution_seed.sh <seed> [max_iters]
-set -uo pipefail
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/common.sh"
 
 SEED="${1:?Usage: $0 <seed> [max_iters]}"
 MAX_ITERS="${2:-10}"
