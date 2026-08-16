@@ -1,5 +1,9 @@
 # Output artifacts
 
+v0.2 checkpoints and Library registries carry `schema_version: 2`. Readers
+accept v0.1 registries and checkpoints, while all new writes use versioned
+metadata.
+
 What gets written where after each RewardHarness command, so you know what to expect, what to keep, and what to ignore. Paths shown here are the defaults; everything is overridable via `--results-dir` on the CLI.
 
 ---

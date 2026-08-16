@@ -1,8 +1,8 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite the paper."
 title: "RewardHarness: Self-Evolving Agentic Post-Training"
-version: "0.1.2"
-date-released: "2026-05-16"
+version: "0.2.0-rc1"
+date-released: "2026-08-17"
 type: software
 authors:
   - given-names: Yuxuan

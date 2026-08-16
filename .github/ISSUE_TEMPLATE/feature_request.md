@@ -16,3 +16,7 @@ What would the smallest version of the fix look like? File paths + behavior, not
 
 ## Out of scope
 (optional) Things you are NOT proposing — helps reviewers stay focused.
+
+## Compatibility
+State whether the proposal changes the public `rewardharness.*` API, Library
+schema, checkpoint schema, or CLI output.

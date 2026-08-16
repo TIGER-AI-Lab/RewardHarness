@@ -1,5 +1,9 @@
 # RewardHarness
 
+> **v0.2 release candidate:** the supported Python API now lives under
+> `rewardharness.*`. Imports from `src.*` remain as deprecated compatibility
+> adapters through the v0.2 release series.
+
 [![arXiv](https://img.shields.io/badge/arXiv-2605.08703-b31b1b.svg)](https://arxiv.org/abs/2605.08703)
 [![HF Paper](https://img.shields.io/badge/🤗_Paper-2605.08703-yellow.svg)](https://huggingface.co/papers/2605.08703)
 [![Project Page](https://img.shields.io/badge/Project-rewardharness.com-6D7CFF.svg)](https://rewardharness.com)
@@ -39,6 +43,9 @@ Read [`WALKTHROUGH.md`](WALKTHROUGH.md) for the 9-step path from `git clone` to 
 
 ## Updates
 
+- **2026-08-17** — `v0.2.0-rc1`: canonical `rewardharness` package, typed
+  configuration/domain API, schema-v2 Libraries, unified CLI, strict quality
+  gates, and trusted GitHub/PyPI release automation.
 - **2026-05-16** — `v0.1.2` released (smallest-end-to-end `examples/score_pair.py`, CI scaffolding, packaging fixes). Code also mirrored at [`KlingAIResearch/RewardHarness`](https://github.com/KlingAIResearch/RewardHarness); both repos kept in sync.
 - **2026-05-16** — `v0.1.1` security patch (rotated and removed a hardcoded internal API key inadvertently shipped in `v0.1.0`; see [SECURITY.md](SECURITY.md)).
 - **2026-05-15** — `v0.1.0` initial open-source release at [`TIGER-AI-Lab/RewardHarness`](https://github.com/TIGER-AI-Lab/RewardHarness); paper featured on [Hugging Face Daily Papers](https://huggingface.co/papers/2605.08703).
@@ -95,12 +102,12 @@ At **inference**, the Router selects relevant entries from the Library and the f
 
 | Module | What it does |
 |---|---|
-| `src/router.py` | Selects relevant Skills/Tools from the Library per editing prompt |
-| `src/chain_analyzer.py` | Analyzes Sub-Agent reasoning chains → improvement signals (skill / tool updates) |
-| `src/evolver.py` | Applies signals to the Library; validates new tool prompts via vLLM; snapshot/restore for rollback |
-| `src/sub_agent.py` | Multi-turn Qwen reasoning with `<think>/<tool>/<obs>/<answer>` tags |
-| `src/library/` | Skills (markdown rubrics) + Tools (VLM `system_prompt` specs) |
-| `src/pipeline.py` | Evolution loop with Phase A (skills) / Phase B (tools) / Phase C (pruning) |
+| `rewardharness/evaluation/router.py` | Selects relevant Skills/Tools from the Library per editing prompt |
+| `rewardharness/evolution/analyzer.py` | Analyzes Sub-Agent reasoning chains → improvement signals (skill / tool updates) |
+| `rewardharness/evolution/evolver.py` | Applies signals to the Library; validates new tool prompts via vLLM; snapshot/restore for rollback |
+| `rewardharness/evaluation/engine.py` | Multi-turn Qwen reasoning with `<think>/<tool>/<obs>/<answer>` tags |
+| `rewardharness/resources/library/` | Skills (markdown rubrics) + Tools (VLM `system_prompt` specs) |
+| `rewardharness/evolution/pipeline.py` | Evolution loop with Phase A (skills) / Phase B (tools) / Phase C (pruning) |
 
 ## Hardware requirements
 
@@ -130,6 +137,16 @@ pip install -r requirements-dev.txt
 # Skip this if you only want to run the test suite, inspect the Library, or
 # point the Sub-Agent at a hosted Gemini endpoint instead.
 pip install -r requirements-vllm.txt
+```
+
+The installation exposes one supported command surface:
+
+```bash
+rewardharness inspect
+rewardharness check
+rewardharness score-pair --help
+rewardharness evolve --help
+rewardharness benchmark --help
 ```
 
 ## Environment
@@ -234,7 +251,7 @@ python scripts/run_benchmark.py --config configs/default.yaml
 No source edits needed &mdash; the Router, ChainAnalyzer, Library, and Evolver are model-agnostic.
 
 **2. A non-OpenAI-compatible VLM** (e.g., Gemini-2.0-Flash directly via Vertex AI).
-Subclass `SubAgent` and override `_call_vllm()` (in `src/sub_agent.py`) to use your backend. The method takes `messages` in OpenAI chat format and must return the assistant's text reply. Everything else (reasoning-chain parsing, tool dispatch, library lookups) stays the same.
+Subclass `SubAgent` and override `_call_vllm()` (in `rewardharness/evaluation/engine.py`) to use your backend. The method takes `messages` in OpenAI chat format and must return the assistant's text reply. Everything else (reasoning-chain parsing, tool dispatch, library lookups) stays the same.
 
 The paper's Gemini-2.0-Flash variant uses path (2). For evaluation-only / benchmark workflows where vLLM is the only heavy dependency, path (2) lets you skip `requirements-vllm.txt` entirely.
 
@@ -242,14 +259,15 @@ The paper's Gemini-2.0-Flash variant uses path (2). For evaluation-only / benchm
 
 ```
 RewardHarness/
-├── src/                  # Orchestrator, Sub-Agent, Library, Pipeline
+├── rewardharness/        # Supported package: evaluation, evolution, clients, Library, CLI
+├── src/                  # Deprecated compatibility adapters for pre-v0.2 imports
 ├── scripts/              # run_evolution.py, run_benchmark.py, vLLM launchers, check_env.py preflight
-├── tests/                # pytest suite (~107 tests, no GPU/network)
+├── tests/                # pytest suite (138 tests, no GPU/network)
 ├── examples/             # inspect_library.py + show_reasoning_format.py (no-API demos),
 │                         # score_pair.py (end-to-end), seed_library/, sample_*.json
 ├── configs/              # default.yaml + vLLM endpoints
 ├── vanilla/              # Baseline benchmark scripts (Claude / Gemini-gateway, on EditReward-Bench / GenAI-Bench / ImagenHub)
-├── score-guidelines/     # 1–4 scoring rubric templates loaded by src/sub_agent.py at inference
+├── rewardharness/resources/score_guidelines/     # 1–4 scoring rubric templates loaded by rewardharness/evaluation/engine.py at inference
 ├── data/                 # Local cache target (datasets actually live in ~/.cache/huggingface)
 ├── Makefile              # `make help` lists install / test / demo / benchmark / evolve / reproduce
 ├── CITATION.cff          # GitHub-rendered "Cite this repository" widget

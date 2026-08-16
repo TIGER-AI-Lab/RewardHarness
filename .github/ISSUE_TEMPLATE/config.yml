@@ -1,5 +1,8 @@
 blank_issues_enabled: false
 contact_links:
+  - name: v0.2 migration guide
+    url: https://github.com/TIGER-AI-Lab/RewardHarness/blob/main/README.md
+    about: Public package, CLI, Library schema, and compatibility-layer guidance.
   - name: Paper
     url: https://arxiv.org/abs/2605.08703
     about: Read the paper before filing a question about results or methodology.

@@ -1,6 +1,8 @@
 # Tests
 
-Fully mocked end-to-end test suite (**107 tests**, runs in ~2 s) — no GPU, no network, no API keys, no real Gemini calls. Works with core `requirements.txt` only.
+Fully mocked end-to-end test suite (**138 tests**, runs in a few seconds) — no GPU,
+no network, no API keys, and no real Gemini calls. Install development tooling
+from `requirements-dev.txt` before running the complete quality gate.
 
 ```bash
 # all tests
@@ -20,6 +22,7 @@ make test
 | `test_chain_evolver.py` | Full evolution micro-flow: failure examples → ChainAnalyzer → improvement signals → Evolver → SKILL.md on disk. |
 | `test_pipeline.py` | `SelfEvolutionPipeline.evolve` over 2 iterations — separate skill/tool rollback, `>= prev - margin` keep condition, checkpoint write, val-acc regression triggers rollback. |
 | `test_check_env.py` | `scripts/check_env.py::_probe_one` — `/v1/models` body parsing for the VLM-swap mismatch detection added in iter 130. |
+| `test_public_api.py` | Typed v0.2 API, schema v2, compatibility imports, config validation, and path safety. |
 
 Everything that touches an external service (Gemini, vLLM, Hugging Face) is mocked with `unittest.mock`. If a test ever makes a real network call, it's a regression — please open an issue.
 
@@ -33,7 +36,8 @@ python -m pytest tests/test_pipeline.py::TestPipelineEvolution::test_two_iterati
 
 Mock the external boundary at the highest layer that's still meaningful:
 
-- Need a Gemini response? Patch `src.router.call_gemini` (or `src.chain_analyzer.call_gemini`).
-- Need a vLLM completion? Patch `src.sub_agent.OpenAI` (the Qwen client is constructed inside `SubAgent`).
+- Need a Gemini response? Inject a completion callable or patch the relevant
+  `rewardharness` client boundary.
+- Need a vLLM completion? Patch `rewardharness.evaluation.engine.OpenAI`.
 
 The fixtures in `conftest.py` already cover the common cases.

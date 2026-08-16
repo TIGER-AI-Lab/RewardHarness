@@ -1,5 +1,8 @@
 # Security policy
 
+Security fixes target the supported `rewardharness.*` package. Reports that
+reproduce through `src.*` compatibility imports remain in scope for v0.2.
+
 ## Reporting a vulnerability
 
 If you find a security issue (leaked credentials in code or commit history, command injection, etc.), **please do NOT open a public GitHub issue**.

@@ -4,7 +4,13 @@ All notable changes to RewardHarness are recorded here. Versions follow [SemVer]
 
 ## [Unreleased]
 
-Post-v0.1.2 polish, slated for v0.1.3:
+Future changes after the v0.2 release candidate.
+
+## [0.2.0-rc1] — 2026-08-17
+
+Large-scale architecture and release-hardening candidate. The supported API
+now uses the `rewardharness` namespace, Library assets use schema v2, and the
+deprecated `src` namespace remains as a compatibility layer for v0.2.
 
 ### Added
 
@@ -13,7 +19,7 @@ Post-v0.1.2 polish, slated for v0.1.3:
 - `requirements-dev.txt`, `make install-dev`, and `make release-check` provide a
   reproducible maintainer path for testing and validating distributions.
 - `scripts/check_links.sh` &mdash; audits every markdown link in the docs (relative paths always; external URLs with `--external`).
-- `WALKTHROUGH.md` &mdash; 5-step Vertex AI service-account setup guide with direct GCP console deep-links; step 8 now shows the fast `python scripts/run_benchmark.py --config configs/default.yaml` paper-reproduction path against the shipped `src/library/` (no evolution required first).
+- `WALKTHROUGH.md` &mdash; 5-step Vertex AI service-account setup guide with direct GCP console deep-links; step 8 now shows the fast `python scripts/run_benchmark.py --config configs/default.yaml` paper-reproduction path against the shipped `rewardharness/resources/library/` (no evolution required first).
 - README release badge auto-updates from the latest GitHub tag.
 - Per-author `affiliation` entries in the JSON-LD `ScholarlyArticle` block (21 author&ndash;org links).
 - `examples/score_pair.py --show-chain` flag to print the full `<think>/<tool>/<obs>/<answer>` reasoning trace.
@@ -27,20 +33,20 @@ Post-v0.1.2 polish, slated for v0.1.3:
 - Test and release tooling is no longer installed as package runtime
   dependencies; published metadata now uses the SPDX `Apache-2.0` expression.
 - `CLAUDE.md` rewritten with an explicit "for AI coding agents" preamble; dropped the internal-only `a-tool/edit-reward/` reference; tightened the no-coauthor rule to also forbid AI-attribution footers.
-- `Makefile` &mdash; `make benchmark` defaults to the paper-evolved `src/library/` (6 entries) instead of `examples/seed_library/` (3 entries). New users running `make benchmark` to verify paper headline numbers now see the actual paper accuracy instead of seed-library accuracy.
+- `Makefile` &mdash; `make benchmark` defaults to the paper-evolved `rewardharness/resources/library/` (6 entries) instead of `examples/seed_library/` (3 entries). New users running `make benchmark` to verify paper headline numbers now see the actual paper accuracy instead of seed-library accuracy.
 - README "Repository layout": `data/` row clarified (HuggingFace caches into `~/.cache/huggingface/`, not the repo's `data/` dir).
 - README "Architecture": honest description of the evolution gate &mdash; replaces "kept only if held-out accuracy improves" with the actual `explore_margin` semantics (small dips permitted within tolerance).
 - README "Key config" / `configs/default.yaml` &mdash; the `model:` block is now flagged INFORMATIONAL; no code reads those keys. Serving knobs are env vars consumed by `scripts/serve_vllm_multi.sh`.
 - README "Updates" section now lists every released version (v0.1.0 / v0.1.1 / v0.1.2) with dates that match `CHANGELOG.md` + git tags. Previously off by one day on v0.1.0 and missing the v0.1.1 security release entirely.
 - Footer on the website lists both code mirrors (TIGER-AI-Lab / KlingAIResearch).
-- Website "Method" card now describes the actual phase A/B/C structure from `src/pipeline.py` instead of a fictitious "five stages" framing.
+- Website "Method" card now describes the actual phase A/B/C structure from `rewardharness/evolution/pipeline.py` instead of a fictitious "five stages" framing.
 - Website figures now use `loading="lazy"` and `decoding="async"`, cutting first-paint bandwidth by ~820 KB for visitors who don't scroll past Abstract.
 - Website "Try it yourself" callout now shows `--show-chain` (so the printed trace matches the section's headline example) and includes the no-image-needed fast path `python scripts/run_benchmark.py --config configs/default.yaml`.
 - Website Table 2: Flux.1 Kontext [dev]'s 3.52 Overall is now marked second-best (matching the "tied at 3.52 with a smaller backbone" claim in the caption); previously RewardHarness's 3.52 was uniquely highlighted.
 - Website mobile (≤735px): the dark-mode toggle stays visible (the previous CSS hid the whole `.nav-links` `<ul>`, taking the toggle with it).
 - `vanilla/README.md` &mdash; backend/env-var table corrected: `gemini_bench_*.py` go through an OpenAI-compatible "Gemini gateway", not a direct Vertex AI client (their `--model` accepts Gemini or Claude ids — whatever your gateway supports).
-- `score-guidelines/README.md` rewritten: the templates ARE loaded by `src/sub_agent.py` at inference time (the old text claimed otherwise), and the internal scoring scale is 1-4 end-to-end (the old text claimed a 1-5 remap).
-- WALKTHROUGH "Where things live" table &mdash; corrected the VLM-swap recipe: split into OpenAI-compatible (export env var, no source edit) and non-OpenAI (subclass) paths, matching what's actually in `src/sub_agent.py`.
+- `rewardharness/resources/score_guidelines/README.md` rewritten: the templates ARE loaded by `rewardharness/evaluation/engine.py` at inference time (the old text claimed otherwise), and the internal scoring scale is 1-4 end-to-end (the old text claimed a 1-5 remap).
+- WALKTHROUGH "Where things live" table &mdash; corrected the VLM-swap recipe: split into OpenAI-compatible (export env var, no source edit) and non-OpenAI (subclass) paths, matching what's actually in `rewardharness/evaluation/engine.py`.
 
 ### Removed
 
@@ -61,14 +67,14 @@ Post-v0.1.2 polish, slated for v0.1.3:
 - `scripts/_launch_all_vllm.sh`, `scripts/sbatch_vllm.sh` &mdash; respect `NUM_GPUS` / `BASE_PORT` / `GPU_MEM` / `MAX_MODEL_LEN` / `VLLM_MODEL_PATH` env vars matching the public `serve_vllm_multi.sh`; previously hardcoded 4 GPUs and 0.85 GPU-mem. `sbatch_vllm.sh` also dropped two unsubstituted `/path/to/your/...` template paths in favour of a fail-fast `$RH_ROOT` requirement.
 - `scripts/run_evolution_seed.sh` &mdash; generated YAML now uses `gemini:` (matching `configs/default.yaml`) instead of `claude:`, which would have `KeyError`'d at Router construction and also violated the no-Claude-API project rule.
 - `scripts/run_all_benchmarks.sh` &mdash; summary table now shows `GenAI` and `average` columns (was only K=2/K=3/K=4), so the headline "which iter scored best on average" is visible at a glance. Inline-python invocation hardened (sys.argv instead of bash-substitution into source).
-- `src/library/__init__.py::call_tool` and `src/evolver.py::_validate_tool_prompt` &mdash; tool dispatches and Phase-B tool validation now read the same `SUBAGENT_MODEL` constant as `src/sub_agent.py`, so VLM-swap setups don't silently break inside `<tool>` blocks or new-tool acceptance.
+- `rewardharness/library/repository.py::call_tool` and `rewardharness/evolution/evolver.py::_validate_tool_prompt` &mdash; tool dispatches and Phase-B tool validation now read the same `SUBAGENT_MODEL` constant as `rewardharness/evaluation/engine.py`, so VLM-swap setups don't silently break inside `<tool>` blocks or new-tool acceptance.
 - `examples/score_pair.py --show-chain` hint replaced a dead-end `result['chain']` instruction.
-- `examples/inspect_library.py` and `examples/show_reasoning_format.py` verified clean against the current `src/library` API (no signature drift).
-- `examples/README.md` &mdash; corrected the "7-entry final library" claim to "6-entry (3 Skills + 3 Tools)", matching what's actually committed at `src/library/`. Same correction landed on the website's Limitations card.
+- `examples/inspect_library.py` and `examples/show_reasoning_format.py` verified clean against the current `rewardharness/resources/library` API (no signature drift).
+- `examples/README.md` &mdash; corrected the "7-entry final library" claim to "6-entry (3 Skills + 3 Tools)", matching what's actually committed at `rewardharness/resources/library/`. Same correction landed on the website's Limitations card.
 - `TROUBLESHOOTING.md` &mdash; corrected two doc/code drifts: the `/v1/models` health check shows `Qwen2.5-VL-7B-Instruct` (no `Qwen/` prefix), and the OOM mitigation now points at the actual `GPU_MEM` env var (default 0.85) instead of a non-existent `--gpu-memory-utilization` flag with the wrong default.
 - `OUTPUTS.md` &mdash; documented the `_about` / `_library_dir` / `_orchestrator` / `_sub_agent` / `average` metadata fields the sample `benchmark_results.json` carries.
 - `SECURITY.md` &mdash; "Supported versions" table now reflects v0.1.2 as latest (was still pointing at v0.1.1).
-- `examples/show_reasoning_format.py` &mdash; corrected the tool-call limit (`MAX_TOOL_CALLS = 5` in `src/sub_agent.py`; was misdocumented as "default 3, bounded by config").
+- `examples/show_reasoning_format.py` &mdash; corrected the tool-call limit (`MAX_TOOL_CALLS = 5` in `rewardharness/evaluation/engine.py`; was misdocumented as "default 3, bounded by config").
 - `.github/ISSUE_TEMPLATE/bug_report.md` &mdash; the version-collection command `pip show A B C | head -3` was silently dropping the second and third packages; switched to `grep -E '^(Name|Version)'` which surfaces all three.
 - `tests/` &mdash; added regression coverage for `REWARDHARNESS_SUBAGENT_MODEL` on all three vLLM call sites (`SubAgent`, `Library.call_tool`, `Evolver._validate_tool_prompt`); a future refactor that re-hardcodes the model id will now fail a test. Suite grew from 100 → 103 tests, still ~2 s.
 - Website `script.js` dark-mode-toggle no longer wipes the inline SVG sun/moon icons with a Unicode entity on the first call &mdash; the CSS-based icon swap (already shipped) now works as designed.
@@ -82,12 +88,12 @@ Post-v0.1.2 polish, slated for v0.1.3:
 - Website footer "Datasets:" line gets the same `TIGER-Lab/GenAI-Bench` link; the existing `TIGER-Lab/EditReward-Bench` blurb is now `(K=2/3/4 benchmark)` so the two benchmark datasets don't read identically.
 - Website citation copy buttons: unified the BibTeX and Plain-text "Copy" handlers through a shared `initCopyButton(btnId, srcId)` helper in `script.js`. Previously the Plain-text button was an inline-onclick IIFE with no clipboard fallback and no error handling &mdash; it would show "Copied!" even when the underlying `navigator.clipboard.writeText` silently failed (denied permission, http-loaded page, older browser without `navigator.clipboard`). Now both use clipboard-API → `execCommand` fallback → `showCopied` only on real success.
 - `scripts/check_links.sh --external` no longer reports false positives for documentation-example URLs (`http://localhost:*`, `127.0.0.1:*`, `example.com`) or rate-limited responses (HTTP 429 from e.g. `console.cloud.google.com`). Also fixed a latent bug where `curl -fsS … -w '%{http_code}'` + `|| echo "ERR"` was producing strings like `"429ERR"` instead of `"429"`, so the accept-list never matched. Now the script exits 0 on a clean repo against both relative-only and external runs.
-- `examples/sample_evolution_log.json` + `OUTPUTS.md` now document **every** key `src/pipeline.py` writes to `evolution_log.json`: previously-missing `applied` (changes-counts dict), `analysis_summary` (string), `pruned` (mostly-empty list), and `duration_s` (wall-clock per iter). All 5 sample iters carry `duration_s` so the sample's total (~8.5 min) is a realistic expectation for `make demo` runtime.
+- `examples/sample_evolution_log.json` + `OUTPUTS.md` now document **every** key `rewardharness/evolution/pipeline.py` writes to `evolution_log.json`: previously-missing `applied` (changes-counts dict), `analysis_summary` (string), `pruned` (mostly-empty list), and `duration_s` (wall-clock per iter). All 5 sample iters carry `duration_s` so the sample's total (~8.5 min) is a realistic expectation for `make demo` runtime.
 - `WALKTHROUGH.md` step 8 + step 9 now reflect what `run_benchmark.py` / `make reproduce` actually produce (K=2/3/4 on EditReward-Bench), with explicit pointers to the GenAI-Bench merge recipe in `OUTPUTS.md` for users wanting to reach the paper's 47.4% / 45.7% headline averages. Step 9 renamed from "Full paper reproduction" → "End-to-end EditReward-Bench reproduction" for accuracy.
 - Website `og:description` and `twitter:description` meta tags corrected: was `"47.4% on EditReward-Bench"`, now `"47.4% on EditReward-Bench + GenAI-Bench"` matching the visible TL;DR card and the paper definition.
 - `website/site/sitemap.xml`'s `<lastmod>` bumped to today's date so search engines re-crawl after 50+ post-v0.1.2 website edits.
 - README + WALKTHROUGH `make demo` timing claim corrected: was misleadingly "~30 min" (a holdover from when `demo` meant 5 iters), now "~3 min of pipeline work" matching the 1-iter Makefile target, with a note that vLLM cold-start dominates first-time runtime.
-- `make help` text fixed: `make evolve` no longer claims "starts from empty library" (it actually loads `src/library/` by default and evolves on top); `make reproduce` renamed from "End-to-end paper reproduction" → "End-to-end EditReward-Bench reproduction" matching iter 125's WALKTHROUGH change.
+- `make help` text fixed: `make evolve` no longer claims "starts from empty library" (it actually loads `rewardharness/resources/library/` by default and evolves on top); `make reproduce` renamed from "End-to-end paper reproduction" → "End-to-end EditReward-Bench reproduction" matching iter 125's WALKTHROUGH change.
 - `WALKTHROUGH.md` step 6 now shows the correct vLLM health-check output (`Qwen2.5-VL-7B-Instruct`, no `Qwen/` prefix &mdash; same fix iter 71 applied to TROUBLESHOOTING.md) and points at `.env.example` + README §Swapping Sub-Agent for users wanting to swap in a non-Qwen VLM.
 - `TROUBLESHOOTING.md` &mdash; new entry covering the canonical VLM-swap failure mode: client `REWARDHARNESS_SUBAGENT_MODEL` mismatched with server `--served-model-name` returns `404 model not found`. Includes the matching client+server setup and a curl verification one-liner.
 - `scripts/check_env.py` preflight now detects VLM-swap mismatches at the `/v1/models` probe step: parses `data[0].id` from each endpoint's response and warns if it differs from `REWARDHARNESS_SUBAGENT_MODEL`. Catches the iter-129 failure mode in ~3 seconds during `make check` instead of after a multi-hour evolution timeout. Imports the canonical `SUBAGENT_MODEL` constant from `src.sub_agent` so the script's expected baseline can't drift from the runtime's. Locked in by 4 new unit tests in `tests/test_check_env.py` (suite now 107 tests).
@@ -106,8 +112,8 @@ Post-v0.1.2 polish, slated for v0.1.3:
 - `examples/score_pair.py` &mdash; smallest-possible end-to-end script: Library + Router (Gemini) + SubAgent (vLLM) → 1&ndash;4 preference judgment for a single edit pair.
 - `examples/sample_evolution_log.json` and `examples/sample_benchmark_results.json` &mdash; illustrative output files matching the paper's headline numbers; cross-linked from `OUTPUTS.md` so users can `jq`/diff their own runs.
 - `.github/dependabot.yml` &mdash; weekly pip + monthly GitHub Actions security tracking.
-- `MANIFEST.in` &mdash; ships `score-guidelines/*.md`, `examples/seed_library/`, and `configs/` in the sdist; closes a packaging hole where wheel installs were missing the runtime templates.
-- `REWARDHARNESS_TEMPLATES_DIR` env-var escape hatch in `src/sub_agent.py` for unusual install layouts.
+- `MANIFEST.in` &mdash; ships `rewardharness/resources/score_guidelines/*.md`, `examples/seed_library/`, and `configs/` in the sdist; closes a packaging hole where wheel installs were missing the runtime templates.
+- `REWARDHARNESS_TEMPLATES_DIR` env-var escape hatch in `rewardharness/evaluation/engine.py` for unusual install layouts.
 - `.editorconfig` for consistent contributor style.
 
 ### Changed
@@ -118,6 +124,7 @@ Post-v0.1.2 polish, slated for v0.1.3:
 - `make help` is now a credentials matrix showing what each target actually needs.
 
 [0.1.2]: https://github.com/TIGER-AI-Lab/RewardHarness/releases/tag/v0.1.2
+[0.2.0-rc1]: https://github.com/TIGER-AI-Lab/RewardHarness/releases/tag/v0.2.0-rc1
 
 ## [0.1.1] — 2026-05-16
 
@@ -140,7 +147,7 @@ Post-v0.1.2 polish, slated for v0.1.3:
 - `make demo` and `make benchmark` now default to `--library-dir examples/seed_library` so first-time users get non-trivial output without doing a 4&ndash;6 h evolution first.
 - `src/__init__.py` exposes `__version__`.
 - README adds a "Swapping in a different VLM as Sub-Agent" guide; Hardware-requirements table now lists credentials needed per workflow.
-- Mermaid architecture diagram in README; per-folder READMEs (`tests/`, `examples/`, `vanilla/`, `score-guidelines/`).
+- Mermaid architecture diagram in README; per-folder READMEs (`tests/`, `examples/`, `vanilla/`, `rewardharness/resources/score_guidelines/`).
 
 [0.1.1]: https://github.com/TIGER-AI-Lab/RewardHarness/releases/tag/v0.1.1
 
@@ -156,7 +163,7 @@ Initial open-source release. Paper: [arXiv 2605.08703](https://arxiv.org/abs/260
 - **Test suite** (`tests/`, 100 tests, ~2 s): fully mocked Library / Router / SubAgent / Evolver / Pipeline / Evaluator tests with no GPU / network / API dependencies.
 - **Examples** (`examples/`): `inspect_library.py` (Library data-model tour) and `show_reasoning_format.py` (annotated `<think>/<tool>/<obs>/<answer>` trace).
 - **Build + packaging**: `Makefile` (install / check / test / demo / evolve / benchmark / reproduce / clean), `pyproject.toml` (editable install), split `requirements.txt` / `requirements-vllm.txt` so CPU-only workflows skip the heavy CUDA dependency, `.env.example`.
-- **Docs**: `README.md` with mermaid architecture diagram, Hardware-requirements table, full `default.yaml` reference, CI/coverage-style badges; `WALKTHROUGH.md` (9-step clone-to-first-judgment); `TROUBLESHOOTING.md`; per-folder READMEs for `tests/`, `examples/`, `vanilla/`, `score-guidelines/`; `CITATION.cff` so GitHub renders a "Cite this repository" widget.
+- **Docs**: `README.md` with mermaid architecture diagram, Hardware-requirements table, full `default.yaml` reference, CI/coverage-style badges; `WALKTHROUGH.md` (9-step clone-to-first-judgment); `TROUBLESHOOTING.md`; per-folder READMEs for `tests/`, `examples/`, `vanilla/`, `rewardharness/resources/score_guidelines/`; `CITATION.cff` so GitHub renders a "Cite this repository" widget.
 - **License**: Apache-2.0.
 
 ### Performance (paper headline)

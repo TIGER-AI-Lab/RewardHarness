@@ -1,5 +1,9 @@
 # RewardHarness
 
+The canonical import namespace is `rewardharness`; `src` contains compatibility
+adapters only. New code must not introduce dependencies from `rewardharness`
+back to `src`.
+
 Self-evolving reward model for image editing quality evaluation.
 Qwen2.5-VL-7B (vLLM) as Sub-Agent; Gemini `gemini-3.1-pro-preview` as orchestration layer (Router, ChainAnalyzer, Evolver).
 
@@ -12,17 +16,17 @@ Gemini (orch layer)          Qwen vLLM (sub-agent + tools)
   Evolver._validate_tool()
 ```
 
-- **Router** (`src/router.py`): selects relevant Skills/Tools from Library per editing prompt
-- **ChainAnalyzer** (`src/chain_analyzer.py`): analyzes reasoning chains → improvement signals (skill_updates, tool_updates)
-- **Evolver** (`src/evolver.py`): applies signals to Library; validates tool prompts via vLLM; snapshot/restore for rollback
-- **SubAgent** (`src/sub_agent.py`): multi-turn Qwen reasoning with `<think>/<tool>/<obs>/<answer>` tags
-- **Library** (`src/library/`): Skills (markdown evaluation guidance) + Tools (VLM system_prompts)
-- **Pipeline** (`src/pipeline.py`): evolution loop with Phase A (skills) / Phase B (tools) / Phase C (pruning)
+- **Router** (`rewardharness/evaluation/router.py`): selects relevant Skills/Tools from Library per editing prompt
+- **ChainAnalyzer** (`rewardharness/evolution/analyzer.py`): analyzes reasoning chains → improvement signals (skill_updates, tool_updates)
+- **Evolver** (`rewardharness/evolution/evolver.py`): applies signals to Library; validates tool prompts via vLLM; snapshot/restore for rollback
+- **SubAgent** (`rewardharness/evaluation/engine.py`): multi-turn Qwen reasoning with `<think>/<tool>/<obs>/<answer>` tags
+- **Library** (`rewardharness/resources/library/`): Skills (markdown evaluation guidance) + Tools (VLM system_prompts)
+- **Pipeline** (`rewardharness/evolution/pipeline.py`): evolution loop with Phase A (skills) / Phase B (tools) / Phase C (pruning)
 
 ## Commands
 
 ```bash
-# Tests (107 tests, ~2s)
+# Tests (138 tests, a few seconds)
 python -m pytest tests/ -v
 
 # Evolution (main experiment)

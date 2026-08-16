@@ -1,5 +1,9 @@
 # Vanilla baselines
 
+The ImagenHub TSVs include an additive `schema_version` column in v0.2. The
+loaders exclude it from aggregation, and `scripts/check_rating_integrity.py`
+proves that every original rating is preserved after projection.
+
 Scripts that benchmark **off-the-shelf VLMs without any Skills/Tools library** — i.e., the raw model directly judging edits. Use these for the "Proprietary Models" and "Open-Source Models" rows of Table 1 in the paper.
 
 ## Layout
@@ -36,4 +40,4 @@ python vanilla/gemini_bench_claude.py \
   --output results/vanilla/gemini-2.0-flash_editrewardbench.json
 ```
 
-These scripts intentionally don't share code with `src/` — they're the "no library" reference point against which RewardHarness is measured.
+These scripts intentionally don't share code with the `rewardharness` package — they're the "no library" reference point against which RewardHarness is measured.

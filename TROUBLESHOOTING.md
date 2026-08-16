@@ -1,5 +1,8 @@
 # Troubleshooting
 
+For v0.2 diagnostics, begin with `rewardharness check`. The historical
+`python scripts/check_env.py` command delegates to the same implementation.
+
 **Run the preflight first:**
 
 ```bash

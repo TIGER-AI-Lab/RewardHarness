@@ -1,5 +1,8 @@
 # Walkthrough — from `git clone` to your first preference judgment
 
+The v0.2 examples prefer the unified `rewardharness` CLI. Historical script
+entry points remain available as compatibility wrappers.
+
 This walkthrough takes ~15 minutes if you only want to inspect the library and run the tests, and an additional ~3 minutes of pipeline work for a full `make demo` evolution pass — though vLLM cold-start can add 5&ndash;15 minutes the first time the model loads. Each step is independent — feel free to stop after step 3 if you only want to understand the codebase.
 
 ---
@@ -98,13 +101,13 @@ Runs `scripts/run_evolution.py` for exactly one iteration over the 60-example tr
 
 ## 8. Full benchmark (read-only)
 
-You don't have to run evolution first &mdash; `src/library/` ships with the paper's evolved Skills and Tools. To reproduce the paper's headline numbers against a hosted Sub-Agent, just point benchmark at the default (shipped) library:
+You don't have to run evolution first &mdash; `rewardharness/resources/library/` ships with the paper's evolved Skills and Tools. To reproduce the paper's headline numbers against a hosted Sub-Agent, just point benchmark at the default (shipped) library:
 
 ```bash
 python scripts/run_benchmark.py --config configs/default.yaml
 ```
 
-That reports K=2/3/4 group accuracy on EditReward-Bench using the entries committed at `src/library/`. The paper's **45.7%** average (Qwen Sub-Agent) and **47.4%** (Gemini-2.0-Flash Sub-Agent) headline numbers also include a separate GenAI-Bench pass; see [`OUTPUTS.md`](OUTPUTS.md#after-make-benchmark--scriptsrun_benchmarkpy) for the schema and the `jq` recipe to merge results from both passes.
+That reports K=2/3/4 group accuracy on EditReward-Bench using the entries committed at `rewardharness/resources/library/`. The paper's **45.7%** average (Qwen Sub-Agent) and **47.4%** (Gemini-2.0-Flash Sub-Agent) headline numbers also include a separate GenAI-Bench pass; see [`OUTPUTS.md`](OUTPUTS.md#after-make-benchmark--scriptsrun_benchmarkpy) for the schema and the `jq` recipe to merge results from both passes.
 
 To benchmark *your own* evolved Library from a prior run instead:
 
@@ -138,11 +141,11 @@ Then continue with `python scripts/run_benchmark.py --config configs/default.yam
 
 | You want to … | Look at |
 |---|---|
-| Add a new Skill or Tool | `src/library/__init__.py` (`add_skill`, `add_tool`) |
-| Change Sub-Agent prompts | `src/sub_agent.py` (`BASE_INSTRUCTIONS_NO_TOOLS`, `TOOL_INSTRUCTIONS`) |
-| Tweak evolution gating | `src/pipeline.py` and `evolution.*` in `configs/default.yaml` |
+| Add a new Skill or Tool | `rewardharness/library/repository.py` (`add_skill`, `add_tool`) |
+| Change Sub-Agent prompts | `rewardharness/evaluation/engine.py` (`BASE_INSTRUCTIONS_NO_TOOLS`, `TOOL_INSTRUCTIONS`) |
+| Tweak evolution gating | `rewardharness/evolution/pipeline.py` and `evolution.*` in `configs/default.yaml` |
 | Swap in a different OpenAI-compatible VLM | Export `REWARDHARNESS_SUBAGENT_MODEL=<your-model-id>`; point `configs/endpoints.txt` at your server. No source edit needed. |
-| Add a non-OpenAI-compatible VLM backend | Subclass `SubAgent` in `src/sub_agent.py` and override `_call_vllm` (see README §Swapping Sub-Agent). |
+| Add a non-OpenAI-compatible VLM backend | Subclass `SubAgent` in `rewardharness/evaluation/engine.py` and override `_call_vllm` (see README §Swapping Sub-Agent). |
 | Debug a single example | `examples/inspect_library.py` + `examples/show_reasoning_format.py` |
 
 If something breaks, [`TROUBLESHOOTING.md`](TROUBLESHOOTING.md) covers the common failure modes.

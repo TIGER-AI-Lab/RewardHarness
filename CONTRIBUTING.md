@@ -10,6 +10,7 @@ Thanks for considering a contribution. RewardHarness is a research codebase, so 
    make install-dev
    make check    # env / credentials / endpoints
    make test     # mocked tests, ~2 s
+   make quality  # Ruff, mypy, rating-integrity and shell syntax gates
    ```
    PRs that break the test suite won't be merged.
 3. **Keep PRs focused.** One PR = one logical change. If you're refactoring while adding a feature, split into two PRs.
@@ -45,11 +46,16 @@ One-line subject (≤72 chars), then optional body. Reference issues with `#NNN`
 
 ## Tests
 
-- All new code in `src/` should have a corresponding mocked test in `tests/`.
-- Tests must not make real network calls. If you need a Gemini response, patch `src.router.call_gemini`. If you need a Sub-Agent completion, patch `src.sub_agent.OpenAI`. See `tests/README.md` for the patterns.
+- All new code in `rewardharness/` should have a corresponding mocked test in `tests/`.
+- Tests must not make real network calls. Inject or patch the client boundary;
+  see `tests/README.md` for the current patterns.
 
 ## Releases
 
 Versions follow [SemVer](https://semver.org/). Before tagging, maintainers run
 `make release-check`, cut a tag + GitHub Release, and add a `## [x.y.z]` block
 to `CHANGELOG.md`.
+
+Release candidates use PEP 440 versions such as `0.2.0rc1` and matching tags
+such as `v0.2.0-rc1`. The tag workflow publishes the same validated artifacts
+to PyPI and GitHub through trusted publishing.

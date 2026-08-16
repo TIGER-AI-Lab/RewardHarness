@@ -1,7 +1,7 @@
 version: 2
 
 updates:
-  # Python dependencies (core + vLLM extra)
+  # Python dependencies (runtime, development/release tooling, and vLLM extra)
   - package-ecosystem: pip
     directory: "/"
     schedule:
