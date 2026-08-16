@@ -77,7 +77,7 @@ def main():
           - The "preference" field must be exactly "A", "B", or "tie".
           - All four score fields must be integers in [1, 4].
 
-        The evolved library (in src/library/) determines which Tools are
+        The evolved library (packaged under rewardharness/resources/) determines which Tools are
         offered and which Skills shape the Sub-Agent's rubric application.
     """)
     )

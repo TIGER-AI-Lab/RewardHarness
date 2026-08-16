@@ -5,7 +5,7 @@ Loads the benchmark dataset, runs inference using the evolved Skills/Tools libra
 and computes K=2/3/4 accuracy. NO library updates — read-only evaluation.
 
 Usage:
-    python scripts/run_benchmark.py --config configs/default.yaml
+    rewardharness benchmark --config configs/default.yaml
 """
 
 import argparse
@@ -15,6 +15,7 @@ import os
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from io import BytesIO
+from typing import Any
 
 import yaml
 from datasets import load_dataset
@@ -127,7 +128,7 @@ def run_benchmark(config: dict, library_dir: str | None = None, results_dir: str
     for row in dataset:
         k_groups[row["num_candidates"]].append(row)
 
-    results = {}
+    results: dict[str, Any] = {"_schema_version": 2}
 
     for k in [2, 3, 4]:
         if k not in k_groups:

@@ -1,4 +1,5 @@
 {
+  "_schema_version": 2,
   "_about": "Illustrative sample matching the paper's headline numbers for RewardHarness (Qwen) on EditReward-Bench + GenAI-Bench. NOTE: scripts/run_benchmark.py writes only the k2/k3/k4 block; genai_bench and average require a separate GenAI-Bench pass and are added here for paper comparison. See OUTPUTS.md for the literal schema.",
   "_library_dir": "results/my_run/checkpoints/best",
   "_sub_agent": "Qwen2.5-VL-7B-Instruct (via vLLM)",

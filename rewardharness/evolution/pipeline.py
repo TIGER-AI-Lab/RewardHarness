@@ -44,7 +44,7 @@ class SelfEvolutionPipeline:
 
         Args:
             config: parsed YAML config dict
-            library_dir: path to library directory (default: src/library/)
+            library_dir: path to library directory (default: packaged library resource)
             results_dir: path to results directory (default: results/)
         """
         typed_config = (
@@ -411,6 +411,7 @@ class SelfEvolutionPipeline:
                 self._checkpoint(iteration, snap, val_acc, train_acc)
 
                 log_entry = {
+                    "schema_version": 2,
                     "iteration": iteration,
                     "train_acc": train_acc,
                     "val_acc": val_acc,
@@ -550,6 +551,7 @@ class SelfEvolutionPipeline:
 
                 summaries = self.library.get_all_summaries()
                 log_entry = {
+                    "schema_version": 2,
                     "iteration": iteration,
                     "train_acc": train_acc,
                     "val_acc": val_acc_after_tools

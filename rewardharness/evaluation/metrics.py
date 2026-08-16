@@ -4,11 +4,22 @@ Computes K-pair accuracy (K=2, 3, 4) following EditReward benchmark methodology.
 Reference: https://github.com/TIGER-AI-Lab/EditReward
 """
 
-from itertools import combinations
-from typing import Any
+from collections.abc import Mapping, Sequence
+from typing import Any, TypedDict
 
 
-def evaluate_prediction(prediction: str, ground_truth: str) -> dict:
+class PredictionEvaluation(TypedDict):
+    correct: bool
+    gap: float
+
+
+class AccuracyReport(TypedDict):
+    accuracy: float
+    n_correct: int
+    n_total: int
+
+
+def evaluate_prediction(prediction: str, ground_truth: str) -> PredictionEvaluation:
     """Evaluate a single prediction against ground truth.
 
     Args:
@@ -22,7 +33,7 @@ def evaluate_prediction(prediction: str, ground_truth: str) -> dict:
     return {"correct": correct, "gap": 0.0}
 
 
-def compute_kpair_accuracy(pair_results: list, k: int) -> dict:
+def compute_kpair_accuracy(pair_results: Sequence[Mapping[str, Any]], k: int) -> AccuracyReport:
     """Compute K-pair group accuracy.
 
     K=2: 1 pair per group, binary accuracy (n_total = n_groups)
@@ -38,8 +49,6 @@ def compute_kpair_accuracy(pair_results: list, k: int) -> dict:
     """
     if k not in (2, 3, 4):
         raise ValueError(f"k must be 2, 3, or 4, got {k}")
-
-    len(list(combinations(range(k), 2)))  # C(k,2)
 
     # Group results by group_id
     groups: dict[Any, list[bool]] = {}

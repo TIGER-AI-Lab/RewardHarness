@@ -9,6 +9,7 @@ import logging
 from collections.abc import Sequence
 from pathlib import Path
 
+from rewardharness import __version__
 from rewardharness.benchmark import run_benchmark
 from rewardharness.clients.endpoints import EndpointPool
 from rewardharness.config import RewardHarnessConfig
@@ -36,6 +37,7 @@ def _add_common(parser: argparse.ArgumentParser) -> None:
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="rewardharness")
+    parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     subparsers.add_parser("check", help="validate local credentials and endpoints")

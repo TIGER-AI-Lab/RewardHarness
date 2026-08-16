@@ -8,7 +8,7 @@ description: Ensures the final preference strictly matches the reasoning and ass
 
 # Reasoning and Preference Alignment
 
-When evaluating images, your final `preference` MUST logically follow from your `reasoning` and the scores you assign. 
+When evaluating images, your final `preference` MUST logically follow from your `reasoning` and the scores you assign.
 
 **Failure Mode:**
 In some cases, the reasoning explicitly states that Image A is better (e.g., "Image A's plausibility and realism are slightly superior"), but the output preference is incorrectly set to "B".

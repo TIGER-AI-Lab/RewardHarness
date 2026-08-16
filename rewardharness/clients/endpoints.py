@@ -6,17 +6,18 @@ Used by both SubAgent (main reasoning) and Library.call_tool (tool calls).
 """
 
 import threading
+from urllib.parse import urlsplit
 
 
 class EndpointPool:
-    def __init__(self, endpoints: list | None = None, endpoints_file: str | None = None):
+    def __init__(self, endpoints: list[str] | None = None, endpoints_file: str | None = None):
         """Initialize endpoint pool.
 
         Args:
             endpoints: List of endpoint URLs directly
             endpoints_file: Path to file with one endpoint URL per line
         """
-        if endpoints:
+        if endpoints is not None:
             self._endpoints = list(endpoints)
         elif endpoints_file:
             with open(endpoints_file) as f:
@@ -28,6 +29,13 @@ class EndpointPool:
 
         if not self._endpoints:
             raise ValueError("No endpoints provided")
+        normalized = []
+        for endpoint in self._endpoints:
+            parsed = urlsplit(endpoint)
+            if parsed.scheme not in {"http", "https"} or not parsed.netloc:
+                raise ValueError(f"Invalid endpoint URL: {endpoint!r}")
+            normalized.append(endpoint.rstrip("/"))
+        self._endpoints = normalized
 
         self._index = 0
         self._lock = threading.Lock()
@@ -44,6 +52,6 @@ class EndpointPool:
         """Number of endpoints in the pool."""
         return len(self._endpoints)
 
-    def all(self) -> list:
+    def all(self) -> list[str]:
         """Return all endpoint URLs."""
         return list(self._endpoints)

@@ -18,7 +18,7 @@ system_prompt: You are an expert OCR and text analysis tool. Given the images, a
 
 # Text and OCR Analyzer
 
-Use this tool whenever a prompt asks to add, modify, or remove specific text (e.g., "Add the letters 'CBS'"). 
+Use this tool whenever a prompt asks to add, modify, or remove specific text (e.g., "Add the letters 'CBS'").
 
 **When to use:**
 - The prompt contains quotes indicating text to render.

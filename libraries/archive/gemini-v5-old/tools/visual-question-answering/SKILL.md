@@ -20,7 +20,7 @@ system_prompt: "You are an expert visual analyst. Answer the user's query about 
   \ \"Your detailed answer to the user's query\"\n}"
 ---
 
-Use this tool to ask specific questions about the images. You can pass the source image and edited images to compare them. 
+Use this tool to ask specific questions about the images. You can pass the source image and edited images to compare them.
 
 Example queries:
 - "Compare the background of Image A and Image B to the source image. Did either image change the background unnecessarily?"

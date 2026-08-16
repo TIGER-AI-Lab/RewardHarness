@@ -54,6 +54,7 @@ class BenchmarkConfig:
 class RewardHarnessConfig:
     """Top-level typed configuration."""
 
+    schema_version: int = 2
     gemini: GeminiConfig = field(default_factory=GeminiConfig)
     evolution: EvolutionConfig = field(default_factory=EvolutionConfig)
     benchmark: BenchmarkConfig = field(default_factory=BenchmarkConfig)
@@ -61,7 +62,11 @@ class RewardHarnessConfig:
 
     @classmethod
     def from_mapping(cls, value: Mapping[str, Any]) -> RewardHarnessConfig:
+        schema_version = int(value.get("schema_version", 1))
+        if schema_version not in (1, 2):
+            raise ValueError(f"Unsupported configuration schema_version: {schema_version}")
         return cls(
+            schema_version=2,
             gemini=GeminiConfig(**dict(value.get("gemini", {}))),
             evolution=EvolutionConfig(**dict(value.get("evolution", {}))),
             benchmark=BenchmarkConfig(**dict(value.get("benchmark", {}))),

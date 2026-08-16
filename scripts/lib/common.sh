@@ -17,11 +17,3 @@ rh_require_command() {
     return 127
   }
 }
-
-rh_on_error() {
-  local exit_code=$?
-  printf 'error: %s failed at line %s (exit %s)\n' "${BASH_SOURCE[1]}" "$1" "$exit_code" >&2
-  return "$exit_code"
-}
-
-trap 'rh_on_error "$LINENO"' ERR
