@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # setup_env.sh — Environment setup for RewardHarness pipeline
+# shellcheck source=scripts/lib/common.sh
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/common.sh"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

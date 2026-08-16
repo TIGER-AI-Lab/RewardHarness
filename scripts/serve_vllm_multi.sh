@@ -15,6 +15,7 @@
 #
 # Setting RH_SKIP_ENV_PIN=1 disables the block entirely (recommended on
 # vanilla servers).
+# shellcheck source=scripts/lib/common.sh
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/common.sh"
 
 if [ -z "${RH_SKIP_ENV_PIN:-}" ]; then

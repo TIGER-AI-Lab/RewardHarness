@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck source=scripts/lib/common.sh
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/common.sh"
 # Kill vLLM processes safely without affecting parent
 trap '' TERM HUP

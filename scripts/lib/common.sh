@@ -5,6 +5,7 @@ set -Eeuo pipefail
 
 RH_PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 RH_PYTHON="${VLLM_PYTHON:-python}"
+export RH_PROJECT_ROOT RH_PYTHON
 readonly RH_PROJECT_ROOT RH_PYTHON
 
 rh_log() {

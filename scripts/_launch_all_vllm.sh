@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck source=scripts/lib/common.sh
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/common.sh"
 # Launch one vLLM instance per GPU and keep the script alive.
 # Respects the same env-var conventions as scripts/serve_vllm_multi.sh:

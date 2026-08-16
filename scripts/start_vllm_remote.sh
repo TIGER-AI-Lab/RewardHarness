@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck source=scripts/lib/common.sh
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/common.sh"
 # start_vllm_remote.sh — Boot a single vLLM endpoint on an assigned GPU.
 # Intended to be invoked over SSH against a remote node (or by a Slurm task)
@@ -36,12 +37,12 @@ SERVED_NAME="${REWARDHARNESS_SUBAGENT_MODEL:-Qwen2.5-VL-7B-Instruct}"
 MAX_MODEL_LEN="${MAX_MODEL_LEN:-16384}"
 
 echo "Starting vLLM on $(hostname) GPU=$GPU_ID port=$PORT model=$MODEL served=$SERVED_NAME gpu_mem=$GPU_MEM at $(date)"
-CUDA_VISIBLE_DEVICES=$GPU_ID $PYTHON -m vllm.entrypoints.openai.api_server \
+CUDA_VISIBLE_DEVICES="$GPU_ID" "$PYTHON" -m vllm.entrypoints.openai.api_server \
     --model "$MODEL" \
     --served-model-name "$SERVED_NAME" \
     --tensor-parallel-size 1 \
-    --port $PORT \
+    --port "$PORT" \
     --max-model-len "$MAX_MODEL_LEN" \
     --limit-mm-per-prompt '{"image": 5}' \
     --dtype bfloat16 \
-    --gpu-memory-utilization $GPU_MEM
+    --gpu-memory-utilization "$GPU_MEM"

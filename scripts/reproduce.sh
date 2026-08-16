@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 # reproduce.sh — End-to-end reproducibility script for RewardHarness
 # Runs setup → download → serve → evolution → benchmark → print results
+# shellcheck source=scripts/lib/common.sh
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/common.sh"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
-cd "$PROJECT_ROOT"
+cd "$PROJECT_ROOT" || exit
 
 VLLM_PIDS=()
 
@@ -20,7 +21,9 @@ cleanup() {
         while IFS= read -r url; do
             [[ -z "$url" || "$url" =~ ^# ]] && continue
             port=$(echo "$url" | sed -nE 's#.*:([0-9]+).*#\1#p')
-            [ -n "$port" ] && fuser -k "$port/tcp" 2>/dev/null || true
+            if [ -n "$port" ]; then
+                fuser -k "$port/tcp" 2>/dev/null || true
+            fi
         done < configs/endpoints.txt
     fi
     wait 2>/dev/null || true

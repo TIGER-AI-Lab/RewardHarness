@@ -10,6 +10,7 @@
 #SBATCH --cpus-per-gpu=16
 #SBATCH --mem=500G
 #SBATCH --output=/tmp/vllm-slurm-%j.log
+# shellcheck source=scripts/lib/common.sh
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/common.sh"
 
 # Override these with `export VAR=… ; sbatch scripts/sbatch_vllm.sh`

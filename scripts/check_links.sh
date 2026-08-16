@@ -11,11 +11,12 @@
 #   bash scripts/check_links.sh             # local file checks only (fast)
 #   bash scripts/check_links.sh --external  # also curl every external URL
 
+# shellcheck source=scripts/lib/common.sh
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/common.sh"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
-cd "$PROJECT_ROOT"
+cd "$PROJECT_ROOT" || exit
 
 CHECK_EXTERNAL=0
 [ "${1:-}" = "--external" ] && CHECK_EXTERNAL=1
