@@ -1,4 +1,4 @@
-.PHONY: help install check test demo evolve benchmark reproduce clean
+.PHONY: help install install-dev check test release-check demo evolve benchmark reproduce clean
 
 # Default target: show available commands
 help:
@@ -7,7 +7,9 @@ help:
 	@echo "  Target           What it does                                           Needs"
 	@echo "  ---------------  ----------------------------------------------------  ---------------------"
 	@echo "  make install     Install Python dependencies (core only)               nothing"
+	@echo "  make install-dev Install test and release tooling                      nothing"
 	@echo "  make test        Run the test suite                                    nothing (no GPU/net)"
+	@echo "  make release-check  Build and validate wheel + source distribution     nothing"
 	@echo "  make check       Preflight: verify env vars / creds / endpoints       nothing (probes only)"
 	@echo "  make demo        1-iter smoke test from examples/seed_library          Gemini + vLLM (or HF)"
 	@echo "  make benchmark   K=2/3/4 accuracy on EditReward-Bench (read-only)     Gemini + vLLM"
@@ -24,11 +26,18 @@ help:
 install:
 	pip install -r requirements.txt
 
+install-dev:
+	pip install -r requirements-dev.txt
+
 check:
 	python scripts/check_env.py
 
 test:
 	python -m pytest tests/ -v
+
+release-check:
+	python -m build
+	python -m twine check dist/*
 
 demo:
 	python scripts/run_evolution.py \

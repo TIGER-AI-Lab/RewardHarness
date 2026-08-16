@@ -123,6 +123,9 @@ cd RewardHarness
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
+# Contributors / maintainers: add test and release tooling.
+pip install -r requirements-dev.txt
+
 # OPTIONAL — only needed if you'll serve Qwen2.5-VL-7B locally with vLLM.
 # Skip this if you only want to run the test suite, inspect the Library, or
 # point the Sub-Agent at a hosted Gemini endpoint instead.

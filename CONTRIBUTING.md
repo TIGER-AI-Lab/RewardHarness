@@ -7,8 +7,9 @@ Thanks for considering a contribution. RewardHarness is a research codebase, so 
 1. **Open an issue first** for non-trivial changes (new features, refactors, anything > 50 lines). Use the [bug report](.github/ISSUE_TEMPLATE/bug_report.md) or [feature request](.github/ISSUE_TEMPLATE/feature_request.md) template. This avoids two-person work and surfaces design feedback before the code is written.
 2. **Run the preflight + tests** locally:
    ```bash
+   make install-dev
    make check    # env / credentials / endpoints
-   make test     # 100 mocked tests, ~2 s
+   make test     # mocked tests, ~2 s
    ```
    PRs that break the test suite won't be merged.
 3. **Keep PRs focused.** One PR = one logical change. If you're refactoring while adding a feature, split into two PRs.
@@ -49,4 +50,6 @@ One-line subject (≤72 chars), then optional body. Reference issues with `#NNN`
 
 ## Releases
 
-Versions follow [SemVer](https://semver.org/). Maintainers cut a tag + GitHub Release and add a `## [x.y.z]` block to `CHANGELOG.md`.
+Versions follow [SemVer](https://semver.org/). Before tagging, maintainers run
+`make release-check`, cut a tag + GitHub Release, and add a `## [x.y.z]` block
+to `CHANGELOG.md`.

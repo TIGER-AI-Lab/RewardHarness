@@ -1,0 +1,9 @@
+-r requirements.txt
+
+# Test suite
+pytest>=8.0
+pytest-mock>=3.12
+
+# Distribution validation
+build>=1.2,<2.0
+twine>=5.1,<8.0

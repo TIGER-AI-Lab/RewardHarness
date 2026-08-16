@@ -23,7 +23,3 @@ scipy>=1.11.0
 tqdm>=4.66.0
 rich>=13.0.0
 pyyaml>=6.0
-
-# Test suite
-pytest>=8.0
-pytest-mock>=3.12
