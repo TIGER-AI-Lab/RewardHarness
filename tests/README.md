@@ -1,6 +1,6 @@
 # Tests
 
-Fully mocked end-to-end test suite (**138 tests**, runs in a few seconds) — no GPU,
+Fully mocked end-to-end test suite (**154 tests**, runs in a few seconds) — no GPU,
 no network, no API keys, and no real Gemini calls. Install development tooling
 from `requirements-dev.txt` before running the complete quality gate.
 
@@ -23,6 +23,7 @@ make test
 | `test_pipeline.py` | `SelfEvolutionPipeline.evolve` over 2 iterations — separate skill/tool rollback, `>= prev - margin` keep condition, checkpoint write, val-acc regression triggers rollback. |
 | `test_check_env.py` | `scripts/check_env.py::_probe_one` — `/v1/models` body parsing for the VLM-swap mismatch detection added in iter 130. |
 | `test_public_api.py` | Typed v0.2 API, schema v2, compatibility imports, config validation, and path safety. |
+| `test_release.py` | Lazy package imports, canonical PyPI/tag identity, and release-status CLI contracts. |
 
 Everything that touches an external service (Gemini, vLLM, Hugging Face) is mocked with `unittest.mock`. If a test ever makes a real network call, it's a regression — please open an issue.
 

@@ -8,16 +8,14 @@ import json
 import logging
 from collections.abc import Sequence
 from pathlib import Path
+from typing import TYPE_CHECKING
 
-from rewardharness import __version__
-from rewardharness.benchmark import run_benchmark
-from rewardharness.clients.endpoints import EndpointPool
-from rewardharness.config import RewardHarnessConfig
-from rewardharness.evaluation.engine import SUBAGENT_MODEL, SubAgent
-from rewardharness.evaluation.router import Router
-from rewardharness.evolution.pipeline import SelfEvolutionPipeline
-from rewardharness.library import Library
+from rewardharness._version import __version__
 from rewardharness.paths import PROJECT_ROOT, default_endpoints_path, default_library_path
+from rewardharness.release import ReleaseIdentity
+
+if TYPE_CHECKING:
+    from rewardharness.config import RewardHarnessConfig
 
 
 def _path(value: str) -> Path:
@@ -41,6 +39,7 @@ def build_parser() -> argparse.ArgumentParser:
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     subparsers.add_parser("check", help="validate local credentials and endpoints")
+    subparsers.add_parser("release-status", help="show canonical package and release identifiers")
 
     inspect_parser = subparsers.add_parser("inspect", help="inspect a Library registry")
     inspect_parser.add_argument("--library-dir", default=str(default_library_path()))
@@ -68,10 +67,14 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def _load_config(path: str) -> RewardHarnessConfig:
+    from rewardharness.config import RewardHarnessConfig
+
     return RewardHarnessConfig.from_yaml(_path(path))
 
 
 def _inspect(library_dir: str, validate: bool = False) -> int:
+    from rewardharness.library import Library
+
     library = Library(str(_path(library_dir)))
     if validate:
         for name in library.registry:
@@ -81,6 +84,8 @@ def _inspect(library_dir: str, validate: bool = False) -> int:
 
 
 def _evolve(args: argparse.Namespace) -> int:
+    from rewardharness.evolution.pipeline import SelfEvolutionPipeline
+
     config = _load_config(args.config)
     pipeline = SelfEvolutionPipeline(config, args.library_dir, args.results_dir)
     iterations = args.max_iters or config.evolution.max_iterations
@@ -92,12 +97,19 @@ def _evolve(args: argparse.Namespace) -> int:
 
 
 def _benchmark(args: argparse.Namespace) -> int:
+    from rewardharness.benchmark import run_benchmark
+
     config = _load_config(args.config)
     run_benchmark(config.to_legacy_dict(), args.library_dir, args.results_dir)
     return 0
 
 
 def _score_pair(args: argparse.Namespace) -> int:
+    from rewardharness.clients.endpoints import EndpointPool
+    from rewardharness.evaluation.engine import SUBAGENT_MODEL, SubAgent
+    from rewardharness.evaluation.router import Router
+    from rewardharness.library import Library
+
     library = Library(str(_path(args.library_dir)))
     context = Router(library).prepare_context(args.prompt)
     pool = EndpointPool(endpoints_file=str(_path(args.endpoints)))
@@ -126,6 +138,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         from rewardharness.diagnostics import main as diagnostics_main
 
         return diagnostics_main()
+    if args.command == "release-status":
+        print(json.dumps(ReleaseIdentity.current().to_dict(), indent=2, sort_keys=True))
+        return 0
     if args.command == "inspect":
         return _inspect(args.library_dir)
     if args.command == "validate-library":

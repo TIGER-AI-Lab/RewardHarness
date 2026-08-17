@@ -34,7 +34,7 @@ Paper = "https://arxiv.org/abs/2605.08703"
 
 [tool.setuptools.dynamic]
 dependencies = { file = ["requirements.txt"] }
-version = { attr = "rewardharness.__version__" }
+version = { attr = "rewardharness._version.__version__" }
 
 [tool.setuptools.packages.find]
 include = ["rewardharness*", "src*"]
