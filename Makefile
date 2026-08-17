@@ -49,6 +49,7 @@ quality:
 	else echo "shellcheck not installed; bash syntax checks completed"; fi
 
 release-check: quality test
+	rm -rf build dist rewardharness.egg-info
 	python -m build
 	python -m twine check dist/*
 

@@ -27,6 +27,10 @@ def main() -> int:
 
     if pyproject["project"]["name"] != "rewardharness":
         raise SystemExit("pyproject project name must be rewardharness")
+    required_urls = {"Homepage", "Documentation", "Repository", "Changelog", "Issues", "Paper"}
+    missing_urls = required_urls - pyproject["project"]["urls"].keys()
+    if missing_urls:
+        raise SystemExit(f"pyproject is missing project URLs: {sorted(missing_urls)}")
     version_source = pyproject["tool"]["setuptools"]["dynamic"]["version"]["attr"]
     if version_source != "rewardharness._version.__version__":
         raise SystemExit("pyproject must read the canonical _version module")
@@ -37,6 +41,9 @@ def main() -> int:
         )
     if f"## [{citation_version}]" not in changelog:
         raise SystemExit(f"CHANGELOG.md has no release heading for {citation_version}")
+    package_data = pyproject["tool"]["setuptools"]["package-data"]["rewardharness"]
+    if "py.typed" not in package_data or not (ROOT / "rewardharness" / "py.typed").is_file():
+        raise SystemExit("the PEP 561 py.typed marker must be packaged")
     print(
         f"release metadata: package={identity.package_version} "
         f"tag={identity.tag} citation={citation_version}"

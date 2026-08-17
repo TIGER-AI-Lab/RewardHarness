@@ -66,6 +66,7 @@ jobs:
           [[ "$GITHUB_REF_NAME" == *-* ]] && prerelease="--prerelease"
           gh release create "$GITHUB_REF_NAME" dist/* \
             --repo "$GITHUB_REPOSITORY" \
+            --verify-tag \
             --generate-notes $prerelease
 
   verify:
@@ -93,7 +94,12 @@ jobs:
           package_version=${GITHUB_REF_NAME#v}
           package_version=${package_version//-/}
           python -m venv /tmp/rewardharness-pypi
-          /tmp/rewardharness-pypi/bin/pip install --no-deps "rewardharness==$package_version"
+          /tmp/rewardharness-pypi/bin/python -m pip install --quiet --upgrade pip
+          /tmp/rewardharness-pypi/bin/pip install \
+            --index-url https://pypi.org/simple \
+            --only-binary=:all: \
+            --no-deps \
+            "rewardharness==$package_version"
           /tmp/rewardharness-pypi/bin/rewardharness --version
           /tmp/rewardharness-pypi/bin/rewardharness release-status
       - name: Verify GitHub release

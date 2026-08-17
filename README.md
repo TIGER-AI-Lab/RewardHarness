@@ -1,6 +1,6 @@
 # RewardHarness
 
-> **v0.2 release candidate:** the supported Python API now lives under
+> **v0.2 stable release:** the supported Python API lives under
 > `rewardharness.*`. Imports from `src.*` remain as deprecated compatibility
 > adapters through the v0.2 release series.
 
@@ -43,6 +43,9 @@ Read [`WALKTHROUGH.md`](WALKTHROUGH.md) for the 9-step path from `git clone` to 
 
 ## Updates
 
+- **2026-08-17** — `v0.2.0`: stable PyPI release with verified wheel/sdist,
+  PEP 561 typing metadata, richer project links, and end-to-end trusted
+  publishing checks.
 - **2026-08-17** — `v0.2.0-rc1`: canonical `rewardharness` package, typed
   configuration/domain API, schema-v2 Libraries, unified CLI, strict quality
   gates, and trusted GitHub/PyPI release automation.

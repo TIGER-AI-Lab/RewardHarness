@@ -4,7 +4,25 @@ All notable changes to RewardHarness are recorded here. Versions follow [SemVer]
 
 ## [Unreleased]
 
-Future changes after the v0.2 release candidate.
+Future changes after v0.2.0.
+
+## [0.2.0] — 2026-08-17
+
+Stable release of the canonical `rewardharness` package introduced in the
+release candidate.
+
+### Added
+
+- Published the `py.typed` marker and `Typing :: Typed` classifier so type
+  checkers can consume the package's inline annotations.
+- Added dedicated Documentation, Changelog, and Issues links to PyPI metadata.
+
+### Changed
+
+- Promoted the v0.2 package, schema-v2 Library, unified CLI, and compatibility
+  adapters from release candidate to stable.
+- Hardened trusted publishing with full-history release builds, explicit GitHub
+  repository targeting, modern-pip wheel installation, and post-publish checks.
 
 ## [0.2.0-rc1] — 2026-08-17
 
@@ -129,6 +147,7 @@ deprecated `src` namespace remains as a compatibility layer for v0.2.
 - `make demo` and `make benchmark` default to `--library-dir examples/seed_library` for non-empty starting state.
 - `make help` is now a credentials matrix showing what each target actually needs.
 
+[0.2.0]: https://github.com/TIGER-AI-Lab/RewardHarness/releases/tag/v0.2.0
 [0.1.2]: https://github.com/TIGER-AI-Lab/RewardHarness/releases/tag/v0.1.2
 [0.2.0-rc1]: https://github.com/TIGER-AI-Lab/RewardHarness/releases/tag/v0.2.0-rc1
 

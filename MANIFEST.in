@@ -2,5 +2,6 @@ include README.md LICENSE CITATION.cff CHANGELOG.md
 include requirements.txt requirements-dev.txt requirements-vllm.txt
 include configs/*.yaml configs/*.txt
 recursive-include rewardharness/resources *.json *.md
+include rewardharness/py.typed
 recursive-include libraries/archive *.json *.md
 recursive-include examples/seed_library *.json *.md

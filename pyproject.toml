@@ -16,11 +16,13 @@ keywords = ["reward-model", "image-editing", "agentic", "vlm", "rlhf"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Typing :: Typed",
 ]
 dynamic = ["dependencies", "version"]
 
@@ -29,7 +31,10 @@ rewardharness = "rewardharness.cli:main"
 
 [project.urls]
 Homepage = "https://rewardharness.com"
+Documentation = "https://github.com/TIGER-AI-Lab/RewardHarness#readme"
 Repository = "https://github.com/TIGER-AI-Lab/RewardHarness"
+Changelog = "https://github.com/TIGER-AI-Lab/RewardHarness/blob/main/CHANGELOG.md"
+Issues = "https://github.com/TIGER-AI-Lab/RewardHarness/issues"
 Paper = "https://arxiv.org/abs/2605.08703"
 
 [tool.setuptools.dynamic]
@@ -42,6 +47,7 @@ exclude = ["tests*", "vanilla*", "examples*", "scripts*"]
 
 [tool.setuptools.package-data]
 rewardharness = [
+  "py.typed",
   "resources/library/**/*.json",
   "resources/library/**/*.md",
   "resources/score_guidelines/*.md",
