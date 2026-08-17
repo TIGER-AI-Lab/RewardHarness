@@ -42,6 +42,7 @@ quality:
 	mypy rewardharness
 	python scripts/check_rating_integrity.py
 	python scripts/check_migration_coverage.py
+	python scripts/check_release_metadata.py
 	pip-audit -r requirements.txt
 	@for file in scripts/*.sh scripts/lib/*.sh; do bash -n "$$file"; done
 	@if command -v shellcheck >/dev/null 2>&1; then shellcheck scripts/*.sh scripts/lib/*.sh; \

@@ -12,6 +12,12 @@ Large-scale architecture and release-hardening candidate. The supported API
 now uses the `rewardharness` namespace, Library assets use schema v2, and the
 deprecated `src` namespace remains as a compatibility layer for v0.2.
 
+- Package metadata imports are now lazy, so version and release checks do not
+  initialize model, dataset, or image-processing dependencies.
+- Added canonical version/tag conversion, `rewardharness release-status`,
+  cross-file release metadata validation, and post-publish PyPI/GitHub smoke
+  verification.
+
 ### Added
 
 - Active GitHub Actions CI now runs the test suite on Python 3.10&ndash;3.12,

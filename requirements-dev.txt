@@ -9,6 +9,7 @@ pytest-cov>=5.0
 mypy>=1.11,<2.0
 ruff>=0.9,<1.0
 types-pyyaml>=6.0
+tomli>=2.0; python_version < "3.11"
 pip-audit>=2.7,<3.0
 pre-commit>=4.0,<5.0
 

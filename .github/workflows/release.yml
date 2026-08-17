@@ -7,6 +7,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,10 +21,7 @@ jobs:
           python-version: "3.10"
       - run: python -m pip install -r requirements-dev.txt
       - name: Verify tag and package version
-        run: |
-          package_version=$(python -c 'import rewardharness; print(rewardharness.__version__)')
-          tag_version=${GITHUB_REF_NAME#v}
-          test "${tag_version//-/}" = "$package_version"
+        run: python -m rewardharness.release --check-tag "$GITHUB_REF_NAME"
       - run: make release-check
       - uses: actions/upload-artifact@v4
         with:
@@ -31,7 +32,9 @@ jobs:
   pypi:
     needs: build
     runs-on: ubuntu-latest
-    environment: pypi
+    environment:
+      name: pypi
+      url: https://pypi.org/project/rewardharness/
     permissions:
       id-token: write
     steps:
@@ -44,7 +47,7 @@ jobs:
           attestations: true
 
   github:
-    needs: build
+    needs: [build, pypi]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -60,3 +63,36 @@ jobs:
           prerelease=""
           [[ "$GITHUB_REF_NAME" == *-* ]] && prerelease="--prerelease"
           gh release create "$GITHUB_REF_NAME" dist/* --generate-notes $prerelease
+
+  verify:
+    needs: [pypi, github]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.10"
+      - name: Wait for PyPI metadata
+        run: |
+          package_version=${GITHUB_REF_NAME#v}
+          package_version=${package_version//-/}
+          for attempt in {1..18}; do
+            curl --fail --silent --output /dev/null \
+              "https://pypi.org/pypi/rewardharness/$package_version/json" && exit 0
+            echo "PyPI metadata not visible yet (attempt $attempt/18)"
+            sleep 10
+          done
+          exit 1
+      - name: Install and smoke-test the published artifact
+        run: |
+          package_version=${GITHUB_REF_NAME#v}
+          package_version=${package_version//-/}
+          python -m venv /tmp/rewardharness-pypi
+          /tmp/rewardharness-pypi/bin/pip install --no-deps "rewardharness==$package_version"
+          /tmp/rewardharness-pypi/bin/rewardharness --version
+          /tmp/rewardharness-pypi/bin/rewardharness release-status
+      - name: Verify GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release view "$GITHUB_REF_NAME" --json tagName,isPrerelease,url

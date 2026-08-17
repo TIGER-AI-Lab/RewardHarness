@@ -144,6 +144,7 @@ The installation exposes one supported command surface:
 ```bash
 rewardharness inspect
 rewardharness check
+rewardharness release-status
 rewardharness score-pair --help
 rewardharness evolve --help
 rewardharness benchmark --help
