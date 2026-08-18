@@ -27,6 +27,7 @@ import os
 import sys
 import urllib.error
 import urllib.request
+from collections.abc import Sequence
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -131,7 +132,7 @@ def check_endpoints(endpoints_path: str, timeout: float = 3.0) -> bool:
         print(f"  [{WARN}] no endpoints listed in {endpoints_path}")
         return True
     # Import the canonical constant so this script's "expected" stays in
-    # lockstep with src.sub_agent.SUBAGENT_MODEL (already env-var-aware).
+    # lockstep with rewardharness.evaluation.engine.SUBAGENT_MODEL.
     # Resolved lazily so check_env.py keeps working even if src/ isn't on
     # the path (e.g. running this from outside the repo root).
     try:
@@ -163,14 +164,22 @@ def check_endpoints(endpoints_path: str, timeout: float = 3.0) -> bool:
     return True  # endpoint probe is informational only
 
 
-def main():
+def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     parser.add_argument(
         "--endpoints",
         default="configs/endpoints.txt",
         help="Path to endpoints file (default: configs/endpoints.txt)",
     )
-    args = parser.parse_args()
+    parser.add_argument(
+        "--timeout",
+        type=float,
+        default=3.0,
+        help="Per-endpoint timeout in seconds (default: 3.0)",
+    )
+    args = parser.parse_args(argv)
+    if args.timeout <= 0:
+        parser.error("--timeout must be positive")
 
     print("RewardHarness preflight check\n")
 
@@ -183,7 +192,7 @@ def main():
     print("\n4. Service-account credentials")
     ok_creds = check_credentials_file() if ok_env else False
     print("\n5. vLLM endpoints (informational)")
-    check_endpoints(args.endpoints)
+    check_endpoints(args.endpoints, timeout=args.timeout)
 
     print()
     all_required = ok_py and ok_imports and ok_env and ok_creds

@@ -38,7 +38,9 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
-    subparsers.add_parser("check", help="validate local credentials and endpoints")
+    check_parser = subparsers.add_parser("check", help="validate local credentials and endpoints")
+    check_parser.add_argument("--endpoints", default=str(default_endpoints_path()))
+    check_parser.add_argument("--timeout", type=float, default=3.0)
     subparsers.add_parser("release-status", help="show canonical package and release identifiers")
 
     inspect_parser = subparsers.add_parser("inspect", help="inspect a Library registry")
@@ -137,7 +139,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     if args.command == "check":
         from rewardharness.diagnostics import main as diagnostics_main
 
-        return diagnostics_main()
+        return diagnostics_main(["--endpoints", args.endpoints, "--timeout", str(args.timeout)])
     if args.command == "release-status":
         print(json.dumps(ReleaseIdentity.current().to_dict(), indent=2, sort_keys=True))
         return 0

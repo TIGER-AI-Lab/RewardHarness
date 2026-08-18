@@ -9,6 +9,7 @@ import json
 from unittest.mock import patch
 
 import rewardharness.diagnostics as diagnostics
+from rewardharness.cli import main as cli_main
 
 
 def _load_check_env():
@@ -62,3 +63,31 @@ class TestProbeOne:
             _url, err, served = mod._probe_one("http://x/v1", timeout=1.0)
         assert "HTTP 500" in err
         assert served == ""
+
+
+def test_cli_forwards_check_options_without_reparsing_process_argv(monkeypatch):
+    received = []
+
+    def fake_main(argv=None):
+        received.append(argv)
+        return 0
+
+    monkeypatch.setattr(diagnostics, "main", fake_main)
+    assert cli_main(["check", "--endpoints", "custom.txt", "--timeout", "0.25"]) == 0
+    assert received == [["--endpoints", "custom.txt", "--timeout", "0.25"]]
+
+
+def test_diagnostics_main_uses_explicit_options(monkeypatch):
+    observed = []
+    monkeypatch.setattr(diagnostics, "check_python_version", lambda: True)
+    monkeypatch.setattr(diagnostics, "check_imports", lambda: True)
+    monkeypatch.setattr(diagnostics, "check_env_vars", lambda: True)
+    monkeypatch.setattr(diagnostics, "check_credentials_file", lambda: True)
+    monkeypatch.setattr(
+        diagnostics,
+        "check_endpoints",
+        lambda path, timeout: observed.append((path, timeout)) or True,
+    )
+
+    assert diagnostics.main(["--endpoints", "custom.txt", "--timeout", "0.25"]) == 0
+    assert observed == [("custom.txt", 0.25)]

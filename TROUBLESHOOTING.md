@@ -51,7 +51,7 @@ export GEMINI_LOCATION="global"  # or us-central1 / europe-west4
 Quick check:
 
 ```bash
-python -c "from src.gemini_client import get_client; get_client(); print('OK')"
+python -c "from rewardharness.clients.gemini import get_client; get_client(); print('OK')"
 ```
 
 **`PermissionDenied: 403 Vertex AI API has not been used in project ... or it is disabled`**
