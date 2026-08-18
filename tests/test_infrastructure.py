@@ -97,7 +97,7 @@ def test_cli_reports_package_version(capsys):
     with pytest.raises(SystemExit) as raised:
         build_parser().parse_args(["--version"])
     assert raised.value.code == 0
-    assert capsys.readouterr().out.strip() == "rewardharness 0.2.0"
+    assert capsys.readouterr().out.strip() == "rewardharness 0.2.1"
 
 
 def test_gemini_text_and_candidate_fallback(monkeypatch):

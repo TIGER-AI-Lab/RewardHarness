@@ -4,7 +4,22 @@ All notable changes to RewardHarness are recorded here. Versions follow [SemVer]
 
 ## [Unreleased]
 
-Future changes after v0.2.0.
+Future changes after v0.2.1.
+
+## [0.2.1] — 2026-08-18
+
+### Added
+
+- Added `scripts/check_distribution.py`, a deterministic release audit that
+  rejects stale or extra artifacts, unsafe archive paths, inconsistent package
+  metadata, missing runtime resources, and non-runtime files leaked into the
+  wheel.
+
+### Changed
+
+- Local release checks and CI now validate the exact wheel/sdist contents after
+  every build, including the PEP 561 marker, CLI entry point, packaged Library,
+  scoring templates, source documentation, and PyPI project URLs.
 
 ## [0.2.0] — 2026-08-17
 
@@ -147,6 +162,7 @@ deprecated `src` namespace remains as a compatibility layer for v0.2.
 - `make demo` and `make benchmark` default to `--library-dir examples/seed_library` for non-empty starting state.
 - `make help` is now a credentials matrix showing what each target actually needs.
 
+[0.2.1]: https://github.com/TIGER-AI-Lab/RewardHarness/releases/tag/v0.2.1
 [0.2.0]: https://github.com/TIGER-AI-Lab/RewardHarness/releases/tag/v0.2.0
 [0.1.2]: https://github.com/TIGER-AI-Lab/RewardHarness/releases/tag/v0.1.2
 [0.2.0-rc1]: https://github.com/TIGER-AI-Lab/RewardHarness/releases/tag/v0.2.0-rc1

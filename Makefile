@@ -39,7 +39,7 @@ test:
 quality:
 	ruff format --check rewardharness src scripts examples tests vanilla
 	ruff check rewardharness src scripts examples tests vanilla
-	mypy rewardharness
+	mypy rewardharness scripts/check_distribution.py scripts/check_release_metadata.py
 	python scripts/check_rating_integrity.py
 	python scripts/check_migration_coverage.py
 	python scripts/check_release_metadata.py
@@ -52,6 +52,7 @@ release-check: quality test
 	rm -rf build dist rewardharness.egg-info
 	python -m build
 	python -m twine check dist/*
+	python scripts/check_distribution.py
 
 demo:
 	rewardharness evolve \

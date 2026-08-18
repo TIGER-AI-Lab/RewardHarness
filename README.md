@@ -43,6 +43,8 @@ Read [`WALKTHROUGH.md`](WALKTHROUGH.md) for the 9-step path from `git clone` to 
 
 ## Updates
 
+- **2026-08-18** — `v0.2.1`: deterministic wheel/sdist content auditing,
+  stricter release metadata verification, and safer clean-build publishing.
 - **2026-08-17** — `v0.2.0`: stable PyPI release with verified wheel/sdist,
   PEP 561 typing metadata, richer project links, and end-to-end trusted
   publishing checks.

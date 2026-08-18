@@ -34,7 +34,7 @@ jobs:
         run: |
           ruff format --check rewardharness src scripts examples tests vanilla
           ruff check rewardharness src scripts examples tests vanilla
-          mypy rewardharness
+          mypy rewardharness scripts/check_distribution.py scripts/check_release_metadata.py
       - name: Rating and shell integrity
         run: |
           python scripts/check_rating_integrity.py
@@ -93,6 +93,7 @@ jobs:
         run: |
           python -m build
           python -m twine check dist/*
+          python scripts/check_distribution.py
 
       - name: Test wheel installation
         run: |

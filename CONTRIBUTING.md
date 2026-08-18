@@ -60,5 +60,7 @@ Release candidates use PEP 440 versions such as `0.2.0rc1` and matching tags
 such as `v0.2.0-rc1`. The tag workflow publishes the same validated artifacts
 to PyPI and GitHub through trusted publishing. Run
 `rewardharness release-status` and `python scripts/check_release_metadata.py`
-before tagging; the workflow also installs the published PyPI artifact and
-verifies the resulting GitHub Release before reporting success.
+before tagging. `make release-check` also runs `scripts/check_distribution.py`
+to reject stale artifacts, metadata drift, and missing package resources; the
+workflow then installs the published PyPI artifact and verifies the resulting
+GitHub Release before reporting success.
