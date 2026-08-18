@@ -69,9 +69,10 @@ def main():
     print("-" * 64)
     print(
         textwrap.dedent("""
-        Parsing rules (see src/sub_agent.py):
+        Parsing rules (see rewardharness/evaluation/engine.py):
           - The Sub-Agent is allowed up to MAX_TOOL_CALLS tool dispatches
-            per judgment (constant in src/sub_agent.py, currently 5). After
+            per judgment (constant in rewardharness/evaluation/engine.py,
+            currently 5). After
             that, one final turn is allowed for the <answer> only.
           - If no <answer> is emitted, FALLBACK_ANSWER is used (tie, 2/2/2/2).
           - The "preference" field must be exactly "A", "B", or "tie".

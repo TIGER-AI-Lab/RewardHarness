@@ -37,8 +37,8 @@ test:
 	python -m pytest tests/ -v --cov=rewardharness --cov-report=term-missing
 
 quality:
-	ruff format --check rewardharness src scripts examples tests vanilla
-	ruff check rewardharness src scripts examples tests vanilla
+	ruff format --check rewardharness scripts examples tests vanilla
+	ruff check rewardharness scripts examples tests vanilla
 	mypy rewardharness scripts/check_distribution.py scripts/check_release_metadata.py
 	python scripts/check_rating_integrity.py
 	python scripts/check_migration_coverage.py

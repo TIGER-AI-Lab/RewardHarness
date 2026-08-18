@@ -23,7 +23,7 @@ A one-line description of what went wrong.
 - Python: `python --version`
 - Key package versions: `pip show vllm google-genai openai | grep -E '^(Name|Version)'`
 - Output of `make check` (or `python scripts/check_env.py`):
-- Import style used: `rewardharness.*` or deprecated `src.*` compatibility layer
+- Import path and public symbol used (for example, `rewardharness.library.Library`)
 
 ## Logs / stack trace
 <details>

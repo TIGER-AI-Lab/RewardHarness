@@ -3,7 +3,7 @@
 The Orchestrator (Router + ChainAnalyzer + Evolver) calls Gemini once per
 operation: skill/tool selection at inference time, chain analysis at
 evolution time. The Sub-Agent does NOT go through this client — it uses an
-OpenAI-compatible vLLM endpoint (see src/sub_agent.py).
+OpenAI-compatible vLLM endpoint (see rewardharness/evaluation/engine.py).
 
 Usage:
     from rewardharness.clients.gemini import call_gemini

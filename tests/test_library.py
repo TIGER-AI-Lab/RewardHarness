@@ -137,7 +137,7 @@ class TestLibraryTools:
         mock_vllm_client.chat.completions.create.assert_called_once()
 
     def test_call_tool_honours_subagent_model_override(self, tmp_library, mock_vllm_client):
-        """Tool dispatch passes src.library.SUBAGENT_MODEL as the vLLM model id.
+        """Tool dispatch passes the canonical SUBAGENT_MODEL as the vLLM model id.
 
         Regression guard: REWARDHARNESS_SUBAGENT_MODEL must propagate from
         sub_agent through library/__init__.py to the actual chat.completions

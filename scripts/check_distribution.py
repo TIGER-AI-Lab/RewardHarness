@@ -82,7 +82,7 @@ def main() -> int:
     missing_wheel = required_wheel - wheel_names
     if missing_wheel:
         _fail(f"{wheel.name} is missing runtime files: {sorted(missing_wheel)}")
-    forbidden_prefixes = ("tests/", "scripts/", "examples/", "vanilla/")
+    forbidden_prefixes = ("src/", "tests/", "scripts/", "examples/", "vanilla/")
     leaked = sorted(name for name in wheel_names if name.startswith(forbidden_prefixes))
     if leaked:
         _fail(f"{wheel.name} contains non-runtime files: {leaked}")
@@ -101,6 +101,7 @@ def main() -> int:
         f"{sdist_root}/CHANGELOG.md",
         f"{sdist_root}/CITATION.cff",
         f"{sdist_root}/LICENSE",
+        f"{sdist_root}/MIGRATING.md",
         f"{sdist_root}/rewardharness/py.typed",
         f"{sdist_root}/configs/default.yaml",
     }

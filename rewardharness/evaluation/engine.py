@@ -17,7 +17,7 @@ from rewardharness.paths import score_guidelines_path
 
 logger = logging.getLogger(__name__)
 
-# SCORE_TEMPLATES_DIR resolves relative to src/, so it works in a source
+# SCORE_TEMPLATES_DIR resolves relative to the installed package, so it works in a source
 # checkout (where score-guidelines/ sits at the repo root, two levels up).
 # For wheel/sdist installs we include score-guidelines via MANIFEST.in;
 # users can override the path with the REWARDHARNESS_TEMPLATES_DIR env var.

@@ -1,10 +1,8 @@
-"""Contract tests for the v0.2 public API and compatibility layer."""
+"""Contract tests for the canonical public API."""
 
 from __future__ import annotations
 
-import importlib
 import json
-import warnings
 
 import pytest
 
@@ -58,14 +56,6 @@ def test_evaluation_example_accepts_legacy_keys():
         }
     )
     assert example.ground_truth is Preference.TIE
-
-
-def test_legacy_module_warns_and_reexports_public_class():
-    with warnings.catch_warnings(record=True) as caught:
-        warnings.simplefilter("always")
-        module = importlib.reload(importlib.import_module("src.endpoint_pool"))
-    assert module.EndpointPool.__module__ == "rewardharness.clients.endpoints"
-    assert any("deprecated" in str(item.message) for item in caught)
 
 
 def test_library_rejects_path_traversal(tmp_library):

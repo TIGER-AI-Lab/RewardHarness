@@ -20,7 +20,7 @@ import os
 import sys
 import tempfile
 
-# Make src/ importable when run from the repo root
+# Make the repository package importable when this file is run directly.
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from rewardharness.library import Library

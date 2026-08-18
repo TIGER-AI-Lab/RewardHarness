@@ -133,8 +133,7 @@ def check_endpoints(endpoints_path: str, timeout: float = 3.0) -> bool:
         return True
     # Import the canonical constant so this script's "expected" stays in
     # lockstep with rewardharness.evaluation.engine.SUBAGENT_MODEL.
-    # Resolved lazily so check_env.py keeps working even if src/ isn't on
-    # the path (e.g. running this from outside the repo root).
+    # Resolved lazily so check_env.py also works outside the repository root.
     try:
         from rewardharness.evaluation.engine import SUBAGENT_MODEL as expected_model
     except ImportError:

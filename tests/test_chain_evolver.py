@@ -579,7 +579,7 @@ class TestEvolverApplySignals:
         assert applied["skills_deleted"] == 0
 
     def test_validate_tool_prompt_honours_subagent_model(self, library_on_disk):
-        """_validate_tool_prompt passes src.evolver.SUBAGENT_MODEL as the model id.
+        """_validate_tool_prompt passes the canonical SUBAGENT_MODEL as the model id.
 
         Regression guard mirroring tests/test_sub_agent.py and
         tests/test_library.py — REWARDHARNESS_SUBAGENT_MODEL must propagate

@@ -42,7 +42,7 @@ dependencies = { file = ["requirements.txt"] }
 version = { attr = "rewardharness._version.__version__" }
 
 [tool.setuptools.packages.find]
-include = ["rewardharness*", "src*"]
+include = ["rewardharness*"]
 exclude = ["tests*", "vanilla*", "examples*", "scripts*"]
 
 [tool.setuptools.package-data]
@@ -78,14 +78,10 @@ skip_covered = true
 [tool.ruff]
 target-version = "py310"
 line-length = 100
-extend-exclude = ["src/library_gemini_*", "src/library"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
 ignore = ["E501"]
-
-[tool.ruff.lint.per-file-ignores]
-"src/*.py" = ["E402", "F401"]
 
 [tool.mypy]
 python_version = "3.10"
@@ -94,7 +90,7 @@ ignore_missing_imports = true
 no_implicit_optional = true
 warn_redundant_casts = true
 warn_unused_ignores = true
-exclude = "^(vanilla|src)/"
+exclude = "^vanilla/"
 
 [[tool.mypy.overrides]]
 module = ["datasets.*", "google.*", "openai.*", "PIL.*", "yaml.*"]

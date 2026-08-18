@@ -32,8 +32,8 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y shellcheck
       - name: Python format, lint, and types
         run: |
-          ruff format --check rewardharness src scripts examples tests vanilla
-          ruff check rewardharness src scripts examples tests vanilla
+          ruff format --check rewardharness scripts examples tests vanilla
+          ruff check rewardharness scripts examples tests vanilla
           mypy rewardharness scripts/check_distribution.py scripts/check_release_metadata.py
       - name: Rating and shell integrity
         run: |

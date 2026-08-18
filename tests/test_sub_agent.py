@@ -175,7 +175,7 @@ class TestSubAgent:
         assert result["preference"] == "A"
 
     def test_subagent_model_override(self, sub_agent):
-        """The model id sent to vLLM is read from src.sub_agent.SUBAGENT_MODEL,
+        """The model id sent to vLLM is read from the canonical SUBAGENT_MODEL,
         which itself is sourced from $REWARDHARNESS_SUBAGENT_MODEL at import time."""
         answer_json = json.dumps(
             {
