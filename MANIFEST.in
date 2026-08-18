@@ -1,4 +1,4 @@
-include README.md LICENSE CITATION.cff CHANGELOG.md
+include README.md LICENSE CITATION.cff CHANGELOG.md MIGRATING.md
 include requirements.txt requirements-dev.txt requirements-vllm.txt
 include configs/*.yaml configs/*.txt
 recursive-include rewardharness/resources *.json *.md

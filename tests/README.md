@@ -1,6 +1,6 @@
 # Tests
 
-Fully mocked end-to-end test suite (**154 tests**, runs in a few seconds) — no GPU,
+Fully mocked end-to-end test suite (**155 tests**, runs in a few seconds) — no GPU,
 no network, no API keys, and no real Gemini calls. Install development tooling
 from `requirements-dev.txt` before running the complete quality gate.
 

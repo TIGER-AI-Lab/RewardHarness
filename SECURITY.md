@@ -1,7 +1,7 @@
 # Security policy
 
-Security fixes target the supported `rewardharness.*` package. Reports that
-reproduce through `src.*` compatibility imports remain in scope for v0.2.
+Security fixes target the supported `rewardharness.*` package. The deprecated
+`src.*` compatibility namespace was removed in v0.3 and is no longer in scope.
 
 ## Reporting a vulnerability
 
@@ -23,7 +23,7 @@ Only the current `main` branch and the most recent tagged release receive securi
 | Version | Supported |
 |---|---|
 | `main` | ✅ |
-| `v0.2.2` (latest) | ✅ |
+| `v0.3.0` (latest) | ✅ |
 | earlier | ❌ |
 
 ## Disclosure history

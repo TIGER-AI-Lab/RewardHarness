@@ -1,8 +1,8 @@
 # RewardHarness
 
-> **v0.2 stable release:** the supported Python API lives under
-> `rewardharness.*`. Imports from `src.*` remain as deprecated compatibility
-> adapters through the v0.2 release series.
+> **v0.3 stable release:** `rewardharness.*` is the sole supported Python API.
+> The deprecated `src.*` compatibility namespace has been removed; see
+> [`MIGRATING.md`](MIGRATING.md) for direct import replacements.
 
 [![arXiv](https://img.shields.io/badge/arXiv-2605.08703-b31b1b.svg)](https://arxiv.org/abs/2605.08703)
 [![HF Paper](https://img.shields.io/badge/🤗_Paper-2605.08703-yellow.svg)](https://huggingface.co/papers/2605.08703)
@@ -43,6 +43,9 @@ Read [`WALKTHROUGH.md`](WALKTHROUGH.md) for the 9-step path from `git clone` to 
 
 ## Updates
 
+- **2026-08-18** — `v0.3.0`: removed the deprecated `src.*` compatibility
+  package, reduced the wheel to one canonical namespace, and published a full
+  import migration map.
 - **2026-08-18** — `v0.2.2`: fixed the installed `rewardharness check`
   command and added explicit endpoint path and timeout controls.
 - **2026-08-18** — `v0.2.1`: deterministic wheel/sdist content auditing,
@@ -268,9 +271,8 @@ The paper's Gemini-2.0-Flash variant uses path (2). For evaluation-only / benchm
 ```
 RewardHarness/
 ├── rewardharness/        # Supported package: evaluation, evolution, clients, Library, CLI
-├── src/                  # Deprecated compatibility adapters for pre-v0.2 imports
 ├── scripts/              # run_evolution.py, run_benchmark.py, vLLM launchers, check_env.py preflight
-├── tests/                # pytest suite (138 tests, no GPU/network)
+├── tests/                # pytest suite (155 tests, no GPU/network)
 ├── examples/             # inspect_library.py + show_reasoning_format.py (no-API demos),
 │                         # score_pair.py (end-to-end), seed_library/, sample_*.json
 ├── configs/              # default.yaml + vLLM endpoints
@@ -283,7 +285,7 @@ RewardHarness/
 ├── requirements.txt      # Python dependencies (core)
 ├── requirements-vllm.txt # vLLM-only deps (GPU); skip for CPU-only workflows
 ├── .env.example          # Every env var the code reads (cp to .env)
-├── README.md / CHANGELOG.md / WALKTHROUGH.md / OUTPUTS.md   # User-facing docs
+├── README.md / CHANGELOG.md / MIGRATING.md / WALKTHROUGH.md / OUTPUTS.md # User-facing docs
 └── TROUBLESHOOTING.md / CONTRIBUTING.md / SECURITY.md       # Operational docs
 ```
 

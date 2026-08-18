@@ -47,8 +47,8 @@ def test_tag_rejects_unsupported_values(value):
 
 def test_current_release_identity_and_tag_validation():
     identity = ReleaseIdentity.current()
-    assert identity.package_version == "0.2.2"
-    assert identity.tag == "v0.2.2"
+    assert identity.package_version == "0.3.0"
+    assert identity.tag == "v0.3.0"
     assert identity.prerelease is False
     identity.validate_tag(identity.tag)
     with pytest.raises(ValueError, match="package version"):
@@ -57,12 +57,12 @@ def test_current_release_identity_and_tag_validation():
 
 def test_release_status_cli(capsys):
     assert cli_main(["release-status"]) == 0
-    assert json.loads(capsys.readouterr().out)["tag"] == "v0.2.2"
+    assert json.loads(capsys.readouterr().out)["tag"] == "v0.3.0"
 
 
 def test_release_module_cli_validates_tag(capsys):
-    assert release_main(["--check-tag", "v0.2.2"]) == 0
-    assert json.loads(capsys.readouterr().out)["package_version"] == "0.2.2"
+    assert release_main(["--check-tag", "v0.3.0"]) == 0
+    assert json.loads(capsys.readouterr().out)["package_version"] == "0.3.0"
 
 
 def test_release_identity_rejects_invalid_canonical_version(monkeypatch):
@@ -82,7 +82,7 @@ def test_top_level_exports_are_lazy_and_discoverable():
 def test_package_import_does_not_eagerly_load_heavy_dependencies():
     code = (
         "import sys, rewardharness; "
-        "assert rewardharness.__version__ == '0.2.2'; "
+        "assert rewardharness.__version__ == '0.3.0'; "
         "assert 'datasets' not in sys.modules; "
         "assert 'transformers' not in sys.modules"
     )
