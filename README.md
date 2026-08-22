@@ -5,15 +5,17 @@
 > [`MIGRATING.md`](MIGRATING.md) for direct import replacements.
 
 [![arXiv](https://img.shields.io/badge/arXiv-2605.08703-b31b1b.svg)](https://arxiv.org/abs/2605.08703)
+[![COLM 2026](https://img.shields.io/badge/COLM_2026-Accepted-6D7CFF.svg)](https://colmweb.org/)
 [![HF Paper](https://img.shields.io/badge/🤗_Paper-2605.08703-yellow.svg)](https://huggingface.co/papers/2605.08703)
 [![Project Page](https://img.shields.io/badge/Project-rewardharness.com-6D7CFF.svg)](https://rewardharness.com)
+[![PyPI](https://img.shields.io/pypi/v/rewardharness?color=3775A9)](https://pypi.org/project/rewardharness/)
 [![Release](https://img.shields.io/github/v/release/TIGER-AI-Lab/RewardHarness?label=release&color=6D7CFF)](https://github.com/TIGER-AI-Lab/RewardHarness/releases/latest)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/downloads/)
 
 **Self-evolving agentic reward framework for image-editing evaluation.**
 
-Code release for [*RewardHarness: Self-Evolving Agentic Post-Training*](https://arxiv.org/abs/2605.08703) (arXiv 2605.08703). Project page: [rewardharness.com](https://rewardharness.com).
+Code release for [*RewardHarness: Self-Evolving Agentic Post-Training*](https://arxiv.org/abs/2605.08703), accepted at the **Conference on Language Modeling (COLM 2026)**. Project page: [rewardharness.com](https://rewardharness.com).
 
 ## Contents
 
@@ -43,6 +45,8 @@ Read [`WALKTHROUGH.md`](WALKTHROUGH.md) for the 9-step path from `git clone` to 
 
 ## Updates
 
+- **2026-08-23** — `v0.3.1`: published the COLM 2026 acceptance metadata,
+  repository/PyPI badges, and a verified direct-import installation path.
 - **2026-08-18** — `v0.3.0`: removed the deprecated `src.*` compatibility
   package, reduced the wheel to one canonical namespace, and published a full
   import migration map.
@@ -56,6 +60,8 @@ Read [`WALKTHROUGH.md`](WALKTHROUGH.md) for the 9-step path from `git clone` to 
 - **2026-08-17** — `v0.2.0-rc1`: canonical `rewardharness` package, typed
   configuration/domain API, schema-v2 Libraries, unified CLI, strict quality
   gates, and trusted GitHub/PyPI release automation.
+- **2026-07-08** — *RewardHarness* accepted at the
+  [Conference on Language Modeling (COLM 2026)](https://colmweb.org/).
 - **2026-05-16** — `v0.1.2` released (smallest-end-to-end `examples/score_pair.py`, CI scaffolding, packaging fixes). Code also mirrored at [`KlingAIResearch/RewardHarness`](https://github.com/KlingAIResearch/RewardHarness); both repos kept in sync.
 - **2026-05-16** — `v0.1.1` security patch (rotated and removed a hardcoded internal API key inadvertently shipped in `v0.1.0`; see [SECURITY.md](SECURITY.md)).
 - **2026-05-15** — `v0.1.0` initial open-source release at [`TIGER-AI-Lab/RewardHarness`](https://github.com/TIGER-AI-Lab/RewardHarness); paper featured on [Hugging Face Daily Papers](https://huggingface.co/papers/2605.08703).
@@ -133,20 +139,29 @@ At **inference**, the Router selects relevant entries from the Library and the f
 ## Install
 
 ```bash
-# clone from either canonical home — they are kept in sync
+# Install the stable package from PyPI.
+python -m venv .venv && source .venv/bin/activate
+python -m pip install "rewardharness==0.3.1"
+python -c "import rewardharness; print(rewardharness.__version__)"
+```
+
+For an editable source checkout:
+
+```bash
+# Clone from either canonical home — they are kept in sync.
 git clone https://github.com/TIGER-AI-Lab/RewardHarness.git
 #   or:  git clone https://github.com/KlingAIResearch/RewardHarness.git
 cd RewardHarness
 python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
+python -m pip install -e .
 
-# Contributors / maintainers: add test and release tooling.
-pip install -r requirements-dev.txt
+# Contributors and maintainers: add test and release tooling.
+python -m pip install -r requirements-dev.txt
 
 # OPTIONAL — only needed if you'll serve Qwen2.5-VL-7B locally with vLLM.
 # Skip this if you only want to run the test suite, inspect the Library, or
 # point the Sub-Agent at a hosted Gemini endpoint instead.
-pip install -r requirements-vllm.txt
+python -m pip install -r requirements-vllm.txt
 ```
 
 The installation exposes one supported command surface:
@@ -312,10 +327,12 @@ Found a credential leak or other security issue? Please email the maintainers pr
 ## Citation
 
 ```bibtex
-@article{zhang2026rewardharness,
+@inproceedings{zhang2026rewardharness,
   title={RewardHarness: Self-Evolving Agentic Post-Training},
   author={Yuxuan Zhang and Penghui Du and Bo Li and Cong Wei and Junwen Miao and Huaisong Zhang and Songcheng Cai and Yubo Wang and Dongfu Jiang and Yuyu Zhang and Ping Nie and Wenhu Chen and Changqian Yu and Kelsey R. Allen},
-  journal={arXiv preprint arXiv:2605.08703},
-  year={2026}
+  booktitle={Conference on Language Modeling (COLM)},
+  year={2026},
+  eprint={2605.08703},
+  archivePrefix={arXiv}
 }
 ```

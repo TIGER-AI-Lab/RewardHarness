@@ -1,8 +1,8 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite the paper."
 title: "RewardHarness: Self-Evolving Agentic Post-Training"
-version: "0.3.0"
-date-released: "2026-08-17"
+version: "0.3.1"
+date-released: "2026-08-23"
 type: software
 authors:
   - given-names: Yuxuan
@@ -36,7 +36,7 @@ authors:
 repository-code: "https://github.com/TIGER-AI-Lab/RewardHarness"
 url: "https://rewardharness.com"
 preferred-citation:
-  type: article
+  type: conference-paper
   title: "RewardHarness: Self-Evolving Agentic Post-Training"
   authors:
     - given-names: Yuxuan
@@ -67,6 +67,6 @@ preferred-citation:
       family-names: Yu
     - given-names: Kelsey R.
       family-names: Allen
-  journal: "arXiv preprint arXiv:2605.08703"
+  collection-title: "Conference on Language Modeling (COLM)"
   year: 2026
   url: "https://arxiv.org/abs/2605.08703"

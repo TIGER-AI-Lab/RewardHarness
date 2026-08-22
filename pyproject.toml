@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "rewardharness"
-description = "Self-evolving agentic reward framework for image-editing evaluation."
+description = "COLM 2026 self-evolving agentic reward framework for image-editing evaluation."
 readme = "README.md"
 requires-python = ">=3.10"
 license = "Apache-2.0"
@@ -12,7 +12,15 @@ license-files = ["LICENSE"]
 authors = [
     { name = "The RewardHarness Authors" },
 ]
-keywords = ["reward-model", "image-editing", "agentic", "vlm", "rlhf"]
+keywords = [
+    "reward-model",
+    "image-editing",
+    "preference-learning",
+    "agentic",
+    "vlm",
+    "rlhf",
+    "colm",
+]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Science/Research",
@@ -36,6 +44,7 @@ Repository = "https://github.com/TIGER-AI-Lab/RewardHarness"
 Changelog = "https://github.com/TIGER-AI-Lab/RewardHarness/blob/main/CHANGELOG.md"
 Issues = "https://github.com/TIGER-AI-Lab/RewardHarness/issues"
 Paper = "https://arxiv.org/abs/2605.08703"
+Conference = "https://colmweb.org/"
 
 [tool.setuptools.dynamic]
 dependencies = { file = ["requirements.txt"] }

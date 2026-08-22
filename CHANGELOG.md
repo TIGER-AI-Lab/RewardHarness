@@ -4,7 +4,16 @@ All notable changes to RewardHarness are recorded here. Versions follow [SemVer]
 
 ## [Unreleased]
 
-Future changes after v0.3.0.
+Future changes after v0.3.1.
+
+## [0.3.1] — 2026-08-23
+
+### Changed
+
+- Updated the repository badge, news, and citation metadata to reflect the
+  paper's acceptance at the Conference on Language Modeling (COLM 2026).
+- Improved PyPI discovery metadata, added a conference project link, and
+  documented a verified `pip install` and `import rewardharness` path.
 
 ## [0.3.0] — 2026-08-18
 
@@ -201,6 +210,7 @@ deprecated `src` namespace remains as a compatibility layer for v0.2.
 - `make demo` and `make benchmark` default to `--library-dir examples/seed_library` for non-empty starting state.
 - `make help` is now a credentials matrix showing what each target actually needs.
 
+[0.3.1]: https://github.com/TIGER-AI-Lab/RewardHarness/releases/tag/v0.3.1
 [0.3.0]: https://github.com/TIGER-AI-Lab/RewardHarness/releases/tag/v0.3.0
 [0.2.2]: https://github.com/TIGER-AI-Lab/RewardHarness/releases/tag/v0.2.2
 [0.2.1]: https://github.com/TIGER-AI-Lab/RewardHarness/releases/tag/v0.2.1
