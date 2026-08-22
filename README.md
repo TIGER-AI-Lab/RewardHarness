@@ -4,8 +4,8 @@
 > The deprecated `src.*` compatibility namespace has been removed; see
 > [`MIGRATING.md`](MIGRATING.md) for direct import replacements.
 
-[![arXiv](https://img.shields.io/badge/arXiv-2605.08703-b31b1b.svg)](https://arxiv.org/abs/2605.08703)
 [![COLM 2026](https://img.shields.io/badge/COLM_2026-Accepted-6D7CFF.svg)](https://colmweb.org/)
+[![arXiv](https://img.shields.io/badge/arXiv-2605.08703-b31b1b.svg)](https://arxiv.org/abs/2605.08703)
 [![HF Paper](https://img.shields.io/badge/🤗_Paper-2605.08703-yellow.svg)](https://huggingface.co/papers/2605.08703)
 [![Project Page](https://img.shields.io/badge/Project-rewardharness.com-6D7CFF.svg)](https://rewardharness.com)
 [![PyPI](https://img.shields.io/pypi/v/rewardharness?color=3775A9)](https://pypi.org/project/rewardharness/)
