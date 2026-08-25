@@ -95,11 +95,20 @@ jobs:
           package_version=${package_version//-/}
           python -m venv /tmp/rewardharness-pypi
           /tmp/rewardharness-pypi/bin/python -m pip install --quiet --upgrade pip
-          /tmp/rewardharness-pypi/bin/pip install \
-            --index-url https://pypi.org/simple \
-            --only-binary=:all: \
-            --no-deps \
-            "rewardharness==$package_version"
+          for attempt in {1..18}; do
+            if /tmp/rewardharness-pypi/bin/pip install \
+              --index-url https://pypi.org/simple \
+              --only-binary=:all: \
+              --no-deps \
+              "rewardharness==$package_version"; then
+              break
+            fi
+            if [[ "$attempt" == "18" ]]; then
+              exit 1
+            fi
+            echo "PyPI Simple API not synchronized yet (attempt $attempt/18)"
+            sleep 10
+          done
           /tmp/rewardharness-pypi/bin/rewardharness --version
           /tmp/rewardharness-pypi/bin/rewardharness release-status
       - name: Verify GitHub release

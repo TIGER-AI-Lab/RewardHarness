@@ -6,6 +6,11 @@ All notable changes to RewardHarness are recorded here. Versions follow [SemVer]
 
 Future changes after v0.4.0.
 
+### Fixed
+
+- Made post-publish installation verification retry the PyPI Simple API while
+  its CDN catches up with JSON metadata, avoiding false-negative release runs.
+
 ## [0.4.0] — 2026-08-26
 
 ### Added
