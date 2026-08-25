@@ -1,7 +1,8 @@
 # Walkthrough — from `git clone` to your first preference judgment
 
-The v0.2 examples prefer the unified `rewardharness` CLI. Historical script
-entry points remain available as compatibility wrappers.
+The v0.4 release uses the unified `rewardharness` CLI and typed configuration
+throughout benchmark and evolution workflows. Historical script entry points
+remain available as compatibility wrappers.
 
 This walkthrough takes ~15 minutes if you only want to inspect the library and run the tests, and an additional ~3 minutes of pipeline work for a full `make demo` evolution pass — though vLLM cold-start can add 5&ndash;15 minutes the first time the model loads. Each step is independent — feel free to stop after step 3 if you only want to understand the codebase.
 
@@ -13,7 +14,7 @@ This walkthrough takes ~15 minutes if you only want to inspect the library and r
 git clone https://github.com/TIGER-AI-Lab/RewardHarness.git
 cd RewardHarness
 python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
+python -m pip install -e .
 ```
 
 That's enough for steps 2–4. The optional `pip install -r requirements-vllm.txt` is **only** needed when you serve Qwen2.5-VL-7B locally (step 6).
@@ -24,7 +25,7 @@ That's enough for steps 2–4. The optional `pip install -r requirements-vllm.tx
 make test
 ```
 
-You should see `100 passed in ~2s`. Every external service (Gemini, vLLM, Hugging Face) is mocked, so if any test hits the network it's a regression — please [open an issue](https://github.com/TIGER-AI-Lab/RewardHarness/issues).
+You should see `156 passed`. Every external service (Gemini, vLLM, Hugging Face) is mocked, so if any test hits the network it's a regression — please [open an issue](https://github.com/TIGER-AI-Lab/RewardHarness/issues).
 
 ## 3. Inspect the data model
 

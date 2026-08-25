@@ -1,8 +1,25 @@
-# Migrating to RewardHarness 0.3
+# Migrating to RewardHarness 0.4
 
-RewardHarness 0.3 removes the deprecated `src.*` compatibility namespace that
-was retained throughout the 0.2 release series. Runtime behavior, configuration
-schema v2, Library files, CLI commands, and result formats remain unchanged.
+RewardHarness 0.4 keeps the canonical `rewardharness.*` namespace introduced in
+0.3 and modernizes configuration handling and interpreter support without
+changing CLI commands, Library files, or result schemas.
+
+## From 0.3 to 0.4
+
+- `RewardHarnessConfig` is now retained throughout benchmark and evolution
+  workflows instead of being converted back to a legacy dictionary.
+- Use `RewardHarnessConfig.to_dict()` for schema-v2 serialization.
+  `to_legacy_dict()` remains available as a compatibility alias.
+- Evolution dataset loading now consumes exactly `train_n + val_n` rows and
+  fails early if the configured split sizes cannot be satisfied.
+- Python 3.13 is supported and continuously tested alongside 3.10–3.12.
+
+No import changes are required when upgrading from 0.3.
+
+## From 0.2 to 0.3
+
+RewardHarness 0.3 removed the deprecated `src.*` compatibility namespace that
+was retained throughout the 0.2 release series.
 
 ## Import replacements
 
@@ -28,7 +45,7 @@ Only the module path changes. Public symbol names such as `EndpointPool`,
 2. Upgrade and reject pre-release caching explicitly:
 
    ```bash
-   python -m pip install --upgrade "rewardharness>=0.3,<0.4"
+   python -m pip install --upgrade "rewardharness>=0.4,<0.5"
    ```
 
 3. Confirm the installed package and configuration:

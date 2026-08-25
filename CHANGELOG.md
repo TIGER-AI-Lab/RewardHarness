@@ -4,12 +4,20 @@ All notable changes to RewardHarness are recorded here. Versions follow [SemVer]
 
 ## [Unreleased]
 
-Future changes after v0.4.0.
+Future changes after v0.4.1.
+
+## [0.4.1] — 2026-08-26
 
 ### Fixed
 
 - Made post-publish installation verification retry the PyPI Simple API while
   its CDN catches up with JSON metadata, avoiding false-negative release runs.
+
+### Changed
+
+- Synchronized the migration guide, security support matrix, walkthrough,
+  contributor guidance, and test inventory with the v0.4 runtime and Python
+  3.13 support.
 
 ## [0.4.0] — 2026-08-26
 
@@ -234,6 +242,7 @@ deprecated `src` namespace remains as a compatibility layer for v0.2.
 - `make demo` and `make benchmark` default to `--library-dir examples/seed_library` for non-empty starting state.
 - `make help` is now a credentials matrix showing what each target actually needs.
 
+[0.4.1]: https://github.com/TIGER-AI-Lab/RewardHarness/releases/tag/v0.4.1
 [0.4.0]: https://github.com/TIGER-AI-Lab/RewardHarness/releases/tag/v0.4.0
 [0.3.1]: https://github.com/TIGER-AI-Lab/RewardHarness/releases/tag/v0.3.1
 [0.3.0]: https://github.com/TIGER-AI-Lab/RewardHarness/releases/tag/v0.3.0

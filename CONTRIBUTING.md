@@ -40,7 +40,8 @@ One-line subject (≤72 chars), then optional body. Reference issues with `#NNN`
 
 ## Code style
 
-- Python 3.10+. Type hints encouraged but not required for one-off scripts.
+- Python 3.10–3.13. Type hints are required for runtime code under
+  `rewardharness/` and encouraged for one-off scripts.
 - Don't introduce new dependencies unless you're prepared to argue they're worth the install cost in the PR description.
 - Default to no comments. Add one only when the *why* is non-obvious (a hidden constraint, a workaround, a surprising behavior).
 

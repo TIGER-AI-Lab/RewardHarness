@@ -45,6 +45,9 @@ Read [`WALKTHROUGH.md`](WALKTHROUGH.md) for the 9-step path from `git clone` to 
 
 ## Updates
 
+- **2026-08-26** — `v0.4.1`: synchronized migration, security, walkthrough,
+  and test documentation, and hardened post-publish verification against PyPI
+  CDN propagation delays.
 - **2026-08-26** — `v0.4.0`: type-safe configuration throughout benchmark
   and evolution workflows, exact validation-split sizing, Python 3.13 CI, and
   Node 24-native release automation.
@@ -144,7 +147,7 @@ At **inference**, the Router selects relevant entries from the Library and the f
 ```bash
 # Install the stable package from PyPI.
 python -m venv .venv && source .venv/bin/activate
-python -m pip install "rewardharness==0.4.0"
+python -m pip install "rewardharness==0.4.1"
 python -c "import rewardharness; print(rewardharness.__version__)"
 ```
 
@@ -290,7 +293,7 @@ The paper's Gemini-2.0-Flash variant uses path (2). For evaluation-only / benchm
 RewardHarness/
 ├── rewardharness/        # Supported package: evaluation, evolution, clients, Library, CLI
 ├── scripts/              # run_evolution.py, run_benchmark.py, vLLM launchers, check_env.py preflight
-├── tests/                # pytest suite (155 tests, no GPU/network)
+├── tests/                # pytest suite (156 tests, no GPU/network)
 ├── examples/             # inspect_library.py + show_reasoning_format.py (no-API demos),
 │                         # score_pair.py (end-to-end), seed_library/, sample_*.json
 ├── configs/              # default.yaml + vLLM endpoints

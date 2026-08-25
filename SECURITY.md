@@ -23,7 +23,8 @@ Only the current `main` branch and the most recent tagged release receive securi
 | Version | Supported |
 |---|---|
 | `main` | ✅ |
-| `v0.3.0` (latest) | ✅ |
+| `v0.4.x` (latest) | ✅ |
+| `v0.3.x` | ❌ |
 | earlier | ❌ |
 
 ## Disclosure history
