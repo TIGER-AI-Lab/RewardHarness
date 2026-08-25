@@ -1,5 +1,7 @@
 """Evaluation services and metrics."""
 
+from __future__ import annotations
+
 from rewardharness.evaluation.engine import SubAgent
 from rewardharness.evaluation.metrics import compute_kpair_accuracy, evaluate_prediction
 from rewardharness.evaluation.router import Router

@@ -4,11 +4,14 @@ Orchestrates iterative improvement of Skills and Tools libraries
 through chain analysis of Sub-Agent predictions.
 """
 
+from __future__ import annotations
+
 import base64
 import json
 import logging
 import os
 import time
+from collections.abc import Mapping
 from concurrent.futures import ThreadPoolExecutor
 from io import BytesIO
 from typing import Any
@@ -36,36 +39,29 @@ def image_to_base64(image) -> str:
 class SelfEvolutionPipeline:
     def __init__(
         self,
-        config: dict | RewardHarnessConfig,
+        config: Mapping[str, Any] | RewardHarnessConfig,
         library_dir: str | None = None,
         results_dir: str | None = None,
     ):
         """Initialize pipeline.
 
         Args:
-            config: parsed YAML config dict
+            config: validated configuration or a compatible mapping
             library_dir: path to library directory (default: packaged library resource)
             results_dir: path to results directory (default: results/)
         """
-        typed_config = (
-            config
-            if isinstance(config, RewardHarnessConfig)
-            else RewardHarnessConfig.from_mapping(config)
-        )
-        config = typed_config.to_legacy_dict()
-
-        self.config = config
+        self.config = RewardHarnessConfig.coerce(config)
         self.lib_dir = library_dir or str(default_library_path())
         self.library = Library(self.lib_dir)
-        self.router = Router(self.library, model=config["gemini"]["model"])
+        self.router = Router(self.library, model=self.config.gemini.model)
 
         endpoints_file = str(default_endpoints_path())
         self.endpoint_pool = EndpointPool(endpoints_file=endpoints_file)
         self.sub_agent = SubAgent(library=self.library, endpoint_pool=self.endpoint_pool)
-        self.chain_analyzer = ChainAnalyzer(model=config["gemini"]["model"])
+        self.chain_analyzer = ChainAnalyzer(model=self.config.gemini.model)
         self.evolver = Evolver(self.library, self.endpoint_pool)
 
-        self.max_workers = config["evolution"].get("batch_concurrent", 128)
+        self.max_workers = self.config.evolution.batch_concurrent
         self.results_dir = results_dir or str(PROJECT_ROOT / "results")
         self.checkpoint_dir = os.path.join(self.results_dir, "checkpoints")
 
@@ -94,6 +90,17 @@ class SelfEvolutionPipeline:
                 }
             )
         return examples
+
+    def _split_dataset_rows(self, rows: list[Any]) -> tuple[list[Any], list[Any]]:
+        """Apply the configured train/validation sizes without leaking extra rows."""
+        train_n = self.config.evolution.train_n
+        val_n = self.config.evolution.val_n
+        required = train_n + val_n
+        if len(rows) < required:
+            raise ValueError(
+                f"Evolution dataset has {len(rows)} rows; train_n + val_n requires {required}"
+            )
+        return rows[:train_n], rows[train_n:required]
 
     def _augment_with_swaps(self, examples: list) -> list:
         """Double dataset by swapping A/B positions and flipping labels.
@@ -347,24 +354,22 @@ class SelfEvolutionPipeline:
         evolution_log = []
         start_iter = 0
         prev_val_acc = 0.0
-        explore_margin = self.config["evolution"].get("explore_margin", 0.0)
+        explore_margin = self.config.evolution.explore_margin
 
         # Load data if not provided
         if train_split is None or val_split is None:
             from datasets import load_dataset
 
-            dataset = load_dataset(self.config["evolution"]["train_dataset"])
+            dataset = load_dataset(self.config.evolution.train_dataset)
             # Get the first (and likely only) split
             split_name = next(iter(dataset.keys()))
             all_data = list(dataset[split_name])
-            train_n = self.config["evolution"]["train_n"]
-            train_split_raw = all_data[:train_n]
-            val_split_raw = all_data[train_n:]
+            train_split_raw, val_split_raw = self._split_dataset_rows(all_data)
             train_split = self._prepare_examples(train_split_raw)
             val_split = self._prepare_examples(val_split_raw)
 
         # Augment train with A/B swaps for position invariance
-        if self.config["evolution"].get("augment_swap", False):
+        if self.config.evolution.augment_swap:
             train_split = self._augment_with_swaps(train_split)
             logger.info(f"Augmented train split: {len(train_split)} examples (with A/B swaps)")
 
@@ -517,7 +522,7 @@ class SelfEvolutionPipeline:
                         )
 
                 # --- Phase C: Periodic Pruning ---
-                prune_every_n = self.config["evolution"].get("prune_every_n", 0)
+                prune_every_n = self.config.evolution.prune_every_n
                 pruned = None
                 if prune_every_n > 0 and iteration > 0 and iteration % prune_every_n == 0:
                     logger.info(f"Phase C: Periodic pruning (every {prune_every_n} iters)...")

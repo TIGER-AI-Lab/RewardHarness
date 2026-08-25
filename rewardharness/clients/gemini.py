@@ -21,6 +21,8 @@ Environment (required; see .env.example):
     GEMINI_LOCATION                — region (default: "global")
 """
 
+from __future__ import annotations
+
 import logging
 import os
 

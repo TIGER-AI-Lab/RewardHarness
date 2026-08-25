@@ -1,6 +1,6 @@
 # RewardHarness
 
-> **v0.3 stable release:** `rewardharness.*` is the sole supported Python API.
+> **v0.4 stable release:** `rewardharness.*` is the sole supported Python API.
 > The deprecated `src.*` compatibility namespace has been removed; see
 > [`MIGRATING.md`](MIGRATING.md) for direct import replacements.
 
@@ -45,6 +45,9 @@ Read [`WALKTHROUGH.md`](WALKTHROUGH.md) for the 9-step path from `git clone` to 
 
 ## Updates
 
+- **2026-08-26** — `v0.4.0`: type-safe configuration throughout benchmark
+  and evolution workflows, exact validation-split sizing, Python 3.13 CI, and
+  Node 24-native release automation.
 - **2026-08-23** — `v0.3.1`: published the COLM 2026 acceptance metadata,
   repository/PyPI badges, and a verified direct-import installation path.
 - **2026-08-18** — `v0.3.0`: removed the deprecated `src.*` compatibility
@@ -141,7 +144,7 @@ At **inference**, the Router selects relevant entries from the Library and the f
 ```bash
 # Install the stable package from PyPI.
 python -m venv .venv && source .venv/bin/activate
-python -m pip install "rewardharness==0.3.1"
+python -m pip install "rewardharness==0.4.0"
 python -c "import rewardharness; print(rewardharness.__version__)"
 ```
 

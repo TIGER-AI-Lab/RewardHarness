@@ -1,5 +1,7 @@
 """Self-evolution orchestration services."""
 
+from __future__ import annotations
+
 from rewardharness.evolution.analyzer import ChainAnalyzer
 from rewardharness.evolution.evolver import Evolver
 from rewardharness.evolution.pipeline import SelfEvolutionPipeline

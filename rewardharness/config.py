@@ -1,4 +1,4 @@
-"""Validated application configuration with legacy-dict compatibility."""
+"""Validated application configuration and normalization."""
 
 from __future__ import annotations
 
@@ -60,6 +60,13 @@ class RewardHarnessConfig:
     benchmark: BenchmarkConfig = field(default_factory=BenchmarkConfig)
     model: Mapping[str, Any] = field(default_factory=dict)
 
+    @staticmethod
+    def _section(value: Mapping[str, Any], name: str) -> dict[str, Any]:
+        section = value.get(name, {})
+        if not isinstance(section, Mapping):
+            raise ValueError(f"Configuration section {name!r} must be a mapping")
+        return dict(section)
+
     @classmethod
     def from_mapping(cls, value: Mapping[str, Any]) -> RewardHarnessConfig:
         schema_version = int(value.get("schema_version", 1))
@@ -67,11 +74,16 @@ class RewardHarnessConfig:
             raise ValueError(f"Unsupported configuration schema_version: {schema_version}")
         return cls(
             schema_version=2,
-            gemini=GeminiConfig(**dict(value.get("gemini", {}))),
-            evolution=EvolutionConfig(**dict(value.get("evolution", {}))),
-            benchmark=BenchmarkConfig(**dict(value.get("benchmark", {}))),
-            model=dict(value.get("model", {})),
+            gemini=GeminiConfig(**cls._section(value, "gemini")),
+            evolution=EvolutionConfig(**cls._section(value, "evolution")),
+            benchmark=BenchmarkConfig(**cls._section(value, "benchmark")),
+            model=cls._section(value, "model"),
         )
+
+    @classmethod
+    def coerce(cls, value: RewardHarnessConfig | Mapping[str, Any]) -> RewardHarnessConfig:
+        """Return one canonical typed configuration from either supported input shape."""
+        return value if isinstance(value, RewardHarnessConfig) else cls.from_mapping(value)
 
     @classmethod
     def from_yaml(cls, path: str | Path) -> RewardHarnessConfig:
@@ -81,5 +93,10 @@ class RewardHarnessConfig:
             raise ValueError("Configuration root must be a mapping")
         return cls.from_mapping(raw)
 
-    def to_legacy_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
+        """Serialize the validated configuration to its schema-v2 mapping."""
         return asdict(self)
+
+    def to_legacy_dict(self) -> dict[str, Any]:
+        """Compatibility alias for callers written before the typed configuration API."""
+        return self.to_dict()

@@ -8,11 +8,14 @@ Usage:
     rewardharness benchmark --config configs/default.yaml
 """
 
+from __future__ import annotations
+
 import argparse
 import base64
 import json
 import os
 from collections import defaultdict
+from collections.abc import Mapping
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from io import BytesIO
 from typing import Any
@@ -22,6 +25,7 @@ from datasets import load_dataset
 from tqdm import tqdm
 
 from rewardharness.clients.endpoints import EndpointPool
+from rewardharness.config import RewardHarnessConfig
 from rewardharness.evaluation.engine import SubAgent
 from rewardharness.evaluation.metrics import compute_kpair_accuracy, evaluate_prediction
 from rewardharness.evaluation.router import Router
@@ -105,23 +109,28 @@ def evaluate_pair(sub_agent, router, example):
     }
 
 
-def run_benchmark(config: dict, library_dir: str | None = None, results_dir: str | None = None):
+def run_benchmark(
+    config: RewardHarnessConfig | Mapping[str, Any],
+    library_dir: str | None = None,
+    results_dir: str | None = None,
+) -> dict[str, Any]:
     """Run full benchmark evaluation."""
+    typed_config = RewardHarnessConfig.coerce(config)
     # Setup
     lib_dir = library_dir or str(default_library_path())
     res_dir = results_dir or str(PROJECT_ROOT / "results")
     library = Library(lib_dir)
-    router = Router(library, model=config["gemini"]["model"])
+    router = Router(library, model=typed_config.gemini.model)
 
     endpoints_file = str(default_endpoints_path())
     pool = EndpointPool(endpoints_file=endpoints_file)
     sub_agent = SubAgent(library=library, endpoint_pool=pool)
 
-    max_workers = config.get("benchmark", {}).get("max_workers", 128)
+    max_workers = typed_config.benchmark.max_workers
 
     # Load benchmark dataset
     print("Loading TIGER-Lab/EditReward-Bench...")
-    dataset = load_dataset(config["benchmark"]["dataset"], split="train")
+    dataset = load_dataset(typed_config.benchmark.dataset, split="train")
 
     # Group by num_candidates (K value)
     k_groups = defaultdict(list)
@@ -149,9 +158,9 @@ def run_benchmark(config: dict, library_dir: str | None = None, results_dir: str
                 try:
                     result = future.result()
                     pair_results.append(result)
-                except Exception as e:
+                except Exception as exc:
                     idx = futures[future]
-                    print(f"Error on example {idx}: {e}")
+                    print(f"Error on example {idx}: {exc}")
                     pair_results.append(
                         {
                             "group_id": f"error_{idx}",
@@ -198,8 +207,8 @@ def main():
     args = parser.parse_args()
 
     config_path = str(PROJECT_ROOT / args.config) if not os.path.isabs(args.config) else args.config
-    with open(config_path) as f:
-        config = yaml.safe_load(f)
+    with open(config_path) as handle:
+        config = yaml.safe_load(handle)
 
     run_benchmark(config, args.library_dir, args.results_dir)
 
@@ -208,13 +217,16 @@ class BenchmarkRunner:
     """Object-oriented façade for the benchmark service."""
 
     def __init__(
-        self, config: dict, library_dir: str | None = None, results_dir: str | None = None
+        self,
+        config: RewardHarnessConfig | Mapping[str, Any],
+        library_dir: str | None = None,
+        results_dir: str | None = None,
     ):
-        self.config = config
+        self.config = RewardHarnessConfig.coerce(config)
         self.library_dir = library_dir
         self.results_dir = results_dir
 
-    def run(self) -> dict:
+    def run(self) -> dict[str, Any]:
         return run_benchmark(self.config, self.library_dir, self.results_dir)
 
 

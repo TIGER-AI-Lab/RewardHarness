@@ -4,6 +4,8 @@ Uses Gemini API to analyze reasoning chains from Sub-Agent predictions,
 producing improvement signals for Skills and Tools evolution.
 """
 
+from __future__ import annotations
+
 import json
 import logging
 import re

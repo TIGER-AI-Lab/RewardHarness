@@ -4,7 +4,26 @@ All notable changes to RewardHarness are recorded here. Versions follow [SemVer]
 
 ## [Unreleased]
 
-Future changes after v0.3.1.
+Future changes after v0.4.0.
+
+## [0.4.0] — 2026-08-26
+
+### Added
+
+- Added Python 3.13 to the supported and continuously tested interpreter
+  matrix, with a wheel-backed conditional NumPy dependency for fast installs.
+- Added canonical `RewardHarnessConfig.coerce()` and `to_dict()` APIs for
+  consistent typed configuration boundaries.
+
+### Changed
+
+- Benchmark and self-evolution workflows now retain validated typed
+  configuration objects instead of converting back to legacy dictionaries.
+- Evolution data loading now honors both `train_n` and `val_n` exactly and
+  fails early when a dataset cannot satisfy the requested split sizes.
+- Standardized deferred annotations across the runtime package.
+- Upgraded artifact upload/download workflows to Node 24-native action
+  releases, removing the Node 20 deprecation warning from publishing jobs.
 
 ## [0.3.1] — 2026-08-23
 
@@ -210,6 +229,7 @@ deprecated `src` namespace remains as a compatibility layer for v0.2.
 - `make demo` and `make benchmark` default to `--library-dir examples/seed_library` for non-empty starting state.
 - `make help` is now a credentials matrix showing what each target actually needs.
 
+[0.4.0]: https://github.com/TIGER-AI-Lab/RewardHarness/releases/tag/v0.4.0
 [0.3.1]: https://github.com/TIGER-AI-Lab/RewardHarness/releases/tag/v0.3.1
 [0.3.0]: https://github.com/TIGER-AI-Lab/RewardHarness/releases/tag/v0.3.0
 [0.2.2]: https://github.com/TIGER-AI-Lab/RewardHarness/releases/tag/v0.2.2

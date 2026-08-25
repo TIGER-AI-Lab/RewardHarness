@@ -5,6 +5,8 @@ Provides next() method for round-robin distribution across all endpoints.
 Used by both SubAgent (main reasoning) and Library.call_tool (tool calls).
 """
 
+from __future__ import annotations
+
 import threading
 from urllib.parse import urlsplit
 

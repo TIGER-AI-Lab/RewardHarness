@@ -24,7 +24,14 @@ def test_typed_config_round_trip():
     config = _config()
     typed = RewardHarnessConfig.from_mapping(config)
     assert typed.evolution.train_n == 80
-    assert typed.to_legacy_dict()["gemini"]["model"] == "gemini-3.1-pro-preview"
+    assert RewardHarnessConfig.coerce(typed) is typed
+    assert typed.to_dict()["gemini"]["model"] == "gemini-3.1-pro-preview"
+    assert typed.to_legacy_dict() == typed.to_dict()
+
+
+def test_typed_config_rejects_non_mapping_sections():
+    with pytest.raises(ValueError, match="section 'benchmark' must be a mapping"):
+        RewardHarnessConfig.from_mapping({"benchmark": []})
 
 
 @pytest.mark.parametrize("field,value", [("train_n", 0), ("batch_concurrent", 0)])

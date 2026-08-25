@@ -1,5 +1,7 @@
 """Model-client and endpoint primitives."""
 
+from __future__ import annotations
+
 from rewardharness.clients.endpoints import EndpointPool
 from rewardharness.clients.gemini import call_gemini, get_client
 from rewardharness.clients.protocols import ChatModelClient, TextModelClient

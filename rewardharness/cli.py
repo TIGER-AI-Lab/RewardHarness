@@ -102,7 +102,7 @@ def _benchmark(args: argparse.Namespace) -> int:
     from rewardharness.benchmark import run_benchmark
 
     config = _load_config(args.config)
-    run_benchmark(config.to_legacy_dict(), args.library_dir, args.results_dir)
+    run_benchmark(config, args.library_dir, args.results_dir)
     return 0
 
 

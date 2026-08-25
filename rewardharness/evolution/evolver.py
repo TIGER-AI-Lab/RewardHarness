@@ -4,6 +4,8 @@ Applies improvement signals to Library (add/update Skills and Tools).
 Supports snapshot/restore for rollback on val_acc regression.
 """
 
+from __future__ import annotations
+
 import json
 import logging
 

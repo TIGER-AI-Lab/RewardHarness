@@ -97,7 +97,7 @@ def test_cli_reports_package_version(capsys):
     with pytest.raises(SystemExit) as raised:
         build_parser().parse_args(["--version"])
     assert raised.value.code == 0
-    assert capsys.readouterr().out.strip() == "rewardharness 0.3.1"
+    assert capsys.readouterr().out.strip() == "rewardharness 0.4.0"
 
 
 def test_gemini_text_and_candidate_fallback(monkeypatch):
@@ -130,6 +130,7 @@ def test_gemini_rejects_empty_response(monkeypatch):
 
 def test_pipeline_data_helpers_preserve_position_invariance():
     pipeline = object.__new__(SelfEvolutionPipeline)
+    pipeline.config = RewardHarnessConfig.from_mapping({"evolution": {"train_n": 2, "val_n": 1}})
     image = Image.new("RGB", (1, 1), "white")
     prepared = pipeline._prepare_examples(
         [
@@ -148,6 +149,11 @@ def test_pipeline_data_helpers_preserve_position_invariance():
     assert swapped[1]["edited_A"] == prepared[0]["edited_B"]
     assert pipeline._map_vote_type("RIGHTVOTE") == "B"
     assert pipeline._map_vote_type("unknown") == "tie"
+    train_rows, val_rows = pipeline._split_dataset_rows([0, 1, 2, 3])
+    assert train_rows == [0, 1]
+    assert val_rows == [2]
+    with pytest.raises(ValueError, match="requires 3"):
+        pipeline._split_dataset_rows([0, 1])
 
 
 def test_checkpoint_v1_and_v2_loading(tmp_path):

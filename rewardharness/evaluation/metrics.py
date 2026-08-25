@@ -4,6 +4,8 @@ Computes K-pair accuracy (K=2, 3, 4) following EditReward benchmark methodology.
 Reference: https://github.com/TIGER-AI-Lab/EditReward
 """
 
+from __future__ import annotations
+
 from collections.abc import Mapping, Sequence
 from typing import Any, TypedDict
 

@@ -6,6 +6,8 @@ Both are stored as SKILL.md files with YAML frontmatter.
 - Registry: library/registry.json maps name -> {type, description, path}
 """
 
+from __future__ import annotations
+
 import copy
 import json
 import os

@@ -4,6 +4,8 @@ Qwen2.5-VL-7B-Instruct via vLLM for multi-turn visual reasoning.
 Receives Router-injected skill/tool context, performs tool dispatch via Library.call_tool.
 """
 
+from __future__ import annotations
+
 import json
 import logging
 import os

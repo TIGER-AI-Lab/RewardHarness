@@ -4,6 +4,8 @@ Uses Gemini API to select relevant Skills and Tools from the Library
 based on the current editing prompt. Implements L1→L2 progressive disclosure.
 """
 
+from __future__ import annotations
+
 import contextlib
 import json
 import logging
