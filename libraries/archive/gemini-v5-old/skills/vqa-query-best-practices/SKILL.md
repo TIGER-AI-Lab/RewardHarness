@@ -23,3 +23,5 @@ When using the `visual-question-answering` tool, you MUST NOT delegate subjectiv
 4. **Artifact Detection**:
    - **BAD**: "Are there artifacts?"
    - **GOOD**: "Look closely at the man's hands and face. Are there any extra fingers, blurred lines, or distorted features?"
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

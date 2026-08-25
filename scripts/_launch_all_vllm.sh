@@ -23,3 +23,5 @@ done
 echo "All $NUM_GPUS vLLM instances launched. Waiting for them..."
 wait
 echo "All vLLM processes exited."
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

@@ -12,3 +12,5 @@ When evaluating prompts that change the scene's context (e.g., 'sold out concert
    - *Elementary school cafeteria*: Institutional tables, lunch trays, children, cafeteria background.
 2. **Integration and Realism**: The added elements must blend naturally with the original subjects. Check for consistent lighting, appropriate scale, and realistic shadows.
 3. **Preservation of Main Subject**: The original main subject should remain the focal point and retain their identity, even if the environment around them changes drastically.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

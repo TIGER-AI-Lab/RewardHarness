@@ -13,3 +13,5 @@ When evaluating prompts that change the style, theme, or background (e.g., "make
 2. **Thematic Accuracy**: Does the new style/background contain the specific elements requested? (e.g., "sold out concert" needs a crowd and stage lighting; "child's bedroom" needs toys, a bed, etc.).
 3. **Integration and Blending**: The foreground subjects must blend naturally with the new background. Look for harsh edges, mismatched lighting, or floating objects.
 4. **Style Consistency**: For artistic styles (e.g., "mosaic-tile"), the style should be applied uniformly across the specified areas without leaving patches of the original photo unedited, but without distorting the underlying shapes beyond recognition.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

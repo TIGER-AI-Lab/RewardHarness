@@ -20,3 +20,5 @@ What would the smallest version of the fix look like? File paths + behavior, not
 ## Compatibility
 State whether the proposal changes the public `rewardharness.*` API, Library
 schema, checkpoint schema, or CLI output.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

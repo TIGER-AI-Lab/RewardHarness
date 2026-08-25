@@ -178,3 +178,6 @@ def test_checkpoint_v1_and_v2_loading(tmp_path):
     assert metadata["iteration"] == 2
     assert snapshot["registry"]["one"]["type"] == "skill"
     assert pipeline.get_latest_checkpoint()[0] == 2
+
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

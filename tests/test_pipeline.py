@@ -247,3 +247,6 @@ class TestPipelineEvolution:
         assert (checkpoint_dir / "metadata.json").exists()
         loaded = json.loads((checkpoint_dir / "metadata.json").read_text())
         assert loaded["iteration"] == 0
+
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

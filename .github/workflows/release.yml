@@ -118,3 +118,5 @@ jobs:
           gh release view "$GITHUB_REF_NAME"
           --repo "$GITHUB_REPOSITORY"
           --json tagName,isPrerelease,url
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

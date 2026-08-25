@@ -17,3 +17,5 @@ When evaluating an image, do not get 'tunnel vision' on the specific requested o
 
 ## Decision Rule:
 If Image B perfectly generates the requested object but ruins the subject's anatomy, introduces severe artifacts, or destroys the image context, while Image A generates a slightly less accurate object (or fails the instruction) but preserves the image perfectly, **Image A is often preferred**. Instruction fulfillment does NOT excuse severe degradation of image quality, structure, or realism.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

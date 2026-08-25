@@ -12,3 +12,5 @@ When a prompt contains multiple instructions (e.g., 'Remove X AND increase brigh
 2. **Check Each Requirement**: Evaluate the edited images against EVERY requirement.
 3. **Partial Compliance**: If an image only fulfills one part of the instruction (e.g., removes the object but fails to increase brightness), it must receive a lower Instruction Following score than an image that fulfills all parts.
 4. **Over-editing**: Ensure that fulfilling one requirement didn't unintentionally alter other parts of the image.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

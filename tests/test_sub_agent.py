@@ -245,3 +245,6 @@ class TestSubAgent:
 
         # Should still get an answer after error obs
         assert result["preference"] == "A"
+
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

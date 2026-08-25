@@ -13,3 +13,5 @@ When an instruction references a specific artist (e.g., Claes Oldenburg, Gustav 
    - *Michelangelo*: High Renaissance, muscular and idealized human forms, fresco textures, classical composition.
 2. **Evaluate Semantic Accuracy**: Does the edited image incorporate these specific defining features, or does it just apply a generic filter? (e.g., an Oldenburg edit should show a giant everyday object, not an abstract sculpture).
 3. **Avoid Generic Interpretations**: Penalize images that fail to capture the specific artist's signature style and instead use a generic 'painting' or 'sculpture' effect.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

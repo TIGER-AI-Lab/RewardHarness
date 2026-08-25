@@ -48,3 +48,5 @@ done
 
 echo "All $NUM_GPUS endpoints starting. PIDs: ${PIDS[*]}"
 wait
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

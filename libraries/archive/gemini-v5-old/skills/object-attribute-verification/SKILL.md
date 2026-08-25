@@ -15,3 +15,5 @@ When a prompt asks to replace an object or add an object with specific attribute
 4. **Physical Interaction**: Does the new object fit naturally into the scene? (e.g., Is the hand gripping it correctly?)
 
 **Strategy**: Do not assume an image followed the instruction just because the main object changed. Query the specific attributes explicitly.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

@@ -13,3 +13,5 @@ Before evaluating an image based on a specific entity, artist, or style, you MUS
 1. **Define Before Judging**: State what the entity looks like. For example, 'Claes Oldenburg is known for oversized pop-art sculptures of everyday objects (like burgers, spoons, etc.).'
 2. **Avoid Mischaracterization**: Do not guess or apply generic labels. Oldenburg is NOT 'abstract'. If an image shows an abstract sculpture, it fails the Oldenburg prompt. If it shows a giant burger, it succeeds.
 3. **Match Hallmarks to Image**: Compare the image's elements directly to your defined hallmarks.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

@@ -11,3 +11,5 @@ When evaluating prompts that ask for a style change (e.g., "mosaic-tile", "Micha
 2. **Content Preservation**: Are the original subjects and composition still recognizable? A good style transfer applies the style without completely destroying the underlying content.
 3. **Over-editing**: Did the model replace the subject with something entirely different (e.g., replacing a bear with a generic Klimt painting)? This is a failure.
 4. **Consistency**: Is the style applied consistently across the entire image, or are there jarring patches of the original photo?
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

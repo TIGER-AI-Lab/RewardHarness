@@ -16,3 +16,5 @@ When an instruction specifies a localized edit (e.g., "adjust the brightness of 
    - *Example*: If asked to make surfboards pink, did the background also turn pink?
 3. **Check Unintended Alterations**: Were other objects removed, distorted, or changed in color/texture?
 4. **Penalize Over-editing**: If an edit bleeds into areas that should have been preserved, heavily penalize the "Instruction Following" score (e.g., score 2 or 1). An ideal edit is perfectly isolated to the target subject/region.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

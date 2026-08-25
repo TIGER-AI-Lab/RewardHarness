@@ -14,3 +14,5 @@ When evaluating prompts that ask to change the image to a specific artistic styl
 2. **Content Preservation**: The underlying subject matter and composition of the original image should remain recognizable, even if abstracted by the style.
 3. **Uniformity**: Is the style applied cohesively across the image? Sometimes models only apply the style to the background or only to the subject. A good style transfer usually affects the entire image cohesively unless specified otherwise.
 4. **Avoid Generic Filters**: Penalize images that simply apply a generic color tint or basic blur instead of genuinely mimicking the requested artistic style.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

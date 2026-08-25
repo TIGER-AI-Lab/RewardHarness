@@ -17,3 +17,5 @@ Penalizing an image because you do not recognize the artist's specific motifs. F
 1. **Identify Entities:** Pay close attention to named entities, artists, or locations (e.g., "New York subway").
 2. **Verify Characteristics:** If an image contains specific elements (like a giant burger for Oldenburg, or specific NYC subway signs), recognize these as strong instruction-following signals.
 3. **Avoid Geographic Hallucinations:** If a prompt asks for New York, do not prefer an image that clearly says "Blackfriars" (a London station) just because it looks like a realistic subway.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

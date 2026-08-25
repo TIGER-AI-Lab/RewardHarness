@@ -21,3 +21,5 @@ system_prompt: 'You are a precise visual analyzer. Given an image and a query, y
 ---
 
 Call this tool when the prompt involves adding specific text, counting objects (e.g., '4th surfboard'), or spatial positioning (e.g., 'under the bag', 'in front of'). Query example: 'What text is written on the surfboards, and on which surfboard from the left is it located?'
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

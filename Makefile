@@ -85,3 +85,5 @@ clean:
 	find . -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true
 	find . -type d -name .pytest_cache -exec rm -rf {} + 2>/dev/null || true
 	rm -rf .mypy_cache .ruff_cache .coverage build dist *.egg-info
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

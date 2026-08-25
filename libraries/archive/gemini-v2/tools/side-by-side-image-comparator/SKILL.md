@@ -31,3 +31,5 @@ Example call:
   "query": "Which image has the text 'Newerg Yyrk' and which has 'NORRAGE'? Does either image have a nipple on the bottle?"
 }
 ```
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

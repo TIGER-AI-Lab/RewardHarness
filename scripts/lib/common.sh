@@ -18,3 +18,5 @@ rh_require_command() {
     return 127
   }
 }
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

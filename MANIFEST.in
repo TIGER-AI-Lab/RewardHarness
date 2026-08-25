@@ -5,3 +5,5 @@ recursive-include rewardharness/resources *.json *.md
 include rewardharness/py.typed
 recursive-include libraries/archive *.json *.md
 recursive-include examples/seed_library *.json *.md
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

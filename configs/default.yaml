@@ -30,3 +30,5 @@ evolution:
 benchmark:
   dataset: TIGER-Lab/EditReward-Bench
   max_workers: 128
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

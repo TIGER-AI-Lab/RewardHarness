@@ -11,3 +11,5 @@ When a prompt asks for a style change (e.g., "Make it look like Gustav Klimt", "
 2. **Style Accuracy**: The requested style should be clearly visible and applied uniformly.
 3. **Over-editing**: Watch out for edits that completely replace the original image with a new, unrelated image that just happens to be in the requested style.
 4. **Consistency**: The style should apply to the intended elements (or the whole image if requested) without leaving awkward, unstyled patches.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

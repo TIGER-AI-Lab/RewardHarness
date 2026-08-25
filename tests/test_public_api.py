@@ -94,3 +94,6 @@ def test_router_rejects_invalid_json_shapes(response):
 def test_router_deduplicates_valid_selections():
     parsed = Router._parse_response('{"skills": ["a", "a"], "tools": ["b", "b"]}')
     assert parsed == {"skills": ["a"], "tools": ["b"]}
+
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

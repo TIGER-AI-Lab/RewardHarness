@@ -57,3 +57,6 @@ class EndpointPool:
     def all(self) -> list[str]:
         """Return all endpoint URLs."""
         return list(self._endpoints)
+
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

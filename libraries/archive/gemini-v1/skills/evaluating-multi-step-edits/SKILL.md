@@ -11,3 +11,5 @@ When a prompt contains multiple instructions (e.g., "Remove the object on the le
 2. **Check Each Component**: Evaluate whether each edited image successfully completes *every* component.
 3. **Partial Success**: If an image only completes one of the two instructions, it should receive a lower Instruction Following score (e.g., 2 or 3) compared to an image that completes both.
 4. **Over-editing**: Ensure that global adjustments (like brightness) are only applied to the specified areas (e.g., "central figure") and not the entire image, unless requested.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

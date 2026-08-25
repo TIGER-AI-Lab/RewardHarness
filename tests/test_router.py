@@ -118,3 +118,6 @@ class TestRouter:
 
         assert "Real content" in result
         # fake-skill and fake-tool silently skipped
+
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

@@ -70,3 +70,5 @@ $PYTHON "$PROJECT_ROOT/scripts/run_benchmark.py" \
 
 cp "$PROJECT_ROOT/results/benchmark_results.json" "$SEED_DIR/benchmark_results.json" 2>/dev/null
 echo "=== Benchmark seed=${SEED} COMPLETE ==="
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

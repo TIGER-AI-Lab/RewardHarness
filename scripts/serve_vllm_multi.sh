@@ -74,3 +74,5 @@ done
 echo "All $TOTAL endpoints starting. Waiting for them to be ready..."
 echo "PIDs: ${PIDS[*]}"
 wait
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

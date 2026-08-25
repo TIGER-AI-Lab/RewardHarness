@@ -16,3 +16,5 @@ pre-commit>=4.0,<5.0
 # Distribution validation
 build>=1.2,<2.0
 twine>=5.1,<8.0
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

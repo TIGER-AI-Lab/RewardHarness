@@ -22,3 +22,5 @@ You are tasked with evaluating an edited image **in comparison with the original
 Text instruction – {text_prompt}
 
 Please output only the integer score.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

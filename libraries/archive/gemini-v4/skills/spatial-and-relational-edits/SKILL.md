@@ -11,3 +11,5 @@ When an instruction specifies a spatial relationship (e.g., 'under', 'on top of'
 2. **Verify Directional Accuracy**: Ensure rotations or directional changes match the exact instruction (e.g., counterclockwise vs. clockwise, left vs. right).
 3. **Check for Over-rotation/Misplacement**: Penalize edits that exaggerate the movement (e.g., rotating an object 90 degrees when a slight rotation was implied) or place the object unnaturally.
 4. **Physical Consistency**: The new position must make physical sense. Check for appropriate shadows, occlusion (e.g., if a foot is *under* a bag, the bag should occlude part of the foot), and perspective.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

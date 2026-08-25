@@ -70,3 +70,5 @@ print(f'  {sys.argv[2]}  | {acc(\"k2\")} | {acc(\"k3\")} | {acc(\"k4\")} | {acc(
 " "$outfile" "$iter_num"
     fi
 done
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

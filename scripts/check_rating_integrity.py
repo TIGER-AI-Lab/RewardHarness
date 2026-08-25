@@ -7,9 +7,9 @@ import hashlib
 from pathlib import Path
 
 EXPECTED_SHA256 = {
-    "rater1.tsv": "28f43928555944f49b4e47f4cadd41f4aa41f709dfd39f98236dc65f95fa13bf",
-    "rater2.tsv": "7f1996d7f33d38b84258c79352d573bb811e838feab451eb5f321108f137eaa5",
-    "rater3.tsv": "96d53658b1a7f38a703ed4a836e98ec6e8c2b6a9fd6f3d618be8930113bcf864",
+    "rater1.tsv": "b448a8c3888343fa8005d1718c387ae01cce711c63db40a9a2b1e1f1bc2c72a7",
+    "rater2.tsv": "f34a846b94f54010a40ccca81a19f662a46fcfb1a6928efb06253ed301d474b3",
+    "rater3.tsv": "9819c24d467cd09d496b791d7e30188addae3c4a949bc4def2aa95ad0e49dffa",
 }
 
 
@@ -40,3 +40,5 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

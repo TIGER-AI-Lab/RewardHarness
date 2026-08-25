@@ -65,3 +65,5 @@ Only the module path changes. Public symbol names such as `EndpointPool`,
 Projects that cannot migrate immediately should remain pinned to
 `rewardharness>=0.2.2,<0.3`; the 0.3 wheel intentionally does not provide a
 silent compatibility alias.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

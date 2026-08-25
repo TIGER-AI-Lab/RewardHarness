@@ -143,3 +143,6 @@ class TestKPairAccuracy:
     def test_invalid_k(self):
         with pytest.raises(ValueError):
             compute_kpair_accuracy([], k=5)
+
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

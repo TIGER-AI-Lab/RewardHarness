@@ -65,3 +65,5 @@ before tagging. `make release-check` also runs `scripts/check_distribution.py`
 to reject stale artifacts, metadata drift, and missing package resources; the
 workflow then installs the published PyPI artifact and verifies the resulting
 GitHub Release before reporting success.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

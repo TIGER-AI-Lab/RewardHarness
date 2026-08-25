@@ -42,3 +42,5 @@ Mock the external boundary at the highest layer that's still meaningful:
 - Need a vLLM completion? Patch `rewardharness.evaluation.engine.OpenAI`.
 
 The fixtures in `conftest.py` already cover the common cases.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

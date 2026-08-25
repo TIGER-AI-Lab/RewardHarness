@@ -168,3 +168,6 @@ class Router:
         if not all(isinstance(name, str) for name in [*skills, *tools]):
             return None
         return {"skills": list(dict.fromkeys(skills)), "tools": list(dict.fromkeys(tools))}
+
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

@@ -27,3 +27,5 @@ Example queries:
 - "Counting from the left, which surfboard has the text 'CBS' on it in Image A?"
 - "Does the image look like a Claes Oldenburg sculpture? Describe the artistic style."
 - "Is the cat's foot placed *under* the bag or *on top* of the bag?"
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

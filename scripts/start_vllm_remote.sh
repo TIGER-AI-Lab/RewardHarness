@@ -46,3 +46,5 @@ CUDA_VISIBLE_DEVICES="$GPU_ID" "$PYTHON" -m vllm.entrypoints.openai.api_server \
     --limit-mm-per-prompt '{"image": 5}' \
     --dtype bfloat16 \
     --gpu-memory-utilization "$GPU_MEM"
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

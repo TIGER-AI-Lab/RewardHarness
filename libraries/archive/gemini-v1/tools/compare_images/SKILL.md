@@ -15,3 +15,5 @@ system_prompt: You are an expert image analyst. You will be provided with a sour
 ---
 
 Use this tool to compare the source image with the edited images. Pass the base64 strings of the images in the `images` list (e.g., `[source_img, edited_a, edited_b]`). Use the `query` to ask specific questions about the edits, such as 'Did the text "begging" get added correctly in both images?', 'Which image better preserves the background?', or 'Are there any visual artifacts in either image?'
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

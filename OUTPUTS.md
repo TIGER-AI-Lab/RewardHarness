@@ -160,3 +160,5 @@ Per evolution run, expect:
 | Cached datasets in `~/.cache/huggingface/datasets/` | ~2 GB (EditReward-Bench + EditReward-Data-100) |
 
 vLLM model weights (`~/.cache/huggingface/hub/`) are ~15 GB for Qwen2.5-VL-7B-Instruct — not counted here because they're shared across runs.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

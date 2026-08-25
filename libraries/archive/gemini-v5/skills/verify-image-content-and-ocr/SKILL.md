@@ -15,3 +15,5 @@ Visual Language Models can sometimes hallucinate image content, swap Image A and
    - *Bad*: "Image A has '8' and Image B has 'CBS'." (Prone to swapping).
    - *Good*: "Looking at the left image (A), the text on the surfboard is [X]. Looking at the right image (B), the text is [Y]." Take a moment to double-check which image is which.
 3. **Subtle Object Recognition**: If an object looks slightly different than expected (e.g., a baby bottle instead of a generic water bottle), do not immediately claim the model "failed to add the object." It might be a stylistically different version of the requested object. Evaluate its plausibility in the context of the scene.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

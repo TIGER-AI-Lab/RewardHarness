@@ -39,3 +39,5 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

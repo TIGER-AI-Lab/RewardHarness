@@ -16,3 +16,5 @@ When a prompt requests an object with multiple specific attributes (e.g., "dark,
 2. **Verify Every Attribute**: Check each image for ALL attributes. An image that misses a key attribute (e.g., missing the nipple, missing the green glow) has failed the instruction and should receive a lower instruction score (e.g., 2).
 3. **Use Tools**: If unsure, use the `target-object-verifier` tool to ask specific questions about the presence of these attributes.
 4. **Avoid Hallucinations**: Do not assume an attribute is present just because the main object is there. Look closely at the details.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

@@ -54,3 +54,5 @@ python scripts/run_evolution.py \
 The seed isn't the paper's evolved Library — it's a tiny illustrative starter so you don't have to begin from an empty registry. The paper's final 6-entry library (3 Skills + 3 Tools) is committed at [`rewardharness/resources/library/`](../rewardharness/resources/library/) and is what `make benchmark` benchmarks by default; `make reproduce` evolves a fresh library from scratch end-to-end.
 
 If you want to see the Library in action against a real Sub-Agent, run `make demo` instead (1-iteration evolution; requires Gemini + a single vLLM endpoint).
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

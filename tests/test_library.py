@@ -206,3 +206,6 @@ class TestLibraryShared:
         lib = Library(str(tmp_library))
         with pytest.raises(KeyError):
             lib.get_full_content("nonexistent")
+
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

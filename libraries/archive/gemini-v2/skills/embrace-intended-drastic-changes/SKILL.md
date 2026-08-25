@@ -13,3 +13,5 @@ When a prompt requests a completely new setting (e.g., 'cafeteria', 'child's bed
 **CRITICAL RULE:** DO NOT penalize an image for 'disrupting the original context' or 'failing to preserve the original background' when a setting change is explicitly requested.
 
 An image that preserves the original setting (e.g., keeping a classroom when a cafeteria is requested, or keeping a restaurant background) FAILS the instruction. Drastic changes are the goal. Reward the image that most convincingly establishes the NEW requested setting, even if it means replacing the entire background.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

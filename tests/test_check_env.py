@@ -91,3 +91,6 @@ def test_diagnostics_main_uses_explicit_options(monkeypatch):
 
     assert diagnostics.main(["--endpoints", "custom.txt", "--timeout", "0.25"]) == 0
     assert observed == [("custom.txt", 0.25)]
+
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

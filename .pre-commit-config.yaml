@@ -14,3 +14,5 @@ repos:
         args: [--unsafe]
       - id: end-of-file-fixer
       - id: trailing-whitespace
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

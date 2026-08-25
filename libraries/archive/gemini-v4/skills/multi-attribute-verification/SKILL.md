@@ -16,3 +16,5 @@ When a prompt asks to transform an object into something with multiple specific 
 2. **Verify Each Attribute**: Check the edited images for *every single* attribute. Do not just glance at the overall shape.
 3. **Identify Partial Success**: If an image makes the object a "clear plastic bottle" but misses the "nipple", it is an incomplete edit.
 4. **Score Accordingly**: An image that captures all attributes perfectly should score much higher on Instruction Following than one that misses key details, even if the overall visual quality is good.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

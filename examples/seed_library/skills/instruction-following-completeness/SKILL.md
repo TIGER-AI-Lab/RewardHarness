@@ -28,3 +28,5 @@ First parse the prompt into atomic sub-instructions. Examples:
 ## When in doubt
 
 If both candidates are at score 3 or both at score 2, fall back to which one feels closer to what a human would call "correct" given the prompt. Then break ties with `realism-and-artifact-penalties`.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

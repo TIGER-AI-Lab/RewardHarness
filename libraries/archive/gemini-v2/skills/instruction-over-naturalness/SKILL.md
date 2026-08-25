@@ -13,3 +13,5 @@ Beware the 'subtlety trap' and 'preservation bias'. You often prefer Image A bec
 - If the prompt asks for a bulky or exaggerated object (e.g., snow goggles instead of glasses), the image that actually includes the bulky object wins, even if it looks slightly artificial.
 - If the prompt asks for a specific addition (e.g., a home plate, a man standing next to a train), the image that clearly includes the addition wins over an image that makes no change or a barely visible change.
 - An image with no edit or a failed edit is a FAILURE, regardless of how 'natural' or 'realistic' it looks. Always verify that the requested edit is actually present before praising its 'natural integration'.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

@@ -588,3 +588,6 @@ class SelfEvolutionPipeline:
 
         logger.info(f"\nEvolution complete. Final val_acc: {prev_val_acc:.4f}")
         return evolution_log
+
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

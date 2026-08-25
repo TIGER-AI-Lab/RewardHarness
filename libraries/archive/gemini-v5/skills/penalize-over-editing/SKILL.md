@@ -17,3 +17,5 @@ When evaluating image edits, the "Do No Harm" principle is critical. An edit tha
 
 ## Evaluation Rule:
 If Image A has a minor flaw in following the instruction (e.g., a typo in text, or a less dramatic background change) but perfectly preserves the original image's structure and style, and Image B perfectly follows the instruction but introduces severe over-editing or style shifts, **prefer Image A**.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

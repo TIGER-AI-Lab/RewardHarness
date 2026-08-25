@@ -24,3 +24,5 @@ system_prompt: 'You are a highly precise visual analysis AI. Your task is to car
 Use this tool when you need to verify the presence, absence, or state of specific objects, backgrounds, or spatial relationships in the images. This helps prevent hallucinating content (like claiming an image is a black screen when it isn't) or mixing up Image A and Image B.
 
 Example query: "Does Image A or Image B have a clear plastic bottle with a nipple? What is the background in each image?"
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

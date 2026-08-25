@@ -18,3 +18,5 @@ Gibberish, misspelled, or garbled text is a common artifact in AI image editing 
 - **Never reward an image that fails the prompt just because it avoided text artifacts.**
 - If Image A fails the main instruction (e.g., does not change the setting as requested) but has clean text, and Image B successfully follows the main instruction but introduces gibberish text (e.g., 'Newerg Yyrk' on a sign), **Image B MUST be preferred**.
 - Only use gibberish text as a tie-breaker or a reason to penalize when BOTH images successfully follow the main instruction.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

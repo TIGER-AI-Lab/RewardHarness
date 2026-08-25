@@ -31,3 +31,5 @@ Use this tool whenever a prompt asks to add, modify, or remove specific text (e.
   "query": "Does the image contain the text 'CBS' on the surfboard?"
 }
 ```
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

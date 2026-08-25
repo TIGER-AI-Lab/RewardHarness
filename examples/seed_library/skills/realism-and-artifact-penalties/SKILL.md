@@ -17,3 +17,5 @@ description: Guidance on penalizing artifacts while allowing conceptual unrealis
    - Color bleeding, halos, or compression noise around edited areas
 
 3. **Prioritize execution quality.** Between two images that both follow the instruction, prefer the one with fewer visual artifacts. Use this skill in combination with `instruction-following-completeness` — an image with perfect realism but partial execution should still lose to one with full execution and minor artifacts.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

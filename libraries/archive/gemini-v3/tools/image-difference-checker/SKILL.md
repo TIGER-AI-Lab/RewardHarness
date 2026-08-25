@@ -18,3 +18,5 @@ system_prompt: "You are an expert image comparison tool. Given a source image an
 ---
 
 Use this tool to compare the source image with an edited image. It will help you identify if the requested changes were made, if any unintended changes occurred, and if there are visual artifacts. Pass the source image and one edited image at a time.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

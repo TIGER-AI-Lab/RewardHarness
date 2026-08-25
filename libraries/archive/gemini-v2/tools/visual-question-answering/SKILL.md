@@ -32,3 +32,5 @@ Use this tool when you need to verify specific visual details that are crucial f
 
 **How to use:**
 Pass the image(s) and formulate a clear, specific query. For example: "Look at the bottle in the image. Does it have a nipple on it?" or "Is the cat's paw positioned underneath the bag on the right side of the image?"
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

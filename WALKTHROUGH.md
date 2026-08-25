@@ -150,3 +150,5 @@ Then continue with `python scripts/run_benchmark.py --config configs/default.yam
 | Debug a single example | `examples/inspect_library.py` + `examples/show_reasoning_format.py` |
 
 If something breaks, [`TROUBLESHOOTING.md`](TROUBLESHOOTING.md) covers the common failure modes.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

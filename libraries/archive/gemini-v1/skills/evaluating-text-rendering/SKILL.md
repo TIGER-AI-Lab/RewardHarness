@@ -12,3 +12,5 @@ When evaluating edits that involve adding or modifying text, check the following
 3. **Style/Color**: Does the text match the requested color, font, or style?
 4. **Integration**: Does the text look naturally integrated, or is it distorted, stretched, or blurry?
 5. **Unintended Changes**: Did the model alter other parts of the image while adding the text?
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

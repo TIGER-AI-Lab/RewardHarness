@@ -16,3 +16,5 @@ When an instruction specifies a spatial relationship (e.g., "under the bag on th
    - The edit is applied to the wrong object (e.g., the 3rd surfboard instead of the 4th).
    - The spatial relationship is inverted (e.g., "above" instead of "under").
    - The target object is added, but the anchor object is accidentally removed or distorted.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

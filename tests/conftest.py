@@ -90,3 +90,6 @@ Reads and returns all visible text from an image.
 ## Call format
 <tool>{"name": "tool-ocr", "images": ["<base64>"], "query": "read all text"}</tool>
 """
+
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

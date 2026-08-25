@@ -29,3 +29,5 @@ Use this tool when the prompt requires adding, modifying, or verifying specific 
 
 **How to use:**
 Pass the images and a query like "What text is written on the black band of the 4th surfboard?" The tool will return the exact text found in both images, helping you avoid mixing up Image A and Image B or hallucinating correct spelling.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

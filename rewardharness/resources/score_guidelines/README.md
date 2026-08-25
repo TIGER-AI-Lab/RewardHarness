@@ -16,3 +16,5 @@ The 1–4 scale is the **internal scale used end-to-end** — by human annotator
 ## Why include these?
 
 The templates are part of the Sub-Agent's runtime contract — anyone reproducing or extending the pipeline needs to see exactly what scoring rubric the model is asked to apply. They're also the rater interface that produced the calibration set, so reviewers can verify what "ground truth" means in the paper's setup.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

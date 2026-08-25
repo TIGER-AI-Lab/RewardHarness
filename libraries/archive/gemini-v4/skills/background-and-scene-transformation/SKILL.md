@@ -16,3 +16,5 @@ When evaluating prompts that change the setting (e.g., "Make it seem like a sold
    - **Edges**: Are there visible artifacts, halos, or jagged cutouts around the subject?
    - **Perspective**: Does the subject's placement make sense in the new environment?
 3. **Subject Preservation**: The identity, pose, and key details of the main subject should remain unchanged unless the prompt implies otherwise.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

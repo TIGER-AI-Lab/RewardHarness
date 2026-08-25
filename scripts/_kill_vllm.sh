@@ -9,3 +9,5 @@ done
 sleep 2
 remaining=$(pgrep -c -f "vllm.entrypoints" 2>/dev/null || echo 0)
 echo "vllm processes remaining: $remaining"
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

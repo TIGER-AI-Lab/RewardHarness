@@ -45,6 +45,9 @@ Read [`WALKTHROUGH.md`](WALKTHROUGH.md) for the 9-step path from `git clone` to 
 
 ## Updates
 
+<details>
+<summary><strong>Release news</strong> — latest: v0.4.1 (2026-08-26)</summary>
+
 - **2026-08-26** — `v0.4.1`: synchronized migration, security, walkthrough,
   and test documentation, and hardened post-publish verification against PyPI
   CDN propagation delays.
@@ -74,6 +77,8 @@ Read [`WALKTHROUGH.md`](WALKTHROUGH.md) for the 9-step path from `git clone` to 
 - **2026-05-09** — Paper on arXiv: [2605.08703](https://arxiv.org/abs/2605.08703).
 
 For commit-level detail of post-`v0.1.2` polish (env-var coverage for VLM swaps, reproducibility fixes, doc honesty pass, …) see [`CHANGELOG.md`](CHANGELOG.md) `[Unreleased]`.
+
+</details>
 
 ## Datasets
 

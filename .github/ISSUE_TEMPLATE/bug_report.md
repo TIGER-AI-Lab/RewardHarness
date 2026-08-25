@@ -36,3 +36,5 @@ A one-line description of what went wrong.
 
 ## Anything else
 Relevant config diffs, hypotheses, prior issues you searched, etc.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

@@ -149,3 +149,5 @@ python -m pytest tests/ -v
 ```
 
 The full suite is mocked end-to-end (no GPU, no network, no real Gemini calls) and runs in ~2 s. If you see any test reach out over the network, file an issue — that's a regression.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

@@ -41,3 +41,5 @@ echo "Both datasets are cached in ~/.cache/huggingface/. To verify your copy"
 echo "matches the paper's, compare each split's HF fingerprint:"
 echo "  python -c \"from datasets import load_dataset; \\"
 echo "             print(load_dataset('TIGER-Lab/EditReward-Bench')['train']._fingerprint)\""
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

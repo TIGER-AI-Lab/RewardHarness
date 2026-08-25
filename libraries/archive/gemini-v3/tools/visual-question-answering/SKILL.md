@@ -22,3 +22,5 @@ system_prompt: "You are an expert visual QA assistant. You will be provided with
 ---
 
 Use this tool to ask specific questions about the images, such as 'Is there a nipple on the bottle in Image A?' or 'What is the exact spelling of the text added in Image B?'. Pass the images and your specific question in the query.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

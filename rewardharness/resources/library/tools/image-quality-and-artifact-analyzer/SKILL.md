@@ -32,3 +32,5 @@ Use this tool to objectively assess the visual quality of the edited image compa
 ```json
 <tool>{"name": "image-quality-and-artifact-analyzer", "images": ["source", "edited"], "query": "Analyze the edited image for any artifacts, distortions, or unnatural lighting introduced by the edit."}</tool>
 ```
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

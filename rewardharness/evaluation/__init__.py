@@ -15,3 +15,5 @@ __all__ = [
     "compute_kpair_accuracy",
     "evaluate_prediction",
 ]
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

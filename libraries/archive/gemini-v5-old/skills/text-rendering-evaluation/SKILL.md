@@ -16,3 +16,5 @@ When a prompt involves text (e.g., "Add the word 'begging'", "Add the letters 'C
 4. **Artifacts**: Ensure the area around the text isn't smudged or distorted.
 
 **Strategy**: Always use a visual question answering tool to explicitly ask "What text is written in Image A?" and "What text is written in Image B?" before making a judgment.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

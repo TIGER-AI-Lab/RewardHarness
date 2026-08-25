@@ -713,3 +713,6 @@ class TestChainEvolverIntegration:
         evolver.restore(snap_evolved)
         assert len(library_on_disk.registry) == 3
         assert "instruction-fidelity-check" in library_on_disk.registry
+
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

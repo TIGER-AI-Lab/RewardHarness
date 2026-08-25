@@ -34,3 +34,5 @@ Before finalizing scores, ask:
 
 ## Score Compression Warning
 Do NOT compress scores to 2-3 by default. Use 4 when the instruction is fully executed. Use 1 when the instruction completely fails. Spread across the full range.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

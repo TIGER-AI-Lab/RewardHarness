@@ -21,3 +21,5 @@ system_prompt: 'You are an expert object verifier. Given an image and a query ab
 ---
 
 Call this tool when the prompt asks for complex object transformations or specific attributes (e.g., 'snow goggles', 'clear plastic bottle with a nipple', 'dark aged metal'). Query example: 'Does the image contain a clear plastic bottle with a nipple? Are there any Wii-remotes left?'
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

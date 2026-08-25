@@ -84,3 +84,6 @@ class EvaluationResult:
             "reasoning": self.reasoning,
             "chain": self.chain,
         }
+
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

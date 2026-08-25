@@ -100,3 +100,6 @@ class RewardHarnessConfig:
     def to_legacy_dict(self) -> dict[str, Any]:
         """Compatibility alias for callers written before the typed configuration API."""
         return self.to_dict()
+
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

@@ -207,3 +207,5 @@ def main(argv: Sequence[str] | None = None) -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

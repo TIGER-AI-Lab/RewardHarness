@@ -32,3 +32,5 @@ Your response MUST follow this exact structure:
 </answer>
 
 Any generation of `<tool>` or `<obs>` tags is a critical failure. Rely SOLELY on your own visual analysis. Look at the images provided in the prompt and describe what you see.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

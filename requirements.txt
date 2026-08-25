@@ -27,3 +27,5 @@ tqdm>=4.66.0
 rich>=13.0.0
 pyyaml>=6.0
 filelock>=3.15
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

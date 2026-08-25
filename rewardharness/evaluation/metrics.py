@@ -69,3 +69,6 @@ def compute_kpair_accuracy(pair_results: Sequence[Mapping[str, Any]], k: int) ->
 
     accuracy = n_correct / n_total if n_total > 0 else 0.0
     return {"accuracy": accuracy, "n_correct": n_correct, "n_total": n_total}
+
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

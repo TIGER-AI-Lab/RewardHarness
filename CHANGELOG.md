@@ -4,7 +4,13 @@ All notable changes to RewardHarness are recorded here. Versions follow [SemVer]
 
 ## [Unreleased]
 
-Future changes after v0.4.1.
+### Changed
+
+- Completed a repository-wide v0.4.1 consistency review across source,
+  automation, documentation, packaged resources, archived libraries, examples,
+  tests, and benchmark fixtures.
+- Collapsed the README release-news history behind a compact disclosure so the
+  project overview remains easy to scan.
 
 ## [0.4.1] — 2026-08-26
 

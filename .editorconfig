@@ -29,3 +29,5 @@ trim_trailing_whitespace = false
 [tests/fixtures/**]
 trim_trailing_whitespace = false
 insert_final_newline = false
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

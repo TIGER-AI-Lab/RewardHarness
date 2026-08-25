@@ -39,3 +39,5 @@ Only the current `main` branch and the most recent tagged release receive securi
 - The test suite is fully mocked and **must never make real network calls**. If a test reaches out, file a bug &mdash; it's a security smell.
 - `scripts/check_env.py` validates that credentials look well-formed but never logs them.
 - Service-account JSON files belong outside the repo tree. Reference them via `GOOGLE_APPLICATION_CREDENTIALS` only.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

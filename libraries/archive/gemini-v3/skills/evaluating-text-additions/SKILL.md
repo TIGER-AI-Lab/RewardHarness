@@ -11,3 +11,5 @@ When a prompt asks to add or change text (e.g., "Add the word 'begging'", "Add t
 2. **Legibility and Clarity**: The text must be readable. Distorted, stretched, or blurry text reduces both instruction following and visual quality scores.
 3. **Integration**: The text should look like it belongs in the scene. It should match the perspective, lighting, and texture of the surface it is placed on, rather than looking like a flat digital overlay.
 4. **Unintended Characters**: Check for extra characters, punctuation, or gibberish added around the requested text.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

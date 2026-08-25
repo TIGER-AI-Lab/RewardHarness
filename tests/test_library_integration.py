@@ -417,3 +417,6 @@ class TestLibraryFullLifecycle:
         assert "extra-skill" not in lib2.registry
         assert "extra-tool" not in lib2.registry
         assert lib2.get_skill("eval-color")["description"] == "Color eval"
+
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

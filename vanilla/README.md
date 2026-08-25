@@ -41,3 +41,5 @@ python vanilla/gemini_bench_claude.py \
 ```
 
 These scripts intentionally don't share code with the `rewardharness` package — they're the "no library" reference point against which RewardHarness is measured.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

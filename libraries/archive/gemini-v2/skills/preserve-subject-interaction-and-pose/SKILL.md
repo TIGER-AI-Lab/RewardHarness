@@ -14,3 +14,5 @@ When an instruction requires replacing an object that a subject is interacting w
 2. **Penalize Mutilation**: Heavily penalize images that distort, mangle, or destroy hands or fingers in the process of replacing the object.
 3. **Anatomy Outweighs Minor Details**: A correct object (e.g., a bottle with a specific feature like a nipple) is useless if the hand holding it becomes a mangled mess. Preserving the structural integrity of the subject's body often outweighs perfect adherence to minor object details.
 4. **Interaction Physics**: Ensure the subject's grip, gaze, and posture still make sense with the new object's size, shape, and weight.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

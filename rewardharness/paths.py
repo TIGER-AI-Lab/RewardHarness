@@ -18,3 +18,6 @@ def default_endpoints_path() -> Path:
 
 def score_guidelines_path() -> Path:
     return Path(str(files("rewardharness").joinpath("resources").joinpath("score_guidelines")))
+
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

@@ -208,3 +208,6 @@ class Evolver:
         """
         self.library.restore(snap)
         logger.info(f"Restored library to snapshot with {len(snap['registry'])} items")
+
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

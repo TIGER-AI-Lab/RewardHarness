@@ -387,3 +387,5 @@ def _save_partial(path, model, k, pair_results):
 
 if __name__ == "__main__":
     main()
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

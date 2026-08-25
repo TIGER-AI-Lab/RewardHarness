@@ -9,3 +9,5 @@ from rewardharness.evolution.pipeline import SelfEvolutionPipeline
 EvolutionPipeline = SelfEvolutionPipeline
 
 __all__ = ["ChainAnalyzer", "EvolutionPipeline", "Evolver", "SelfEvolutionPipeline"]
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

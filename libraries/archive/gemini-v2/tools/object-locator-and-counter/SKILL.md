@@ -26,3 +26,5 @@ Use this tool when the prompt requires modifying a specific instance of an objec
 **How to use:**
 Pass the image and a query like: "Count the surfboards from left to right. Identify the 4th surfboard and describe any text on its black band."
 The tool will return the total count, the locations of each, and the specific details of the target instance, helping you verify if the edit was applied to the correct object.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

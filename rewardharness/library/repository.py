@@ -496,3 +496,6 @@ class Library:
         path = os.path.join(self.base_dir, self.registry[name]["path"])
         parsed = self._parse_skill_md(path)
         return parsed["body"]
+
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

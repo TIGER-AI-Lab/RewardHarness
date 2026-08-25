@@ -15,3 +15,5 @@ Vision-Language Models frequently hallucinate text rendering. You might "see" th
 
 **Action:**
 Always call the `text-and-ocr-analyzer` tool to get an objective reading of the text in both images before writing your reasoning or assigning scores.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

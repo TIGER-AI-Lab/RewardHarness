@@ -28,3 +28,5 @@ Use this tool when you need to verify:
 ```json
 <tool>{"name": "visual-detail-and-setting-analyzer", "images": ["<base64_A>", "<base64_B>"], "query": "Is the setting a school cafeteria with dining tables, or a classroom with desks? Does the bottle have a nipple?"}</tool>
 ```
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

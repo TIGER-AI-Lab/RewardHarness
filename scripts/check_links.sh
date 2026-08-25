@@ -76,3 +76,5 @@ else
   echo "$broken broken link(s) found."
   exit 1
 fi
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

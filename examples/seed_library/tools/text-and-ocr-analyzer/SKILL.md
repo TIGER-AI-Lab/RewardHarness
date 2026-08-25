@@ -42,3 +42,5 @@ Treat a `False` in `image_*_spelling_correct` as strong evidence of instruction-
 ## Cost
 
 This tool runs one extra VLM call per evaluation, so don't invoke it unless the prompt explicitly contains text-editing intent.
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->

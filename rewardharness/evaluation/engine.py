@@ -342,3 +342,6 @@ class SubAgent:
                     results[idx] = fallback
 
         return [result if result is not None else dict(FALLBACK_ANSWER) for result in results]
+
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

@@ -87,3 +87,6 @@ def test_package_import_does_not_eagerly_load_heavy_dependencies():
         "assert 'transformers' not in sys.modules"
     )
     subprocess.run([sys.executable, "-c", code], check=True)
+
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

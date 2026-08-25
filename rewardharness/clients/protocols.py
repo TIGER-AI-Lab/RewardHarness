@@ -27,3 +27,6 @@ class ChatModelClient(Protocol):
         model: str,
         max_tokens: int,
     ) -> str: ...
+
+
+# Release review: RewardHarness v0.4.1 (2026-08-26).

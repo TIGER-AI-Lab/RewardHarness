@@ -22,3 +22,5 @@ Use this tool whenever the prompt asks to add, modify, or verify text in an imag
 - **When to use**: Prompts containing quotes (e.g., Add the word "begging", letters "CBS").
 - **Why**: VLMs often overlook subtle typos (e.g., "beging" instead of "begging", "gegging"). This tool explicitly extracts and checks the spelling.
 - **Usage**: Pass the image and a query like "Check if the word 'begging' is spelled correctly and where it is located."
+
+<!-- Release review: RewardHarness v0.4.1 (2026-08-26). -->
