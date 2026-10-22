@@ -53,12 +53,19 @@ class Library:
             if document.get("schema_version") == REGISTRY_SCHEMA_VERSION:
                 self.metadata = dict(document.get("library", self.metadata))
                 entries = document.get("entries", {})
-                self.registry = {
-                    name: {**info, "type": info.get("kind", info.get("type"))}
-                    for name, info in entries.items()
-                }
+                self.registry = self._internal_entries(entries)
             else:
                 self.registry = document
+
+    @staticmethod
+    def _internal_entries(entries: dict) -> dict:
+        """Convert v2 disk entries to the same shape used by live additions."""
+        normalized = {}
+        for name, info in entries.items():
+            entry = dict(info)
+            entry["type"] = entry.pop("kind", entry.get("type"))
+            normalized[name] = entry
+        return normalized
 
     def registry_document(self, registry: dict | None = None) -> dict:
         """Serialize the internal flat registry as the public v2 document."""
@@ -102,10 +109,7 @@ class Library:
                     with open(self.registry_path) as f:
                         document = json.load(f)
                     if document.get("schema_version") == REGISTRY_SCHEMA_VERSION:
-                        disk_registry = {
-                            name: {**info, "type": info.get("kind", info.get("type"))}
-                            for name, info in document.get("entries", {}).items()
-                        }
+                        disk_registry = self._internal_entries(document.get("entries", {}))
                     else:
                         disk_registry = document
                 else:

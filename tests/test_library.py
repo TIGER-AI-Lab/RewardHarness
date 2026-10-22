@@ -202,6 +202,30 @@ class TestLibraryShared:
         skill = lib2.get_skill("persistent-skill")
         assert skill["description"] == "Persists"
 
+    def test_mixed_registry_roundtrip_preserves_entry_shape(self, tmp_library):
+        lib = Library(str(tmp_library))
+        lib.add_skill("rubric", "Scoring guidance", "Check the edited region.")
+        lib.add_tool("text-check", "Inspect text", "Read text", {}, {}, "Check spelling.")
+
+        reloaded = Library(str(tmp_library))
+        assert reloaded.registry == lib.registry
+        assert all("kind" not in entry for entry in reloaded.registry.values())
+        saved = json.loads((tmp_library / "registry.json").read_text())
+        assert saved["schema_version"] == 2
+        assert saved["entries"]["rubric"]["kind"] == "skill"
+        assert saved["entries"]["text-check"]["kind"] == "tool"
+        assert all("type" not in entry for entry in saved["entries"].values())
+
+    def test_stale_writer_merges_new_entries_in_internal_format(self, tmp_library):
+        first = Library(str(tmp_library))
+        stale = Library(str(tmp_library))
+        first.add_skill("rubric", "Scoring guidance", "Check the edited region.")
+        stale.add_tool("text-check", "Inspect text", "Read text", {}, {}, "Check spelling.")
+
+        assert stale.registry["rubric"] == first.registry["rubric"]
+        assert set(stale.registry) == {"rubric", "text-check"}
+        assert Library(str(tmp_library)).registry == stale.registry
+
     def test_get_full_content_nonexistent(self, tmp_library):
         lib = Library(str(tmp_library))
         with pytest.raises(KeyError):
