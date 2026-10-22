@@ -71,7 +71,9 @@ jobs:
         run: python -m pytest tests/ -v --tb=short --cov=rewardharness --cov-report=term-missing
 
       - name: Smoke-test library inspection
-        run: python -m rewardharness.cli inspect
+        run: |
+          python -m rewardharness.cli inspect
+          python examples/inspect_library.py
 
   package:
     name: Validate distribution
