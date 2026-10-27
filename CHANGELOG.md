@@ -6,7 +6,7 @@ All notable changes to RewardHarness are recorded here. Versions follow [SemVer]
 
 ### Changed
 
-- Require Python 3.11+ and Pillow 13.0.0+ for new installations, so supported
+- Require Python 3.11+, Pillow 13.0.0+, and FileLock 4.2.1+ for new installations, so supported
   environments can use the security fixes identified by the dependency audit.
   Python 3.10 users must create a newer Python environment before upgrading.
 

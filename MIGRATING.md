@@ -6,9 +6,9 @@ changing CLI commands, Library files, or result schemas.
 
 ## Upcoming Python baseline (unreleased)
 
-The source checkout now requires Python 3.11+ and Pillow 13.0.0+. Pillow 13
-contains the fixes identified by the dependency audit and no longer supports
-Python 3.10. This source change does not replace any already published wheel.
+The source checkout now requires Python 3.11+, Pillow 13.0.0+, and FileLock
+4.2.1+. These dependency versions contain the fixes identified by the audit
+and require Python 3.11 or newer. This source change does not replace any already published wheel.
 
 Create a new environment with Python 3.11 or newer instead of upgrading an
 existing Python 3.10 environment in place:
