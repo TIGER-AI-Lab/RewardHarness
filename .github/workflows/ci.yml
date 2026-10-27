@@ -15,6 +15,16 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  file-inspection:
+    name: Inspect library files without installed packages
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.10"
+      - run: python -I -S examples/inspect_library_files.py
+
   quality:
     name: Static quality and data integrity
     runs-on: ubuntu-latest
