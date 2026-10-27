@@ -8,7 +8,7 @@ from enum import Enum
 from typing import Any
 
 
-class Preference(str, Enum):
+class Preference(str, Enum):  # noqa: UP042 - Preserve existing str(Preference) output.
     """Supported pairwise preferences."""
 
     A = "A"

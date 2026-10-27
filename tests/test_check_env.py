@@ -6,7 +6,10 @@ the served model against `REWARDHARNESS_SUBAGENT_MODEL`. Locked in here.
 """
 
 import json
+from types import SimpleNamespace
 from unittest.mock import patch
+
+import pytest
 
 import rewardharness.diagnostics as diagnostics
 from rewardharness.cli import main as cli_main
@@ -91,6 +94,18 @@ def test_diagnostics_main_uses_explicit_options(monkeypatch):
 
     assert diagnostics.main(["--endpoints", "custom.txt", "--timeout", "0.25"]) == 0
     assert observed == [("custom.txt", 0.25)]
+
+
+@pytest.mark.parametrize(("minor", "supported"), [(10, False), (11, True), (13, True)])
+def test_preflight_rejects_unsupported_python_before_pipeline_setup(
+    monkeypatch, capsys, minor, supported
+):
+    version = SimpleNamespace(major=3, minor=minor, micro=0)
+    monkeypatch.setattr(diagnostics.sys, "version_info", version)
+    assert diagnostics.check_python_version() is supported
+    output = capsys.readouterr().out
+    assert "need >= 3.11" in output
+    assert ("[PASS]" if supported else "[FAIL]") in output
 
 
 # Release review: RewardHarness v0.4.1 (2026-08-26).

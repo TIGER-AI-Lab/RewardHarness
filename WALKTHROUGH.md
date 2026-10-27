@@ -8,7 +8,11 @@ This walkthrough takes ~15 minutes if you only want to inspect the library and r
 
 ---
 
-## 1. Clone and install (CPU-only, no Internet beyond pip)
+## 1. Clone and install (CPU-only)
+
+Use Python 3.11 or newer. The current source requires Pillow 13+; Python 3.10
+is no longer supported. Cloning and installing dependencies require network
+access. The library-inspection examples make no model calls.
 
 ```bash
 git clone https://github.com/TIGER-AI-Lab/RewardHarness.git

@@ -1,5 +1,5 @@
 # Core dependencies (no GPU required).
-# Python 3.10+. Versions reflect known-good combinations from the published
+# Python 3.11+. Versions reflect known-good combinations from the published
 # evolution runs. Loosen upper bounds at your own risk.
 #
 # For Sub-Agent inference with Qwen2.5-VL-7B locally, ALSO install:
@@ -14,9 +14,10 @@ google-genai>=0.3.0
 # Model loading + dataset I/O
 transformers>=4.57.0
 datasets>=2.18.0
-pillow>=10.0.0
+# Pillow 13 contains the fixes required by the dependency audit.
+pillow>=13.0.0
 scikit-image>=0.23.0
-# Preserve the paper-era NumPy line on Python 3.10-3.12 while using the
+# Preserve the paper-era NumPy line on Python 3.11-3.12 while using the
 # wheel-backed NumPy line required by Python 3.13+.
 numpy>=1.26.0,<2.0; python_version < "3.13"
 numpy>=2.1.0,<3.0; python_version >= "3.13"
@@ -26,6 +27,6 @@ scipy>=1.11.0
 tqdm>=4.66.0
 rich>=13.0.0
 pyyaml>=6.0
-filelock>=3.15
+filelock>=4.2.1
 
 # Release review: RewardHarness v0.4.1 (2026-08-26).

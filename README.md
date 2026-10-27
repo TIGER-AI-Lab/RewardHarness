@@ -11,7 +11,7 @@
 [![PyPI](https://img.shields.io/pypi/v/rewardharness?color=3775A9)](https://pypi.org/project/rewardharness/)
 [![Release](https://img.shields.io/github/v/release/TIGER-AI-Lab/RewardHarness?label=release&color=6D7CFF)](https://github.com/TIGER-AI-Lab/RewardHarness/releases/latest)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
-[![Python 3.10+](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![Python 3.11+](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/downloads/)
 
 **Self-evolving agentic reward framework for image-editing evaluation.**
 

@@ -4,14 +4,10 @@
 from __future__ import annotations
 
 import sys
+import tomllib
 from pathlib import Path
 
 import yaml
-
-try:
-    import tomllib
-except ImportError:  # pragma: no cover - exercised by the Python 3.10 CI job
-    import tomli as tomllib
 
 ROOT = Path(__file__).resolve().parent.parent
 

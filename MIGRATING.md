@@ -4,6 +4,26 @@ RewardHarness 0.4 keeps the canonical `rewardharness.*` namespace introduced in
 0.3 and modernizes configuration handling and interpreter support without
 changing CLI commands, Library files, or result schemas.
 
+## Upcoming Python baseline (unreleased)
+
+The source checkout now requires Python 3.11+, Pillow 13.0.0+, and FileLock
+4.2.1+. These dependency versions contain the fixes identified by the audit
+and require Python 3.11 or newer. This source change does not replace any already published wheel.
+
+Create a new environment with Python 3.11 or newer instead of upgrading an
+existing Python 3.10 environment in place:
+
+```bash
+python3.11 -m venv .venv311
+.venv311/bin/python -m pip install -e .
+.venv311/bin/python -m pip check
+```
+
+On Windows, use `py -3.11 -m venv .venv311` and
+`.venv311\Scripts\python.exe` for the remaining commands. Model service and
+optional GPU dependencies still have their own environment requirements.
+Library and result schemas do not change as part of this baseline update.
+
 ## From 0.3 to 0.4
 
 - `RewardHarnessConfig` is now retained throughout benchmark and evolution
