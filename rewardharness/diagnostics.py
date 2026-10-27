@@ -6,7 +6,7 @@ needs is in place — so you catch misconfiguration in 10 seconds instead of
 after a 4-hour vLLM serve + evolution attempt.
 
 Checks performed:
-  1. Python version >= 3.10
+  1. Python version >= 3.11
   2. Core package imports (openai, google.genai, datasets, ...)
   3. Required env vars (GOOGLE_APPLICATION_CREDENTIALS, GEMINI_PROJECT)
   4. Credentials file readable + looks like a service-account JSON
@@ -42,9 +42,9 @@ PASS, FAIL, WARN = f"{GREEN}PASS{RESET}", f"{RED}FAIL{RESET}", f"{YELLOW}WARN{RE
 
 def check_python_version() -> bool:
     v = sys.version_info
-    ok = (v.major, v.minor) >= (3, 10)
+    ok = (v.major, v.minor) >= (3, 11)
     status = PASS if ok else FAIL
-    print(f"  [{status}] Python {v.major}.{v.minor}.{v.micro} (need >= 3.10)")
+    print(f"  [{status}] Python {v.major}.{v.minor}.{v.micro} (need >= 3.11)")
     return ok
 
 

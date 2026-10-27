@@ -34,7 +34,7 @@ def _metadata(raw: bytes, archive: str) -> Message:
     message = BytesParser(policy=default).parsebytes(raw)
     required = {
         "Name": "rewardharness",
-        "Requires-Python": ">=3.10",
+        "Requires-Python": ">=3.11",
         "License-Expression": "Apache-2.0",
         "Description-Content-Type": "text/markdown",
     }

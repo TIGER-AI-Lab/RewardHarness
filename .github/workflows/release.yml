@@ -20,7 +20,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-python@v6
         with:
-          python-version: "3.10"
+          python-version: "3.11"
       - run: python -m pip install -r requirements-dev.txt
       - name: Verify tag and package version
         run: python -m rewardharness.release --check-tag "$GITHUB_REF_NAME"
@@ -77,7 +77,7 @@ jobs:
     steps:
       - uses: actions/setup-python@v6
         with:
-          python-version: "3.10"
+          python-version: "3.11"
       - name: Wait for PyPI metadata
         run: |
           package_version=${GITHUB_REF_NAME#v}
