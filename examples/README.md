@@ -7,6 +7,7 @@ Standalone scripts that you can run **without GPUs, vLLM, or API keys** to under
 
 | Item | What it shows |
 |---|---|
+| [`inspect_library_files.py`](inspect_library_files.py) | Reads the packaged and seed registry JSON, verifies referenced local files, and prints entry kinds, paths, and hashes. Pure standard library; no package installation or imports. |
 | [`inspect_library.py`](inspect_library.py) | Five-minute tour of the Library data model: adding a Skill, adding a Tool, printing the registry, and round-tripping through disk. Requires `openai` + `pyyaml`. |
 | [`show_reasoning_format.py`](show_reasoning_format.py) | Prints a representative `<think>/<tool>/<obs>/<answer>` chain so you know what to expect when running the real Sub-Agent. Pure stdlib. |
 | [`score_pair.py`](score_pair.py) | End-to-end **real-models** demo: score a single edit pair through Library → Router → SubAgent. Needs Gemini + a vLLM endpoint (see .env.example). |
@@ -15,6 +16,20 @@ Standalone scripts that you can run **without GPUs, vLLM, or API keys** to under
 | [`sample_benchmark_results.json`](sample_benchmark_results.json) | Illustrative `benchmark_results.json` matching the paper's Qwen numbers on EditReward-Bench + GenAI-Bench. |
 
 Run from the repo root:
+
+```bash
+python examples/inspect_library_files.py
+```
+
+This first step reads existing files only. It reports the selected checkout's
+schema-v2 registry entries and their SHA-256 digests; it does not run a model,
+validate tool behavior, or test the package installation. An optional checkout
+argument selects a different source tree. Preserve the Git revision with the
+output when comparing libraries. Missing files, unsupported registry schemas,
+and paths outside a selected library fail instead of reporting a valid entry.
+
+The mutation example below exercises the package API and its installed
+dependencies, a separate check from inspecting committed text and JSON:
 
 ```bash
 python examples/inspect_library.py

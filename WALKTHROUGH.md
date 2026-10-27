@@ -8,6 +8,20 @@ This walkthrough takes ~15 minutes if you only want to inspect the library and r
 
 ---
 
+## 0. Read the released library files without installing the package
+
+From a source checkout, run:
+
+```bash
+python examples/inspect_library_files.py
+```
+
+This standard-library example reads both the packaged library and illustrative
+seed library, checks their referenced files, and prints entry types and file
+digests. It makes no model calls and does not modify the library. It establishes
+what files are present at your checkout revision, not runtime readiness,
+preference accuracy, or benchmark reproduction. See [Examples](examples/README.md).
+
 ## 1. Clone and install (CPU-only, no Internet beyond pip)
 
 ```bash
